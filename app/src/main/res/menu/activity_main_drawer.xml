@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_matches"
+            android:icon="@drawable/icon_matches"
+            android:title="My Matches" />
+        <item
+            android:id="@+id/nav_inbox"
+            android:icon="@drawable/icon_inbox"
+            android:title="Inbox" />
+        <item
+            android:id="@+id/nav_upgrade_account"
+            android:icon="@drawable/icon_upgrade"
+            android:title="Upgrade account" />
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/icon_chat"
+            android:title="Chat" />
+        <item
+            android:id="@+id/nav_edit_profile"
+            android:icon="@drawable/icon_profile"
+            android:title="Edit profile" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/icon_setting"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_daily_recomm"
+            android:icon="@drawable/icon_daily_recomm"
+            android:title="Daily recommendations" />
+    </group>
+
+</menu>

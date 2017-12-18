@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+        <com.lifejodi.utils.customfonts.CustomTextBeatles
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Match Night"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"/>
+
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <com.lifejodi.utils.customfonts.CustomEditBeatles
+                        android:id="@+id/edit_firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@null"
+
+                        android:hint="First name"
+                        android:inputType="text"
+                        android:textColor="@color/dark_grey"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="14dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <com.lifejodi.utils.customfonts.CustomEditBeatles
+                        android:id="@+id/edit_lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@null"
+
+                        android:hint="Last name"
+                        android:inputType="text"
+                        android:textColor="@color/dark_grey"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="14dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <com.lifejodi.utils.customfonts.CustomEditBeatles
+                        android:id="@+id/edit_mobileno"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@null"
+
+                        android:hint="Mobile no."
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:textColor="@color/dark_grey"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="14dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox_terms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/pink"/>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.lifejodi.utils.customfonts.CustomTextBeatles
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I have read and accept the "
+                    android:textSize="12dp"
+                    android:textColor="@color/dark_grey"/>
+                <com.lifejodi.utils.customfonts.CustomTextBeatles
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terms &amp; Conditions. "
+                    android:textColor="@color/pink"
+                    android:textSize="12dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.lifejodi.utils.customfonts.CustomButtonBeatles
+            android:id="@+id/button_confirm"
+            android:layout_marginTop="30dp"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:text="Confirm"
+
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:background="@drawable/button_background"/>
+    </LinearLayout>
+</LinearLayout>
