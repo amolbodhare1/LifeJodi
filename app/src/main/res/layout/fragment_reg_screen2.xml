@@ -15,7 +15,8 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+        />
 
     <Spinner
         android:layout_marginTop="20dp"
@@ -27,7 +28,8 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+         />
 
     <LinearLayout
         android:layout_gravity="center"
@@ -45,7 +47,8 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+            android:spinnerMode="dialog"
+            />
 
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -71,6 +74,7 @@
                         android:textColorHint="@color/colorPrimary"
                         android:textColor="@color/dark_grey"
                         android:textSize="14dp"
+                        android:maxLength="10"
                         android:background="@null"
                         android:inputType="number" />
                 </android.support.design.widget.TextInputLayout>
@@ -103,7 +107,7 @@
                 android:layout_gravity="center_vertical">
                 <com.lifejodi.utils.customfonts.CustomEditBeatles
                     android:layout_gravity="center_vertical"
-                    android:id="@+id/edit_name"
+                    android:id="@+id/edit_email_id"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:hint="Enter email id"

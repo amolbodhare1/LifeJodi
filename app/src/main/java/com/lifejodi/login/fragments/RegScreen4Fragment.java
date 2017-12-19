@@ -1,4 +1,4 @@
-package com.lifejodi.login.activity;
+package com.lifejodi.login.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -89,14 +89,14 @@ public class RegScreen4Fragment extends Fragment {
         familyStatusList.add("Family Status");
         familyValuesList.add("Family Values");
 
-        spinnerHeight.setAdapter(new SpinnerAdapter(heightList));
+     /*   spinnerHeight.setAdapter(new SpinnerAdapter(heightList));
         spinnerPhysicalStatus.setAdapter(new SpinnerAdapter(physicalStatusList));
         spinnerEducation.setAdapter(new SpinnerAdapter(educationList));
         spinnerOccupation.setAdapter(new SpinnerAdapter(occupationList));
         spinnerEmployedIn.setAdapter(new SpinnerAdapter(employedInList));
         spinnerFamilyStatus.setAdapter(new SpinnerAdapter(familyStatusList));
         spinnerFamilyValues.setAdapter(new SpinnerAdapter(familyValuesList));
-
+*/
         return view;
     }
 

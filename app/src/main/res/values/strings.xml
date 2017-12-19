@@ -9,4 +9,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_search">Search</string>
     <string name="title_events">Events</string>
+    <string name="select_dob">Select date of birth</string>
+    <string name="select_religion">Select Religion</string>
+    <string name="select_mother_tongue">Mother tongue</string>
+    <string name="select_cast">Select cast</string>
+    <string name="select_marital_status">Select Marital Status</string>
+
 </resources>

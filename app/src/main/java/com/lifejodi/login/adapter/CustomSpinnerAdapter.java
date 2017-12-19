@@ -1,7 +1,6 @@
 package com.lifejodi.login.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,27 +8,33 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lifejodi.R;
+import com.lifejodi.login.data.RegisterData;
+import com.lifejodi.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Ajay on 07-12-2017.
+ * Created by Administrator on 12/18/2017.
  */
 
-public class SpinnerAdapter extends BaseAdapter {
+public class CustomSpinnerAdapter  extends BaseAdapter {
 
-    List<String> list = new ArrayList<>();
+    ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
     Context context;
+    String hintText,tag;
 
-    public SpinnerAdapter(Context mcontext,List<String> dataList) {
+    public CustomSpinnerAdapter(Context mcontext,ArrayList<HashMap<String,String>> list,String text,String mtag) {
         context = mcontext;
-        list = dataList;
+        dataList =  list;
+        hintText = text;
+        tag = mtag;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return dataList.size();
     }
 
     @Override
@@ -48,10 +53,18 @@ public class SpinnerAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_spinner_list,null);
         TextView tv_spinner = (TextView) convertView.findViewById(R.id.spinnertext);
 
-        tv_spinner.setText(list.get(position));
+        HashMap<String,String> dataMap = dataList.get(position);
         if (position == 0){
+            tv_spinner.setText(hintText);
             tv_spinner.setHintTextColor(context.getResources().getColor(R.color.hint_color));
         }else {
+            if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
+                tv_spinner.setText(dataMap.get(RegisterData.KEY_RELIGIONNAME));
+            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
+                tv_spinner.setText(dataMap.get(RegisterData.KEY_CASTNAME));
+            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
+                tv_spinner.setText(dataMap.get(RegisterData.KEY_MARITALSTATUSNAME));
+            }
             tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
         }
         tv_spinner.setPadding(10, 0, 0, 0);
@@ -62,10 +75,11 @@ public class SpinnerAdapter extends BaseAdapter {
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_spinner_dropdown,null);
         TextView tv_spinner_drop = (TextView) convertView.findViewById(R.id.spinnertext_drop);
-
+        HashMap<String,String> dataMap = dataList.get(position);
         //HashMap<String,String> dataMap = spinner_list.get(position);
         if(position==0)
         {
+            tv_spinner_drop.setText(hintText);
             tv_spinner_drop.setPadding(10,10, 0, 0);
             tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.hint_color));
             tv_spinner_drop.setTextSize(18);
@@ -73,12 +87,17 @@ public class SpinnerAdapter extends BaseAdapter {
         }
         else
         {
+            if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
+                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_RELIGIONNAME));
+            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
+                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_CASTNAME));
+            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
+                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_MARITALSTATUSNAME));
+            }
             tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
             tv_spinner_drop.setPadding(30,0, 0, 0);
 
         }
-        tv_spinner_drop.setText(list.get(position));
-
         return convertView;
     }
 

@@ -9,6 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.lifejodi.R;
+import com.lifejodi.login.fragments.RegScreen1Fragment;
+import com.lifejodi.login.fragments.RegScreen2Fragment;
+import com.lifejodi.login.fragments.RegScreen3Fragment;
+import com.lifejodi.login.fragments.RegScreen4Fragment;
+import com.lifejodi.login.interfaces.SetRegistrationFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by Ajay on 11-11-2017.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements SetRegistrationFragment {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -29,6 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         viewPager.setAdapter(new CustomViewPagerAdapter(getSupportFragmentManager()));
+    }
+
+    @Override
+    public void setRegFragment(int pos) {
+        viewPager.setCurrentItem(pos);
     }
 
 
