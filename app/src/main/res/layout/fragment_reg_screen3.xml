@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
-
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="15dp"
+        android:gravity="center">
     <LinearLayout
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
@@ -28,41 +35,47 @@
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_marital_status"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="3dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined" />
 
     <Spinner
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_caste"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="3dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined" />
     <Spinner
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_dosham"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="3dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined" />
 
 
     <LinearLayout
         android:layout_marginTop="15dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -103,7 +116,7 @@
 
     <com.lifejodi.utils.customfonts.CustomTextBeatles
         android:layout_marginTop="15dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Groom's Current Location"
         android:textColor="@color/dark_grey"
@@ -114,18 +127,20 @@
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_current_location"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="3dp"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
     <com.lifejodi.utils.customfonts.CustomButtonBeatles
         android:layout_gravity="center"
         android:id="@+id/button_continue"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_width="280dp"
         android:layout_height="40dp"
         android:text="Continue"
@@ -133,3 +148,17 @@
         android:textSize="14dp"
         android:background="@drawable/button_background"/>
 </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+</RelativeLayout>

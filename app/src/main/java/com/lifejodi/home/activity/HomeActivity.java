@@ -15,7 +15,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.InboxActivity;
@@ -23,6 +26,9 @@ import com.lifejodi.NotificationActivity;
 import com.lifejodi.ProfileActivity;
 import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
+import com.lifejodi.utils.AppController;
+import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.SharedPreference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +53,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    TextView tvHeaderName;
+    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+
+    AppController appController = AppController.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +68,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initialization() {
-
-
+        sharedPreference.initialize(this);
+        appController.initialize(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +91,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabs.addTab(tabs.newTab().setText("NEW MATCHES"));
         tabs.addTab(tabs.newTab().setText("SHORTLISTED"));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        View view = navView.getHeaderView(0);
+        tvHeaderName = (TextView)view.findViewById(R.id.nav_header_username);
+        tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.USERNAME));
     }
 
     @Override
@@ -132,4 +146,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return false;
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            appController.doubleTapToExit(HomeActivity.this);
+        }
+        return true;
+    }
 }

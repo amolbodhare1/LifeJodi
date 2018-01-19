@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">LifeJodi</string>
+    <string name="facebook_app_id">515103778873176</string>
+    <string name="fb_login_protocol_scheme">fb515103778873176</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

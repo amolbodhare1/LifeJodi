@@ -9,26 +9,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
-import com.lifejodi.login.data.RegisterData;
-import com.lifejodi.login.data.SpinnersRegistrationData;
+import com.lifejodi.login.data.RegSpinnersData;
+import com.lifejodi.login.data.RegSpinnersStaticData;
+import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
-import com.lifejodi.login.manager.RegistrationManager;
+import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,21 +60,25 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
     @BindView(R.id.button_register)
     CustomButtonBeatles buttonRegister;
     Unbinder unbinder;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
 
-    private boolean fragmentResume=false;
-    private boolean fragmentVisible=false;
-    private boolean fragmentOnCreated=false;
+    private boolean fragmentResume = false;
+    private boolean fragmentVisible = false;
+    private boolean fragmentOnCreated = false;
 
-    ArrayList<HashMap<String,String>> religionList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> religionList = new ArrayList<>();
     List<String> motherToungueList = new ArrayList<>();
     List<String> countryCodesList = new ArrayList<>();
-    String religion="",motherTongue="",mobileNumber="",countryCode="",email="",password="";
+    String religion = "", motherTongue = "", mobileNumber = "", countryCode = "", email = "", password = "";
 
-    RegistrationManager registrationManager = RegistrationManager.getInstance();
-    RegisterData registerData = RegisterData.getInstance();
+    RegSpinnersManager registrationManager = RegSpinnersManager.getInstance();
+    RegSpinnersData registerData = RegSpinnersData.getInstance();
+    UserRegData userRegData = UserRegData.getInstance();
     SpinnerAdapter spinnerAdapter;
     CustomSpinnerAdapter customSpinnerAdapter;
     SetRegistrationFragment setRegistrationFragment;
+    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     @Nullable
     @Override
@@ -81,46 +86,50 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         View view = inflater.inflate(R.layout.fragment_reg_screen2, null);
         unbinder = ButterKnife.bind(this, view);
         initialization();
-        if (!fragmentResume && fragmentVisible){
-            registrationManager.initialize(this,getActivity());
+        if (!fragmentResume && fragmentVisible) {
+            registrationManager.initialize(this, getActivity());
+            progressLayout.setVisibility(View.VISIBLE);
             registrationManager.getReligions();
         }
         return view;
     }
 
-    public void initialization()
-    {
-        motherToungueList = Constants.getArraylistFromArray(SpinnersRegistrationData.motherTongueArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(),motherToungueList);
+    public void initialization() {
+        sharedPreference.initialize(getActivity());
+        motherToungueList = Constants.getArraylistFromArray(RegSpinnersStaticData.motherTongueArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), motherToungueList);
         spinnerMotherToungue.setAdapter(spinnerAdapter);
 
-        countryCodesList = Constants.getArraylistFromArray(SpinnersRegistrationData.countryCodesArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(),countryCodesList);
+        countryCodesList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryCodesArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), countryCodesList);
         spinnerCode.setAdapter(spinnerAdapter);
-
+        if(sharedPreference.getSharedPrefData(Constants.FACEBOOKSIGNUP).equalsIgnoreCase("1"))
+        {
+            editEmail.setText(sharedPreference.getSharedPrefData(Constants.FBEMAIL));
+        }
         setListeners();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && isResumed()){   // only at fragment screen is resumed
-            fragmentResume=true;
-            fragmentVisible=false;
-            fragmentOnCreated=true;
-            registrationManager.initialize(this,getActivity());
+        if (isVisibleToUser && isResumed()) {   // only at fragment screen is resumed
+            fragmentResume = true;
+            fragmentVisible = false;
+            fragmentOnCreated = true;
+            registrationManager.initialize(this, getActivity());
+            progressLayout.setVisibility(View.VISIBLE);
             registrationManager.getReligions();
 
-        }else  if (isVisibleToUser){        // only at fragment onCreated
-            fragmentResume=false;
-            fragmentVisible=true;
-            fragmentOnCreated=true;
+        } else if (isVisibleToUser) {        // only at fragment onCreated
+            fragmentResume = false;
+            fragmentVisible = true;
+            fragmentOnCreated = true;
 
 
-        }
-        else if(!isVisibleToUser && fragmentOnCreated){// only when you go out of fragment screen
-            fragmentVisible=false;
-            fragmentResume=false;
+        } else if (!isVisibleToUser && fragmentOnCreated) {// only when you go out of fragment screen
+            fragmentVisible = false;
+            fragmentResume = false;
         }
     }
 
@@ -134,12 +143,11 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         }
     }
 
-    public void setListeners()
-    {
+    public void setListeners() {
         spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    countryCode = countryCodesList.get(i);
+                countryCode = countryCodesList.get(i);
             }
 
             @Override
@@ -151,7 +159,7 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         spinnerMotherToungue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    motherTongue = motherToungueList.get(i);
+                motherTongue = motherToungueList.get(i);
             }
 
             @Override
@@ -162,6 +170,7 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
 
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -170,20 +179,21 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
 
     @Override
     public void successCallBack(String msg, String tag) {
-       if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION))
-       {
+        if (tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
             setReligionSpinner();
-       }
+        }
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
-        Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+        progressLayout.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
     }
-    public void setReligionSpinner()
-    {
+
+    public void setReligionSpinner() {
+        progressLayout.setVisibility(View.GONE);
         religionList = registerData.getReligionsList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),religionList,getActivity().getResources().getString(R.string.select_religion),Constants.TAG_GET_RELIGION);
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), religionList, getActivity().getResources().getString(R.string.select_religion), Constants.TAG_GET_RELIGION);
         spinnerReligion.setAdapter(customSpinnerAdapter);
         spinnerReligion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -200,28 +210,36 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         });
     }
 
-    public void checkAllFields()
-    {
+    public void checkAllFields() {
         mobileNumber = editMobileNo.getText().toString();
         email = editEmail.getText().toString();
         password = editPassword.getText().toString();
-        if(religion.equalsIgnoreCase("") || religion.equalsIgnoreCase(getActivity().getResources().getString(R.string.select_religion))) {
-            Toast.makeText(getActivity(), "Select religion", Toast.LENGTH_SHORT).show();}else {
-            if(motherTongue.equalsIgnoreCase("")|| motherTongue.equalsIgnoreCase(getActivity().getResources().getString(R.string.select_mother_tongue))) {
-                Toast.makeText(getActivity(), "Select mother tongue", Toast.LENGTH_SHORT).show();}else {
-                if(countryCode.equalsIgnoreCase("")) {
-                    Toast.makeText(getActivity(), "Select country code", Toast.LENGTH_SHORT).show();}else {
-                    if(mobileNumber.equalsIgnoreCase("")) {
-                        Toast.makeText(getActivity(), "Enter mobile number", Toast.LENGTH_SHORT).show();}else {
-                        if(email.equalsIgnoreCase("") || (!Constants.isEmailValid(email))) {
-                            Toast.makeText(getActivity(), "Enter valid email id", Toast.LENGTH_SHORT).show();}else {
-                            if(password.equalsIgnoreCase("")) {
-                                Toast.makeText(getActivity(), "Enter password", Toast.LENGTH_SHORT).show();}else {
+        if (religion.equalsIgnoreCase("") || religion.equalsIgnoreCase("0")) {
+            Toast.makeText(getActivity(), "Select religion", Toast.LENGTH_SHORT).show();
+        } else {
+            if (motherTongue.equalsIgnoreCase("") || motherTongue.equalsIgnoreCase(getActivity().getResources().getString(R.string.select_mother_tongue))) {
+                Toast.makeText(getActivity(), "Select mother tongue", Toast.LENGTH_SHORT).show();
+            } else {
+                if (countryCode.equalsIgnoreCase("")) {
+                    Toast.makeText(getActivity(), "Select country code", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mobileNumber.equalsIgnoreCase("")) {
+                        Toast.makeText(getActivity(), "Enter mobile number", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (email.equalsIgnoreCase("") || (!Constants.isEmailValid(email))) {
+                            Toast.makeText(getActivity(), "Enter valid email id", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (password.equalsIgnoreCase("")) {
+                                Toast.makeText(getActivity(), "Enter password", Toast.LENGTH_SHORT).show();
+                            } else {
                                 try {
-                                    registerData.regDataObject.put(RegisterData.KEY_EMAIL,email);
-                                    registerData.regDataObject.put(RegisterData.KEY_CONTACTNUMBER,mobileNumber);
-                                    registerData.regDataObject.put(RegisterData.KEY_RELIGION,religion);
-                                    setRegistrationFragment = (SetRegistrationFragment)getActivity();
+                                    sharedPreference.putSharedPrefData(Constants.SAVEDEMAIL,email);
+                                    sharedPreference.putSharedPrefData(Constants.SAVEDPASSWORD,password);
+                                    sharedPreference.putSharedPrefData(Constants.SAVEDMOBILE,mobileNumber);
+                                    userRegData.regDataObject.put(userRegData.KEY_EMAIL, email);
+                                    userRegData.regDataObject.put(userRegData.KEY_CONTACTNUMBER, mobileNumber);
+                                    userRegData.regDataObject.put(userRegData.KEY_RELIGION, religion);
+                                    setRegistrationFragment = (SetRegistrationFragment) getActivity();
                                     setRegistrationFragment.setRegFragment(2);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

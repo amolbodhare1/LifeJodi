@@ -1,21 +1,39 @@
 package com.lifejodi.login.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.lifejodi.R;
+import com.lifejodi.login.activity.LoginActivity;
 import com.lifejodi.login.adapter.SpinnerAdapter;
+import com.lifejodi.login.data.RegSpinnersData;
+import com.lifejodi.login.data.RegSpinnersStaticData;
+import com.lifejodi.login.data.UserRegData;
+import com.lifejodi.login.manager.RegSpinnersManager;
+import com.lifejodi.login.manager.UserRegManager;
+import com.lifejodi.network.VolleyCallbackInterface;
+import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
+import com.lifejodi.utils.customfonts.CustomTextBeatles;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +43,7 @@ import butterknife.Unbinder;
  * Created by Ajay on 07-12-2017.
  */
 
-public class RegScreen4Fragment extends Fragment {
+public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSelectedListener, VolleyCallbackInterface {
 
     @BindView(R.id.spinner_height)
     Spinner spinnerHeight;
@@ -51,58 +69,240 @@ public class RegScreen4Fragment extends Fragment {
     CustomEditBeatles editAboutFriend;
     @BindView(R.id.button_continue)
     CustomButtonBeatles buttonContinue;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
+    @BindView(R.id.text_about_you)
+    CustomTextBeatles textAboutYou;
     Unbinder unbinder;
 
-    ArrayList<String> heightList = new ArrayList<>();
-    ArrayList<String> physicalStatusList = new ArrayList<>();
-    ArrayList<String> educationList = new ArrayList<>();
-    ArrayList<String> occupationList = new ArrayList<>();
-    ArrayList<String> employedInList = new ArrayList<>();
-    ArrayList<String> familyStatusList = new ArrayList<>();
-    ArrayList<String> familyValuesList = new ArrayList<>();
+    List<String> heightList = new ArrayList<>();
+    List<String> physicalStatusList = new ArrayList<>();
+    List<String> educationList = new ArrayList<>();
+    List<String> occupationList = new ArrayList<>();
+    List<String> employedInList = new ArrayList<>();
+    List<String> currencyList = new ArrayList<>();
+    List<String> familyStatusList = new ArrayList<>();
+    List<String> familyValuesList = new ArrayList<>();
+    String height = "", physicalStatus = "", education = "", occupation = "", employedIn = "", currency = "", annualIncome = "", familyStatus = "";
+    String familyType = "", familyValues = "", aboutFriend = "",profile="";
+
+    RegSpinnersData registerData = RegSpinnersData.getInstance();
+    RegSpinnersManager regSpinnersManager = RegSpinnersManager.getInstance();
+    UserRegManager userRegManager = UserRegManager.getInstance();
+    UserRegData userRegData = UserRegData.getInstance();
+    SpinnerAdapter spinnerAdapter;
+    SharedPreference sharedPreference;
+
+    View view;
+    RadioButton radioButton;
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_reg_screen4, null);
+        view = inflater.inflate(R.layout.fragment_reg_screen4, null);
         unbinder = ButterKnife.bind(this, view);
-
-        heightList.clear();
-        physicalStatusList.clear();
-        educationList.clear();
-        occupationList.clear();
-        educationList.clear();
-        familyStatusList.clear();
-        familyValuesList.clear();
-
-        heightList.add("Height");
-        physicalStatusList.add("Physical Status");
-        physicalStatusList.add("Normal");
-        educationList.add("Education");
-        occupationList.add("Occupation");
-        employedInList.add("Employed in");
-        employedInList.add("Government");
-        employedInList.add("Defence");
-        employedInList.add("Private");
-        employedInList.add("Business");
-        employedInList.add("Self Employed ");
-        familyStatusList.add("Family Status");
-        familyValuesList.add("Family Values");
-
-     /*   spinnerHeight.setAdapter(new SpinnerAdapter(heightList));
-        spinnerPhysicalStatus.setAdapter(new SpinnerAdapter(physicalStatusList));
-        spinnerEducation.setAdapter(new SpinnerAdapter(educationList));
-        spinnerOccupation.setAdapter(new SpinnerAdapter(occupationList));
-        spinnerEmployedIn.setAdapter(new SpinnerAdapter(employedInList));
-        spinnerFamilyStatus.setAdapter(new SpinnerAdapter(familyStatusList));
-        spinnerFamilyValues.setAdapter(new SpinnerAdapter(familyValuesList));
-*/
+        initialization();
         return view;
+    }
+
+    public void initialization() {
+        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference.initialize(getActivity());
+        profile = sharedPreference.getSharedPrefData(Constants.PROFILEFOR);
+        if(profile.equalsIgnoreCase("Myself"))
+        {
+            textAboutYou.setText("About yourself");
+            editAboutFriend.setHint("Enter about yourself");
+        }else {
+            textAboutYou.setText("About your "+profile);
+            editAboutFriend.setHint("Enter about your "+profile);
+        }
+        heightList = Constants.getArraylistFromArray(RegSpinnersStaticData.heightArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), heightList);
+        spinnerHeight.setAdapter(spinnerAdapter);
+
+        physicalStatusList = Constants.getArraylistFromArray(RegSpinnersStaticData.physicalStatusArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), physicalStatusList);
+        spinnerPhysicalStatus.setAdapter(spinnerAdapter);
+
+        educationList = Constants.getArraylistFromArray(RegSpinnersStaticData.educationArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), educationList);
+        spinnerEducation.setAdapter(spinnerAdapter);
+
+        occupationList = Constants.getArraylistFromArray(RegSpinnersStaticData.occupationArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), occupationList);
+        spinnerOccupation.setAdapter(spinnerAdapter);
+
+        employedInList = Constants.getArraylistFromArray(RegSpinnersStaticData.employedInArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), employedInList);
+        spinnerEmployedIn.setAdapter(spinnerAdapter);
+
+        currencyList = Constants.getArraylistFromArray(RegSpinnersStaticData.currencyArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), currencyList);
+        spinnerCurrencyCode.setAdapter(spinnerAdapter);
+
+        familyStatusList = Constants.getArraylistFromArray(RegSpinnersStaticData.familyStatus);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), familyStatusList);
+        spinnerFamilyStatus.setAdapter(spinnerAdapter);
+
+        familyValuesList = Constants.getArraylistFromArray(RegSpinnersStaticData.familyValues);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), familyValuesList);
+        spinnerFamilyValues.setAdapter(spinnerAdapter);
+
+        setListeners();
+    }
+
+    public void setListeners() {
+        spinnerHeight.setOnItemSelectedListener(this);
+        spinnerPhysicalStatus.setOnItemSelectedListener(this);
+        spinnerEducation.setOnItemSelectedListener(this);
+        spinnerOccupation.setOnItemSelectedListener(this);
+        spinnerEmployedIn.setOnItemSelectedListener(this);
+        spinnerCurrencyCode.setOnItemSelectedListener(this);
+        spinnerFamilyStatus.setOnItemSelectedListener(this);
+        spinnerFamilyValues.setOnItemSelectedListener(this);
+
+        radiogroupFamilyType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                radioButton = (RadioButton) view.findViewById(i);
+                familyType = radioButton.getText().toString();
+            }
+        });
+
+        buttonContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAllFields();
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+        Spinner spinner = (Spinner) adapterView;
+        switch (spinner.getId()) {
+            case R.id.spinner_height:
+                height = heightList.get(pos);
+                break;
+            case R.id.spinner_physical_status:
+                physicalStatus = physicalStatusList.get(pos);
+                break;
+            case R.id.spinner_education:
+                education = educationList.get(pos);
+                break;
+            case R.id.spinner_occupation:
+                occupation = occupationList.get(pos);
+                break;
+            case R.id.spinner_employed_in:
+                employedIn = employedInList.get(pos);
+                break;
+            case R.id.spinner_currency_code:
+                currency = currencyList.get(pos);
+                break;
+            case R.id.spinner_family_status:
+                familyStatus = familyStatusList.get(pos);
+                break;
+            case R.id.spinner_family_values:
+                familyValues = familyValuesList.get(pos);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void checkAllFields() {
+        annualIncome = editAnnualIncome.getText().toString();
+        aboutFriend = editAboutFriend.getText().toString();
+        if (height.equalsIgnoreCase("") || height.equalsIgnoreCase("Height")) {
+            Toast.makeText(getActivity(), "Select height", Toast.LENGTH_SHORT).show();
+        } else {
+            if (physicalStatus.equals("") || physicalStatus.equalsIgnoreCase("Physical status")) {
+                Toast.makeText(getActivity(), "Select physical status", Toast.LENGTH_SHORT).show();
+            } else {
+                if (education.equals("") || education.equalsIgnoreCase("Education")) {
+                    Toast.makeText(getActivity(), "Select education", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (occupation.equals("") || occupation.equalsIgnoreCase("Occupation")) {
+                        Toast.makeText(getActivity(), "Select occupation", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (employedIn.equals("") || employedIn.equalsIgnoreCase("Employed in")) {
+                            Toast.makeText(getActivity(), "Select employed in", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (currency.equals("") || currency.equalsIgnoreCase("Currency")) {
+                                Toast.makeText(getActivity(), "Select currency", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (annualIncome.equalsIgnoreCase("")) {
+                                    Toast.makeText(getActivity(), "Enter annual income", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (familyStatus.equals("") || familyStatus.equalsIgnoreCase("Family status")) {
+                                        Toast.makeText(getActivity(), "Select family status", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (familyType.equalsIgnoreCase("")) {
+                                            Toast.makeText(getActivity(), "Select family type", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            if (familyValues.equals("") || familyValues.equalsIgnoreCase("Family values")) {
+                                                Toast.makeText(getActivity(), "Select family values", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                if (aboutFriend.equalsIgnoreCase("")) {
+                                                    Toast.makeText(getActivity(), "Enter about your friend", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    try {
+                                                        userRegData.regDataObject.put(userRegData.KEY_HEIGHT, height);
+                                                        userRegData.regDataObject.put(userRegData.KEY_WEIGHT, " ");
+                                                        userRegManager.initialize(this, getActivity());
+                                                        progressLayout.setVisibility(View.VISIBLE);
+                                                        userRegManager.registerUser(userRegData.regDataObject);
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void successCallBack(String msg, String tag) {
+        if (tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER)) {
+            progressLayout.setVisibility(View.GONE);
+            //String status = userRegData.getRegStatus();
+            Toast.makeText(getActivity(), "You are registered successfully.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+    }
+
+    @Override
+    public void errorCallBack(String msg, String tag) {
+        progressLayout.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), "You are registered successfully.", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

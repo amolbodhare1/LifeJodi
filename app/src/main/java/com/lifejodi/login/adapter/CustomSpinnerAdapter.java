@@ -8,12 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lifejodi.R;
-import com.lifejodi.login.data.RegisterData;
+import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Administrator on 12/18/2017.
@@ -56,14 +55,14 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
         HashMap<String,String> dataMap = dataList.get(position);
         if (position == 0){
             tv_spinner.setText(hintText);
-            tv_spinner.setHintTextColor(context.getResources().getColor(R.color.hint_color));
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.light_gray));
         }else {
             if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
-                tv_spinner.setText(dataMap.get(RegisterData.KEY_RELIGIONNAME));
+                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_RELIGIONNAME));
             }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
-                tv_spinner.setText(dataMap.get(RegisterData.KEY_CASTNAME));
+                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_CASTNAME));
             }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
-                tv_spinner.setText(dataMap.get(RegisterData.KEY_MARITALSTATUSNAME));
+                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_MARITALSTATUSNAME));
             }
             tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
         }
@@ -81,18 +80,18 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
         {
             tv_spinner_drop.setText(hintText);
             tv_spinner_drop.setPadding(10,10, 0, 0);
-            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.hint_color));
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.light_gray));
             tv_spinner_drop.setTextSize(18);
 
         }
         else
         {
             if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
-                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_RELIGIONNAME));
+                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_RELIGIONNAME));
             }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
-                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_CASTNAME));
+                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_CASTNAME));
             }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
-                tv_spinner_drop.setText(dataMap.get(RegisterData.KEY_MARITALSTATUSNAME));
+                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_MARITALSTATUSNAME));
             }
             tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
             tv_spinner_drop.setPadding(30,0, 0, 0);

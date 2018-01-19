@@ -9,18 +9,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
-import com.lifejodi.login.data.RegisterData;
-import com.lifejodi.login.data.SpinnersRegistrationData;
-import com.lifejodi.login.manager.RegistrationManager;
+import com.lifejodi.login.data.RegSpinnersData;
+import com.lifejodi.login.data.RegSpinnersStaticData;
+import com.lifejodi.login.data.UserRegData;
+import com.lifejodi.login.interfaces.SetRegistrationFragment;
+import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,19 +55,23 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     CustomButtonBeatles buttonContinue;
     RadioButton radioButton;
     Unbinder unbinder;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
 
-    private boolean fragmentResume=false;
-    private boolean fragmentVisible=false;
-    private boolean fragmentOnCreated=false;
+    private boolean fragmentResume = false;
+    private boolean fragmentVisible = false;
+    private boolean fragmentOnCreated = false;
 
-    ArrayList<HashMap<String,String>> maritalStatusList = new ArrayList<>();
-    ArrayList<HashMap<String,String>> casteList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> maritalStatusList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> casteList = new ArrayList<>();
     List<String> doshamList = new ArrayList<>();
     List<String> livingCountryList = new ArrayList<>();
-    String maritalStatus,dosham,country,cast,willingtoMarryOtherCommunities;
+    String maritalStatus="", dosham="", country="", cast="", willingtoMarryOtherCommunities="";
 
-    RegisterData registerData = RegisterData.getInstance();
-    RegistrationManager registrationManager = RegistrationManager.getInstance();
+    RegSpinnersData registerData = RegSpinnersData.getInstance();
+    RegSpinnersManager registrationManager = RegSpinnersManager.getInstance();
+    UserRegData userRegData = UserRegData.getInstance();
+    SetRegistrationFragment setRegistrationFragment;
     SpinnerAdapter spinnerAdapter;
     CustomSpinnerAdapter customSpinnerAdapter;
     View view;
@@ -70,12 +79,13 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_reg_screen3, null);
+        view = inflater.inflate(R.layout.fragment_reg_screen3, null);
         unbinder = ButterKnife.bind(this, view);
 
         initialization();
-        if (!fragmentResume && fragmentVisible){
-            registrationManager.initialize(this,getActivity());
+        if (!fragmentResume && fragmentVisible) {
+            registrationManager.initialize(this, getActivity());
+            progressLayout.setVisibility(View.VISIBLE);
             registrationManager.getCasts();
 
         }
@@ -85,42 +95,41 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && isResumed()){   // only at fragment screen is resumed
-            fragmentResume=true;
-            fragmentVisible=false;
-            fragmentOnCreated=true;
-            registrationManager.initialize(this,getActivity());
+        if (isVisibleToUser && isResumed()) {   // only at fragment screen is resumed
+            fragmentResume = true;
+            fragmentVisible = false;
+            fragmentOnCreated = true;
+            registrationManager.initialize(this, getActivity());
+            progressLayout.setVisibility(View.VISIBLE);
             registrationManager.getCasts();
 
 
-        }else  if (isVisibleToUser){        // only at fragment onCreated
-            fragmentResume=false;
-            fragmentVisible=true;
-            fragmentOnCreated=true;
+        } else if (isVisibleToUser) {        // only at fragment onCreated
+            fragmentResume = false;
+            fragmentVisible = true;
+            fragmentOnCreated = true;
 
 
-        }
-        else if(!isVisibleToUser && fragmentOnCreated){// only when you go out of fragment screen
-            fragmentVisible=false;
-            fragmentResume=false;
+        } else if (!isVisibleToUser && fragmentOnCreated) {// only when you go out of fragment screen
+            fragmentVisible = false;
+            fragmentResume = false;
         }
     }
 
-    public void initialization()
-    {
-        doshamList = Constants.getArraylistFromArray(SpinnersRegistrationData.doshamArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(),doshamList);
+    public void initialization() {
+        doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), doshamList);
         spinnerDosham.setAdapter(spinnerAdapter);
 
-        livingCountryList = Constants.getArraylistFromArray(SpinnersRegistrationData.countryLivingInArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(),livingCountryList);
+        livingCountryList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryLivingInArray);
+        spinnerAdapter = new SpinnerAdapter(getActivity(), livingCountryList);
         spinnerCurrentLocation.setAdapter(spinnerAdapter);
 
         setListeners();
 
     }
-    public void setListeners()
-    {
+
+    public void setListeners() {
         spinnerDosham.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -148,11 +157,19 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
         radiogroupOtherCommunities.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-              radioButton = (RadioButton)view.findViewById(i);
-              willingtoMarryOtherCommunities = radioButton.getText().toString();
+                radioButton = (RadioButton) view.findViewById(i);
+                willingtoMarryOtherCommunities = radioButton.getText().toString();
+            }
+        });
+
+        buttonContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAllFields();
             }
         });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -161,24 +178,24 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
 
     @Override
     public void successCallBack(String msg, String tag) {
-        if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
+        if (tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
             setCastSpinner();
-            registrationManager.initialize(this,getActivity());
+            registrationManager.initialize(this, getActivity());
             registrationManager.getMaritalStatus();
-        }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)){
+        } else if (tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
             setMarritalStatusSpinner();
         }
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
-        Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+        progressLayout.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void setCastSpinner()
-    {
+    public void setCastSpinner() {
         casteList = registerData.getCastsList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),casteList,getActivity().getResources().getString(R.string.select_cast),Constants.TAG_GET_CAST);
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), casteList, getActivity().getResources().getString(R.string.select_cast), Constants.TAG_GET_CAST);
         spinnerCaste.setAdapter(customSpinnerAdapter);
         spinnerCaste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,21 +212,53 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
         });
     }
 
-    public void setMarritalStatusSpinner()
-    {
+    public void setMarritalStatusSpinner() {
+        progressLayout.setVisibility(View.GONE);
         maritalStatusList = registerData.getMaritalStatusList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),maritalStatusList,getActivity().getResources().getString(R.string.select_marital_status),Constants.TAG_GET_MARITALSTATUS);
-       spinnerMaritalStatus.setAdapter(customSpinnerAdapter);
-       spinnerMaritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               maritalStatus = String.valueOf(i);
-           }
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), maritalStatusList, getActivity().getResources().getString(R.string.select_marital_status), Constants.TAG_GET_MARITALSTATUS);
+        spinnerMaritalStatus.setAdapter(customSpinnerAdapter);
+        spinnerMaritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                maritalStatus = String.valueOf(i);
+            }
 
-           @Override
-           public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-           }
-       });
+            }
+        });
+    }
+
+    public void checkAllFields() {
+        if (maritalStatus.equalsIgnoreCase("") || maritalStatus.equalsIgnoreCase("0")) {
+            Toast.makeText(getActivity(), "Select marital status", Toast.LENGTH_SHORT).show();
+        } else {
+            if (cast.equals("") || cast.equalsIgnoreCase("0")) {
+                Toast.makeText(getActivity(), "Select cast", Toast.LENGTH_SHORT).show();
+            } else {
+                if (dosham.equalsIgnoreCase("") || dosham.equalsIgnoreCase("Dosham")) {
+                    Toast.makeText(getActivity(), "Select dosham", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (willingtoMarryOtherCommunities.equalsIgnoreCase("")) {
+                        Toast.makeText(getActivity(), "Select if willing to marry from other communities or not", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (country.equalsIgnoreCase("") || country.equalsIgnoreCase("Country living in")) {
+                            Toast.makeText(getActivity(), "Select country", Toast.LENGTH_SHORT).show();
+                        } else {
+                            try {
+                                userRegData.regDataObject.put(userRegData.KEY_MARITALSTATUS, maritalStatus);
+                                userRegData.regDataObject.put(userRegData.KEY_CAST, cast);
+                                setRegistrationFragment = (SetRegistrationFragment) getActivity();
+                                setRegistrationFragment.setRegFragment(3);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }

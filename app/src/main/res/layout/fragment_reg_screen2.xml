@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="15dp"
+        android:orientation="vertical">
     <Spinner
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_religion"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textColor="@color/dark_grey"
         android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
         />
-
     <Spinner
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_mother_toungue"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:textColor="@color/dark_grey"
         android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
          />
 
     <LinearLayout
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Spinner
             android:layout_gravity="center"
             android:id="@+id/spinner_code"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            android:paddingTop="0dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
+            app:backgroundTint="@color/bottomline_color"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
             />
 
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_gravity="center"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,9 +81,9 @@
                         android:layout_gravity="center_vertical"
                         android:id="@+id/edit_mobile_no"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:hint="Mobile number"
-                        android:textColorHint="@color/colorPrimary"
+                        android:textColorHint="@color/hint_color"
                         android:textColor="@color/dark_grey"
                         android:textSize="14dp"
                         android:maxLength="10"
@@ -84,7 +96,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/line_color"/>
+                android:background="@color/bottomline_color"/>
 
         </LinearLayout>
 
@@ -93,7 +105,7 @@
     <LinearLayout
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -111,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:hint="Enter email id"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColorHint="@color/hint_color"
                     android:textColor="@color/dark_grey"
                     android:textSize="14dp"
                     android:background="@null"
@@ -123,13 +135,13 @@
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/line_color"/>
+            android:background="@color/bottomline_color"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -146,8 +158,8 @@
                     android:id="@+id/edit_password"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:hint="password"
-                    android:textColorHint="@color/colorPrimary"
+                    android:hint="Password"
+                    android:textColorHint="@color/hint_color"
                     android:textColor="@color/dark_grey"
                     android:textSize="14dp"
                     android:background="@null"
@@ -158,15 +170,16 @@
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/line_color"/>
+            android:background="@color/bottomline_color"/>
     </LinearLayout>
 
 
     <com.lifejodi.utils.customfonts.CustomTextBeatles
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="By clicking REGISTER button, you accept our Terms and Condition"
         android:textSize="14dp"
         android:textColor="@color/pink"/>
@@ -182,3 +195,18 @@
         android:textSize="14dp"
         android:background="@drawable/button_background"/>
 </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+</RelativeLayout>

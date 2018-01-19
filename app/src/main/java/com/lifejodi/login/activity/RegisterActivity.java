@@ -8,12 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.facebook.FacebookSdk;
 import com.lifejodi.R;
+import com.lifejodi.login.adapter.CustomViewPagerAdapter;
 import com.lifejodi.login.fragments.RegScreen1Fragment;
 import com.lifejodi.login.fragments.RegScreen2Fragment;
 import com.lifejodi.login.fragments.RegScreen3Fragment;
 import com.lifejodi.login.fragments.RegScreen4Fragment;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
+import com.lifejodi.login.viewpagers.CustomViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,15 +28,18 @@ import butterknife.ButterKnife;
 public class RegisterActivity extends AppCompatActivity implements SetRegistrationFragment {
 
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    CustomViewPager viewPager;
+    CustomViewPagerAdapter customViewPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
 
-        viewPager.setAdapter(new CustomViewPagerAdapter(getSupportFragmentManager()));
+        customViewPagerAdapter = new CustomViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(customViewPagerAdapter);
     }
 
     @Override
@@ -42,34 +48,4 @@ public class RegisterActivity extends AppCompatActivity implements SetRegistrati
     }
 
 
-    public class CustomViewPagerAdapter extends FragmentPagerAdapter {
-
-        public CustomViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position)
-            {
-                case 0:
-                    return new RegScreen1Fragment();
-                case 1:
-                    return new RegScreen2Fragment();
-                case 2:
-                    return new RegScreen3Fragment();
-                case 3:
-                    return new RegScreen4Fragment();
-
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-
-    }
 }

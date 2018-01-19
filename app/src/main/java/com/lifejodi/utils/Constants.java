@@ -18,6 +18,16 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
+    public static String PROFILEFOR="profile_for";
+    public static String SAVEDEMAIL="saved_email";
+    public static String SAVEDPASSWORD="saved_password";
+    public static String SAVEDMOBILE="saved_mobile";
+    public static String LOGINSTATUS="login_status";
+    public static String FACEBOOKSIGNUP="fb_signup";
+    public static String FBNAME="fb_name";
+    public static String FBEMAIL="fb_email";
+    public static String FBGENDER="fb_gender";
+    public static String USERNAME="username";
 
     //GET RELIGION
     public static String URL_GET_RELIGION = "http://lifejodi.coinage.in/api/MasterData/GetReligion?ID=0";
@@ -28,9 +38,12 @@ public class Constants {
     public static  String TAG_GET_CAST = "get_casts";
 
     //GET MARITAL STATUS
-    public static String URL_GET_MARITALSTATUS = "http://lifejodi.coinage.in/api/MasterData/GetCasts?ID=0";
+    public static String URL_GET_MARITALSTATUS = "http://lifejodi.coinage.in/api/MasterData/GetMarritalStatus?ID=0";
     public static  String TAG_GET_MARITALSTATUS = "get_marital_status";
 
+    //USER REGISTRATION
+    public static String URL_REGISTER_USER = "http://lifejodi.coinage.in/api/UserAccount/RegisterWithDetails";
+    public static  String TAG_REGISTER_USER = "register_user";
 
 
     public static String[] PERMISSIONS = {

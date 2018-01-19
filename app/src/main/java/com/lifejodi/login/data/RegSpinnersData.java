@@ -9,11 +9,11 @@ import java.util.HashMap;
  * Created by Administrator on 12/18/2017.
  */
 
-public class RegisterData {
+public class RegSpinnersData {
 
-    private static RegisterData registerData = new RegisterData();
+    private static RegSpinnersData registerData = new RegSpinnersData();
 
-    public static RegisterData getInstance()
+    public static RegSpinnersData getInstance()
     {
         return registerData;
     }
@@ -25,8 +25,6 @@ public class RegisterData {
     //GET RELIGIONS
     public static String KEY_RELIGIONID = "ReligionID";
     public static String KEY_RELIGIONNAME = "Religion1";
-
-    public JSONObject regDataObject = new JSONObject();
 
     ArrayList<HashMap<String,String>> religionsList = new ArrayList<>();
     public ArrayList<HashMap<String, String>> getReligionsList() {
@@ -60,26 +58,6 @@ public class RegisterData {
     public void setMaritalStatusList(ArrayList<HashMap<String, String>> maritalStatusList) {
         this.maritalStatusList = maritalStatusList;
     }
-
-
-    //REGISTER USER
-    public static String KEY_USERNAME = "UserName";
-    public static String KEY_EMAIL = "Email";
-    public static String KEY_FIRSTNAME = "FirstName";
-    public static String KEY_LASTNAME = "LastName";
-    public static String KEY_MIDDLENAME = "MiddleName";
-    public static String KEY_GENDER = "Gender";
-    public static String KEY_DOB = "DOB";
-    public static String KEY_MARITALSTATUS = "MarritalStatusIDFK";
-    public static String KEY_HEIGHT = "Height";
-    public static String KEY_WEIGHT = "Weight";
-    public static String KEY_CONTACTNUMBER = "ContactNumber";
-    public static String KEY_RELIGION = "ReligionIDFK";
-    public static String KEY_CAST = "CastIDFK";
-    public static String KEY_PROFILEFOR = "ProfileForTypeIDFK";
-
-
-
 
 
 }

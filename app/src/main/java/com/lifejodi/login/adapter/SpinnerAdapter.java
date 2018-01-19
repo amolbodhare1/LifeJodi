@@ -50,7 +50,7 @@ public class SpinnerAdapter extends BaseAdapter {
 
         tv_spinner.setText(list.get(position));
         if (position == 0){
-            tv_spinner.setHintTextColor(context.getResources().getColor(R.color.hint_color));
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.light_gray));
         }else {
             tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
         }
@@ -67,7 +67,7 @@ public class SpinnerAdapter extends BaseAdapter {
         if(position==0)
         {
             tv_spinner_drop.setPadding(10,10, 0, 0);
-            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.hint_color));
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.light_gray));
             tv_spinner_drop.setTextSize(18);
 
         }

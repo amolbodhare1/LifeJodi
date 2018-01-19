@@ -3,7 +3,7 @@ package com.lifejodi.login.manager;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.lifejodi.login.data.RegisterData;
+import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
@@ -20,21 +20,21 @@ import java.util.HashMap;
  * Created by Administrator on 12/18/2017.
  */
 
-public class RegistrationManager implements VolleyResponse {
+public class RegSpinnersManager implements VolleyResponse {
     private String TAG = LoginManager.class.getSimpleName();
     private VolleyRequest mVolleyRequest;
     private VolleyCallbackInterface mVolleyCallbackInterface;
 
-    RegisterData registerData = RegisterData.getInstance();
+    RegSpinnersData registerData = RegSpinnersData.getInstance();
 
-    private static RegistrationManager registrationManager = new RegistrationManager();
+    private static RegSpinnersManager registrationManager = new RegSpinnersManager();
 
-    public static RegistrationManager getInstance()
+    public static RegSpinnersManager getInstance()
     {
         return registrationManager;
     }
 
-    public RegistrationManager()
+    public RegSpinnersManager()
     {
         mVolleyRequest = new VolleyRequest(this);
     }
@@ -91,11 +91,11 @@ public class RegistrationManager implements VolleyResponse {
             {
                 HashMap<String,String> dataMap = new HashMap<>();
                 JSONObject dataObject = jsonArray.getJSONObject(i);
-                dataMap.put(RegisterData.KEY_RELIGIONID,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_RELIGIONID,RegisterData.KEY_RELIGIONID));
-                dataMap.put(RegisterData.KEY_RELIGIONNAME,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_RELIGIONNAME,RegisterData.KEY_RELIGIONNAME));
-                dataMap.put(RegisterData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_ISACTIVE,RegisterData.KEY_ISACTIVE));
-                dataMap.put(RegisterData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDON,RegisterData.KEY_CREATEDON));
-                dataMap.put(RegisterData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDBY,RegisterData.KEY_CREATEDBY));
+                dataMap.put(RegSpinnersData.KEY_RELIGIONID,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_RELIGIONID, RegSpinnersData.KEY_RELIGIONID));
+                dataMap.put(RegSpinnersData.KEY_RELIGIONNAME,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_RELIGIONNAME, RegSpinnersData.KEY_RELIGIONNAME));
+                dataMap.put(RegSpinnersData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_ISACTIVE, RegSpinnersData.KEY_ISACTIVE));
+                dataMap.put(RegSpinnersData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDON, RegSpinnersData.KEY_CREATEDON));
+                dataMap.put(RegSpinnersData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDBY, RegSpinnersData.KEY_CREATEDBY));
                 dataList.add(dataMap);
 
             }
@@ -117,11 +117,11 @@ public class RegistrationManager implements VolleyResponse {
             {
                 HashMap<String,String> dataMap = new HashMap<>();
                 JSONObject dataObject = jsonArray.getJSONObject(i);
-                dataMap.put(RegisterData.KEY_CASTID,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CASTID,RegisterData.KEY_CASTID));
-                dataMap.put(RegisterData.KEY_CASTNAME,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CASTNAME,RegisterData.KEY_CASTNAME));
-                dataMap.put(RegisterData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_ISACTIVE,RegisterData.KEY_ISACTIVE));
-                dataMap.put(RegisterData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDON,RegisterData.KEY_CREATEDON));
-                dataMap.put(RegisterData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDBY,RegisterData.KEY_CREATEDBY));
+                dataMap.put(RegSpinnersData.KEY_CASTID,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CASTID, RegSpinnersData.KEY_CASTID));
+                dataMap.put(RegSpinnersData.KEY_CASTNAME,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CASTNAME, RegSpinnersData.KEY_CASTNAME));
+                dataMap.put(RegSpinnersData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_ISACTIVE, RegSpinnersData.KEY_ISACTIVE));
+                dataMap.put(RegSpinnersData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDON, RegSpinnersData.KEY_CREATEDON));
+                dataMap.put(RegSpinnersData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDBY, RegSpinnersData.KEY_CREATEDBY));
                 dataList.add(dataMap);
 
             }
@@ -143,11 +143,11 @@ public class RegistrationManager implements VolleyResponse {
             {
                 HashMap<String,String> dataMap = new HashMap<>();
                 JSONObject dataObject = jsonArray.getJSONObject(i);
-                dataMap.put(RegisterData.KEY_MARITALSTATUSID,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_MARITALSTATUSID,RegisterData.KEY_MARITALSTATUSID));
-                dataMap.put(RegisterData.KEY_MARITALSTATUSNAME,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_MARITALSTATUSNAME,RegisterData.KEY_MARITALSTATUSNAME));
-                dataMap.put(RegisterData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_ISACTIVE,RegisterData.KEY_ISACTIVE));
-                dataMap.put(RegisterData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDON,RegisterData.KEY_CREATEDON));
-                dataMap.put(RegisterData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject,RegisterData.KEY_CREATEDBY,RegisterData.KEY_CREATEDBY));
+                dataMap.put(RegSpinnersData.KEY_MARITALSTATUSID,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_MARITALSTATUSID, RegSpinnersData.KEY_MARITALSTATUSID));
+                dataMap.put(RegSpinnersData.KEY_MARITALSTATUSNAME,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_MARITALSTATUSNAME, RegSpinnersData.KEY_MARITALSTATUSNAME));
+                dataMap.put(RegSpinnersData.KEY_ISACTIVE,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_ISACTIVE, RegSpinnersData.KEY_ISACTIVE));
+                dataMap.put(RegSpinnersData.KEY_CREATEDON,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDON, RegSpinnersData.KEY_CREATEDON));
+                dataMap.put(RegSpinnersData.KEY_CREATEDBY,Constants.getStringValueOfJsonObject(dataObject, RegSpinnersData.KEY_CREATEDBY, RegSpinnersData.KEY_CREATEDBY));
                 dataList.add(dataMap);
 
             }
