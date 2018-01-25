@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.home.activity.HomeActivity;
+import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
 
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     String userEmail="",userMobile="",userPassword="",enteredEmail="",enteredPassword="";
+    AppController appController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,12 @@ public class LoginActivity extends AppCompatActivity {
     public void initialization()
     {
         sharedPreference.initialize(this);
+        appController = AppController.getInstance();
+        appController.initialize(this);
+        if(!appController.hasPermissions(Constants.PERMISSIONS))
+        {
+            appController.requestPermission(Constants.PERMISSIONS);
+        }
     }
 
     @OnClick({R.id.text_forgot_password, R.id.button_login, R.id.text_login_via_otp, R.id.layout_fb_login, R.id.text_sign_up})
@@ -72,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 checkLoginCredentials();
                 break;
             case R.id.text_login_via_otp:
+                Intent intentOTP = new Intent(LoginActivity.this,LoginViaOTPActivity.class);
+                startActivity(intentOTP);
                 break;
             case R.id.layout_fb_login:
                 break;

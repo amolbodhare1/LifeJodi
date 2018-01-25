@@ -34,6 +34,7 @@ public class RegSpinnersData {
     public void setReligionsList(ArrayList<HashMap<String, String>> religionsList) {
         this.religionsList = religionsList;
     }
+
     //GET CATSTS
     public static String KEY_CASTID = "CastID";
     public static String KEY_CASTNAME = "Cast";
@@ -44,6 +45,59 @@ public class RegSpinnersData {
 
     public void setCastsList(ArrayList<HashMap<String, String>> castsList) {
         this.castsList = castsList;
+    }
+
+    //GET MOTHERTONGUE
+    ArrayList<HashMap<String,String>> motherTongueList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getMotherTongueList() {
+        return motherTongueList;
+    }
+
+    public void setMotherTongueList(ArrayList<HashMap<String, String>> motherTongueList) {
+        this.motherTongueList = motherTongueList;
+    }
+
+    //GET HEIGHT
+    ArrayList<HashMap<String,String>> heightList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getHeightList() {
+        return heightList;
+    }
+
+    public void setHeightList(ArrayList<HashMap<String, String>> heightList) {
+        this.heightList = heightList;
+    }
+
+
+
+    //GET EDUCATION
+    ArrayList<HashMap<String,String>> educationList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getEducationList() {
+        return educationList;
+    }
+
+    public void setEducationList(ArrayList<HashMap<String, String>> educationList) {
+        this.educationList = educationList;
+    }
+
+    //GET OCCUPATION
+    ArrayList<HashMap<String,String>> occupationList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getOccupationList() {
+        return occupationList;
+    }
+
+    public void setOccupationList(ArrayList<HashMap<String, String>> occupationList) {
+        this.occupationList = occupationList;
+    }
+
+
+    //GET CURRENCY
+    ArrayList<HashMap<String,String>> currencyList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getCurrencyList() {
+        return currencyList;
+    }
+
+    public void setCurrencyList(ArrayList<HashMap<String, String>> currencyList) {
+        this.currencyList = currencyList;
     }
 
     //GET

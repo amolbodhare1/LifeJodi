@@ -123,7 +123,7 @@
         android:textSize="15dp"
         android:textStyle="bold"/>
 
-    <Spinner
+    <!--<Spinner
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:id="@+id/spinner_current_location"
@@ -135,12 +135,20 @@
         android:textColor="@color/dark_grey"
         android:spinnerMode="dialog"
         app:backgroundTint="@color/bottomline_color"
-        style="@style/Widget.AppCompat.Spinner.Underlined"/>
-
+        style="@style/Widget.AppCompat.Spinner.Underlined"/>-->
+        <com.lifejodi.utils.customfonts.CustomTextBeatles
+            android:id="@+id/text_get_current_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get my current location"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:textColor="@color/pink"
+            android:textSize="16dp"/>
     <com.lifejodi.utils.customfonts.CustomButtonBeatles
         android:layout_gravity="center"
         android:id="@+id/button_continue"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_width="280dp"
         android:layout_height="40dp"
         android:text="Continue"

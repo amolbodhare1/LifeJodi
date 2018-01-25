@@ -3,6 +3,8 @@
     package="com.lifejodi">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -18,18 +20,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.activity.LoginActivity" />
-        <activity android:name=".login.activity.RegisterActivity" />
-        <activity android:name=".home.activity.HomeActivity" />
-        <activity android:name=".login.activity.ForgotPasswordActivity"/>
-        <activity android:name=".InboxActivity"/>
-        <activity android:name=".NotificationActivity"/>
-        <activity android:name=".event.activity.EventsActivity"/>
-        <activity android:name=".event.activity.EventRegistrationActivity"/>
-        <activity android:name=".PaymentActivity"/>
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".VideoCallActivity"/>
-        <activity android:name=".SearchActivity"/>
+        <activity android:name=".login.activity.LoginActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".login.activity.RegisterActivity" android:screenOrientation="portrait" />
+        <activity android:name=".home.activity.HomeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".login.activity.ForgotPasswordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".InboxActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".NotificationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".event.activity.EventsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".event.activity.EventRegistrationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".PaymentActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ProfileActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".VideoCallActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".login.activity.LoginViaOTPActivity" android:screenOrientation="portrait"/>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>

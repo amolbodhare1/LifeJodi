@@ -43,7 +43,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:background="@null"
-                    android:hint="Matri Id/email/mobile no."
+                    android:hint="LifeJodi Id/email/mobile no."
                     android:inputType="text"
                     android:textColor="@color/dark_grey"
                     android:textColorHint="@color/colorPrimary"

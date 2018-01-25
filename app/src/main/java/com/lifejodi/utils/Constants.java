@@ -18,6 +18,13 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
+    public static String[] PERMISSIONSSTORAGE = {Manifest.permission.ACCESS_FINE_LOCATION};
+
+    //sharedPref KEYS
+    public static String LATITUDE="latitude";
+    public static String LONGITUDE="longitude";
+
+
     public static String PROFILEFOR="profile_for";
     public static String SAVEDEMAIL="saved_email";
     public static String SAVEDPASSWORD="saved_password";

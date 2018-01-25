@@ -14,9 +14,9 @@
 
     <style name="MyEditTextTheme">
 
-        <item name="colorControlNormal">@color/bottomline_color</item>
-        <item name="colorControlActivated">@color/bottomline_color</item>
-        <item name="colorControlHighlight">@color/bottomline_color</item>
+        <item name="colorControlNormal">@color/line_color</item>
+        <item name="colorControlActivated">@color/line_color</item>
+        <item name="colorControlHighlight">@color/line_color</item>
 
     </style>
     <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">

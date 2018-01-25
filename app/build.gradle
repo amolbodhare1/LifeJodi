@@ -9,6 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -37,4 +38,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.wdullaer:materialdatetimepicker:3.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.google.android.gms:play-services:11.8.0'
 }

@@ -1,5 +1,7 @@
 package com.lifejodi.login.fragments;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,13 +25,16 @@ import com.lifejodi.login.interfaces.SetRegistrationFragment;
 import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
+import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,14 +54,14 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     Spinner spinnerDosham;
     @BindView(R.id.radiogroup_other_communities)
     RadioGroup radiogroupOtherCommunities;
-    @BindView(R.id.spinner_current_location)
-    Spinner spinnerCurrentLocation;
     @BindView(R.id.button_continue)
     CustomButtonBeatles buttonContinue;
     RadioButton radioButton;
     Unbinder unbinder;
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
+    @BindView(R.id.text_get_current_location)
+    CustomTextBeatles textGetCurrentLocation;
 
     private boolean fragmentResume = false;
     private boolean fragmentVisible = false;
@@ -66,7 +71,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     ArrayList<HashMap<String, String>> casteList = new ArrayList<>();
     List<String> doshamList = new ArrayList<>();
     List<String> livingCountryList = new ArrayList<>();
-    String maritalStatus="", dosham="", country="", cast="", willingtoMarryOtherCommunities="";
+    String maritalStatus = "", dosham = "", country = "", cast = "", willingtoMarryOtherCommunities = "";
 
     RegSpinnersData registerData = RegSpinnersData.getInstance();
     RegSpinnersManager registrationManager = RegSpinnersManager.getInstance();
@@ -75,6 +80,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     SpinnerAdapter spinnerAdapter;
     CustomSpinnerAdapter customSpinnerAdapter;
     View view;
+    SharedPreference sharedPreference;
 
     @Nullable
     @Override
@@ -117,13 +123,15 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     }
 
     public void initialization() {
+        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference.initialize(getActivity());
         doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
         spinnerAdapter = new SpinnerAdapter(getActivity(), doshamList);
         spinnerDosham.setAdapter(spinnerAdapter);
 
-        livingCountryList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryLivingInArray);
+        /*livingCountryList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryLivingInArray);
         spinnerAdapter = new SpinnerAdapter(getActivity(), livingCountryList);
-        spinnerCurrentLocation.setAdapter(spinnerAdapter);
+        spinnerCurrentLocation.setAdapter(spinnerAdapter);*/
 
         setListeners();
 
@@ -142,7 +150,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
             }
         });
 
-        spinnerCurrentLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  spinnerCurrentLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 country = livingCountryList.get(i);
@@ -152,7 +160,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
+        });*/
 
         radiogroupOtherCommunities.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -166,6 +174,13 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
             @Override
             public void onClick(View view) {
                 checkAllFields();
+            }
+        });
+
+        textGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setLocation();
             }
         });
     }
@@ -258,6 +273,36 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void setLocation()
+    {
+        String latitude = sharedPreference.getSharedPrefData(Constants.LATITUDE);
+        String longitude = sharedPreference.getSharedPrefData(Constants.LONGITUDE);
+        if(latitude!="" && longitude!="")
+        {
+            double lats = Double.valueOf(latitude);
+            double longis = Double.valueOf(longitude);
+            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+            List<Address> addresses;
+            try {
+                addresses = gcd.getFromLocation(lats, longis, 1);
+                if (addresses.size() > 0) {
+                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    String locality = addresses.get(0).getLocality();
+                    String subLocality = addresses.get(0).getSubLocality();
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    String postalCode = addresses.get(0).getPostalCode();
+                    String knownName = addresses.get(0).getFeatureName();
+                    textGetCurrentLocation.setText(locality+","+state+","+country);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "Error fetching location", Toast.LENGTH_SHORT).show();
             }
         }
     }
