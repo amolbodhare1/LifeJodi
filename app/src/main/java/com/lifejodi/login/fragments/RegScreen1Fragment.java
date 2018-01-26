@@ -283,7 +283,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
     public void checkAllFields() {
         name = editName.getText().toString();
         dob = textDob.getText().toString();
-        if (profileFor.equalsIgnoreCase("") || profileFor.equalsIgnoreCase("-1")) {
+        if (profileFor.equalsIgnoreCase("") || profileFor.equalsIgnoreCase(getResources().getString(R.string.profile_for))) {
             Toast.makeText(getActivity(), "Select profile created for", Toast.LENGTH_SHORT).show();
         } else {
             if (name.equalsIgnoreCase("")) {
@@ -297,13 +297,10 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
                     } else {
                         try {
                             sharedPreference.putSharedPrefData(Constants.USERNAME,name);
-                            userRegData.regDataObject.put(userRegData.KEY_USERNAME, name);
-                            userRegData.regDataObject.put(userRegData.KEY_FIRSTNAME, name);
-                            userRegData.regDataObject.put(userRegData.KEY_LASTNAME, " ");
-                            userRegData.regDataObject.put(userRegData.KEY_MIDDLENAME, " ");
-                            userRegData.regDataObject.put(userRegData.KEY_GENDER, gender);
-                            userRegData.regDataObject.put(userRegData.KEY_DOB, dob);
-                            userRegData.regDataObject.put(userRegData.KEY_PROFILEFOR, profileFor);
+                            userRegData.regDataObject.put(userRegData.PROFILEFOR, profileFor);
+                            userRegData.regDataObject.put(userRegData.NAME, name);
+                            userRegData.regDataObject.put(userRegData.GENDER,gender);
+                            userRegData.regDataObject.put(userRegData.DOB, dob);
                             setRegistrationFragment = (SetRegistrationFragment) getActivity();
                             setRegistrationFragment.setRegFragment(1);
 

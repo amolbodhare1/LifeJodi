@@ -80,7 +80,6 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
     ArrayList<HashMap<String, String>> countriesList = new ArrayList<>();
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -141,30 +140,6 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
     }
 
     public void setListeners() {
-        spinnerDosham.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-      /*  spinnerCurrentLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                country = livingCountryList.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });*/
-
         radiogroupOtherCommunities.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -196,10 +171,10 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
 
 
     public void checkAllFields() {
-       /* if (maritalStatus.equalsIgnoreCase("") || maritalStatus.equalsIgnoreCase("0")) {
+        if (maritalStatus.equalsIgnoreCase("") || maritalStatus.equalsIgnoreCase(getResources().getString(R.string.select_marital_status))) {
             Toast.makeText(getActivity(), "Select marital status", Toast.LENGTH_SHORT).show();
         } else {
-            if (cast.equals("") || cast.equalsIgnoreCase("0")) {
+            if (cast.equals("") || cast.equalsIgnoreCase(getResources().getString(R.string.select_cast))) {
                 Toast.makeText(getActivity(), "Select cast", Toast.LENGTH_SHORT).show();
             } else {
                 if (dosham.equalsIgnoreCase("") || dosham.equalsIgnoreCase("Dosham")) {
@@ -208,12 +183,15 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
                     if (willingtoMarryOtherCommunities.equalsIgnoreCase("")) {
                         Toast.makeText(getActivity(), "Select if willing to marry from other communities or not", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (country.equalsIgnoreCase("") || country.equalsIgnoreCase("Country living in")) {
+                        if (country.equalsIgnoreCase("") || country.equalsIgnoreCase(getResources().getString(R.string.select_country))) {
                             Toast.makeText(getActivity(), "Select country", Toast.LENGTH_SHORT).show();
                         } else {
                             try {
-                                userRegData.regDataObject.put(userRegData.KEY_MARITALSTATUS, maritalStatus);
-                                userRegData.regDataObject.put(userRegData.KEY_CAST, cast);
+                                userRegData.regDataObject.put(userRegData.MARITALSTATUS, maritalStatus);
+                                userRegData.regDataObject.put(userRegData.CASTE, cast);
+                                userRegData.regDataObject.put(userRegData.DOSHAM, dosham);
+                                userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, willingtoMarryOtherCommunities);
+                                userRegData.regDataObject.put(userRegData.COUNTRY, country);
                                 setRegistrationFragment = (SetRegistrationFragment) getActivity();
                                 setRegistrationFragment.setRegFragment(3);
                             } catch (JSONException e) {
@@ -224,16 +202,8 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
                     }
                 }
             }
-        }*/
-
-        try {
-            userRegData.regDataObject.put(userRegData.KEY_MARITALSTATUS, maritalStatus);
-            userRegData.regDataObject.put(userRegData.KEY_CAST, cast);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-        setRegistrationFragment = (SetRegistrationFragment) getActivity();
-        setRegistrationFragment.setRegFragment(3);
+
     }
 
     public void setLocation() {

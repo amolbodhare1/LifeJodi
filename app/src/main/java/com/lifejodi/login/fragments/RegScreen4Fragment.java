@@ -83,6 +83,7 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
     ArrayList<HashMap<String,String>> currencyList = new ArrayList<>();
     ArrayList<HashMap<String,String>> familyStatusList = new ArrayList<>();
     ArrayList<HashMap<String,String>> familyValuesList = new ArrayList<>();
+    ArrayList<String> heightList = new ArrayList<>();
     List<String> employedInList = new ArrayList<>();
     String height = "", physicalStatus = "", education = "", occupation = "", employedIn = "", currency = "", annualIncome = "", familyStatus = "";
     String familyType = "", familyValues = "", aboutFriend = "",profile="";
@@ -149,6 +150,10 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(),employedInList);
         spinnerEmployedIn.setAdapter(spinnerAdapter);
 
+        heightList = regSpinnersData.getHeightList();
+        SpinnerAdapter spinnerAdapter1 = new SpinnerAdapter(getActivity(),heightList);
+        spinnerHeight.setAdapter(spinnerAdapter1);
+
 
 
 
@@ -197,7 +202,7 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
         Spinner spinner = (Spinner) adapterView;
         switch (spinner.getId()) {
             case R.id.spinner_height:
-             //   height = heightList.get(pos);
+                height = heightList.get(pos);
                 break;
             case R.id.spinner_physical_status:
                 physicalStatus = physicalStatusList.get(pos).get(regSpinnersData.VALUE);
@@ -231,22 +236,22 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
     public void checkAllFields() {
         annualIncome = editAnnualIncome.getText().toString();
         aboutFriend = editAboutFriend.getText().toString();
-        if (height.equalsIgnoreCase("") || height.equalsIgnoreCase("Height")) {
+        if (height.equalsIgnoreCase("") || height.equalsIgnoreCase(getResources().getString(R.string.select_height))) {
             Toast.makeText(getActivity(), "Select height", Toast.LENGTH_SHORT).show();
         } else {
-            if (physicalStatus.equals("") || physicalStatus.equalsIgnoreCase("Physical status")) {
+            if (physicalStatus.equals("") || physicalStatus.equalsIgnoreCase(getResources().getString(R.string.select_physicalstatus))) {
                 Toast.makeText(getActivity(), "Select physical status", Toast.LENGTH_SHORT).show();
             } else {
-                if (education.equals("") || education.equalsIgnoreCase("Education")) {
+                if (education.equals("") || education.equalsIgnoreCase(getResources().getString(R.string.select_education))) {
                     Toast.makeText(getActivity(), "Select education", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (occupation.equals("") || occupation.equalsIgnoreCase("Occupation")) {
+                    if (occupation.equals("") || occupation.equalsIgnoreCase(getResources().getString(R.string.select_occupation))) {
                         Toast.makeText(getActivity(), "Select occupation", Toast.LENGTH_SHORT).show();
                     } else {
                         if (employedIn.equals("") || employedIn.equalsIgnoreCase("Employed in")) {
                             Toast.makeText(getActivity(), "Select employed in", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (currency.equals("") || currency.equalsIgnoreCase("Currency")) {
+                            if (currency.equals("") || currency.equalsIgnoreCase(getResources().getString(R.string.select_currency))) {
                                 Toast.makeText(getActivity(), "Select currency", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (annualIncome.equalsIgnoreCase("")) {
@@ -265,8 +270,8 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                                                     Toast.makeText(getActivity(), "Enter about your friend", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     try {
-                                                        userRegData.regDataObject.put(userRegData.KEY_HEIGHT, height);
-                                                        userRegData.regDataObject.put(userRegData.KEY_WEIGHT, " ");
+                                                        userRegData.regDataObject.put(userRegData.HEIGHT, height);
+                                                      //  userRegData.regDataObject.put(userRegData.KEY_WEIGHT, " ");
                                                         userRegManager.initialize(this, getActivity());
                                                         progressLayout.setVisibility(View.VISIBLE);
                                                         userRegManager.registerUser(userRegData.regDataObject);

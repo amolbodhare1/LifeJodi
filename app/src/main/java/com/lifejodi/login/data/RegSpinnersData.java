@@ -112,16 +112,17 @@ public class RegSpinnersData {
         this.motherTongueList = motherTongueList;
     }
 
+
+
     //GET HEIGHT
-    ArrayList<HashMap<String,String>> heightList = new ArrayList<>();
-    public ArrayList<HashMap<String, String>> getHeightList() {
+    ArrayList<String> heightList = new ArrayList<>();
+    public ArrayList<String> getHeightList() {
         return heightList;
     }
 
-    public void setHeightList(ArrayList<HashMap<String, String>> heightList) {
+    public void setHeightList(ArrayList<String> heightList) {
         this.heightList = heightList;
     }
-
 
 
     //GET EDUCATION

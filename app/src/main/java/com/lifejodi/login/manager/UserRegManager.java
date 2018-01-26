@@ -3,6 +3,7 @@ package com.lifejodi.login.manager;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
@@ -35,9 +36,25 @@ public class UserRegManager implements VolleyResponse {
         mVolleyRequest.setContext(mContext);
     }
 
+    public JSONObject regUserInputParams(String deviceId,JSONObject userData)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(RegSpinnersData.API,"register");
+            jsonObject.put(RegSpinnersData.VERSION,"1.0");
+            jsonObject.put(RegSpinnersData.DEVICEID,deviceId);
+            jsonObject.put(RegSpinnersData.DATA,userData);
+
+            return jsonObject;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
     public void registerUser(JSONObject dataObject)
     {
-      //  mVolleyRequest.volleyJsonRequest(Request.Method.POST,Constants.URL_REGISTER_USER,Constants.TAG_REGISTER_USER,dataObject);
+      mVolleyRequest.volleyJsonRequest(Request.Method.POST,Constants.URL_REGISTER_USER,Constants.TAG_REGISTER_USER,dataObject);
     }
     @Override
     public void getResponse(JSONObject jsonObject, String tag) throws JSONException {
@@ -46,10 +63,12 @@ public class UserRegManager implements VolleyResponse {
 
     @Override
     public void getResponse(String strResponse, String tag) {
-       /*if(tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER))
+       switch (tag)
        {
-           parseRegisterUserResponse(strResponse,tag);
-       }*/
+           case Constants.TAG_REGISTER_USER:
+               parseRegisterUserResponse(strResponse,tag);
+               break;
+       }
     }
 
     @Override
@@ -62,11 +81,11 @@ public class UserRegManager implements VolleyResponse {
         String status;
         try {
             JSONObject jsonObject = new JSONObject(strResponse);
-            if(jsonObject.has(UserRegData.KEY_STATUSMESSAGE))
+            if(jsonObject.has(UserRegData.MESSAGE))
             {
-                status = Constants.getStringValueOfJsonObject(jsonObject,UserRegData.KEY_STATUSMESSAGE,UserRegData.KEY_STATUSMESSAGE);
+                status = Constants.getStringValueOfJsonObject(jsonObject,UserRegData.MESSAGE,UserRegData.MESSAGE);
                 UserRegData.getInstance().setRegStatus(status);
-                mVolleyCallbackInterface.successCallBack("success",tag);
+                mVolleyCallbackInterface.successCallBack(status,tag);
             }
         }catch (Exception e) {
             mVolleyCallbackInterface.errorCallBack("error",tag);

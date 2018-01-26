@@ -328,6 +328,15 @@ public class RegSpinnersManager implements VolleyResponse {
 
             }
 
+            if(jsonObject.has(RegSpinnersData.HEIGHT))
+            {
+                JSONArray heightArray = jsonObject.getJSONArray(RegSpinnersData.HEIGHT);
+                for(int i=0;i<heightArray.length();i++)
+                {
+                    heightList.add(heightArray.getString(i));
+                }
+                RegSpinnersData.getInstance().setHeightList(heightList);
+            }
             mVolleyCallbackInterface.successCallBack("success",tag);
         } catch (JSONException e) {
             e.printStackTrace();

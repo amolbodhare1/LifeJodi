@@ -42,7 +42,7 @@ import butterknife.Unbinder;
  * Created by Ajay on 11-11-2017.
  */
 
-public class RegScreen2Fragment extends Fragment {
+public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
 
     @BindView(R.id.spinner_religion)
@@ -106,7 +106,7 @@ public class RegScreen2Fragment extends Fragment {
         spinnerMotherToungue.setAdapter(customSpinnerAdapter);
         customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),countryCodesList,regSpinnersData.COUNTRYCODE);
         spinnerCode.setAdapter(customSpinnerAdapter);
-        setListeners();
+
     }
 
     @Override
@@ -139,46 +139,6 @@ public class RegScreen2Fragment extends Fragment {
         }
     }
 
-    public void setListeners() {
-        spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                countryCode = countryCodesList.get(i).get(regSpinnersData.COUNTRYCODE);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        spinnerMotherToungue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                motherTongue = motherToungueList.get(i).get(regSpinnersData.NAME);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        spinnerReligion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                religion = religionsList.get(i).get(regSpinnersData.NAME);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -189,7 +149,7 @@ public class RegScreen2Fragment extends Fragment {
         mobileNumber = editMobileNo.getText().toString();
         email = editEmail.getText().toString();
         password = editPassword.getText().toString();
-        if (religion.equalsIgnoreCase("") || religion.equalsIgnoreCase("0")) {
+        if (religion.equalsIgnoreCase("") || religion.equalsIgnoreCase(getResources().getString(R.string.select_religion))) {
             Toast.makeText(getActivity(), "Select religion", Toast.LENGTH_SHORT).show();
         } else {
             if (motherTongue.equalsIgnoreCase("") || motherTongue.equalsIgnoreCase(getActivity().getResources().getString(R.string.select_mother_tongue))) {
@@ -211,9 +171,14 @@ public class RegScreen2Fragment extends Fragment {
                                     sharedPreference.putSharedPrefData(Constants.SAVEDEMAIL,email);
                                     sharedPreference.putSharedPrefData(Constants.SAVEDPASSWORD,password);
                                     sharedPreference.putSharedPrefData(Constants.SAVEDMOBILE,mobileNumber);
-                                    userRegData.regDataObject.put(userRegData.KEY_EMAIL, email);
-                                    userRegData.regDataObject.put(userRegData.KEY_CONTACTNUMBER, mobileNumber);
-                                    userRegData.regDataObject.put(userRegData.KEY_RELIGION, religion);
+
+                                    userRegData.regDataObject.put(userRegData.RELIGION, religion);
+                                    userRegData.regDataObject.put(userRegData.MOTHERTONGUE, motherTongue);
+                                    userRegData.regDataObject.put(userRegData.COUNTRYCODE, countryCode);
+                                    userRegData.regDataObject.put(userRegData.PHONENUMBER, mobileNumber);
+                                    userRegData.regDataObject.put(userRegData.EMAIL, email);
+                                    userRegData.regDataObject.put(userRegData.PASSWORD, password);
+
                                     setRegistrationFragment = (SetRegistrationFragment) getActivity();
                                     setRegistrationFragment.setRegFragment(2);
                                 } catch (JSONException e) {
@@ -225,5 +190,26 @@ public class RegScreen2Fragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+        Spinner spinner = (Spinner) adapterView;
+        switch (spinner.getId()) {
+            case R.id.spinner_religion:
+                 religion = religionsList.get(pos).get(regSpinnersData.NAME);
+                break;
+            case R.id.spinner_mother_toungue:
+                 motherTongue = motherToungueList.get(pos).get(regSpinnersData.NAME);
+                break;
+            case R.id.spinner_code:
+                 countryCode = countryCodesList.get(pos).get(regSpinnersData.COUNTRYCODE);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

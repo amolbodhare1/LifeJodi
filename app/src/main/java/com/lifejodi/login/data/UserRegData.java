@@ -17,23 +17,50 @@ public class UserRegData {
 
     public JSONObject regDataObject = new JSONObject();
     //REGISTER USER
-    public static String KEY_USERNAME = "UserName";
-    public static String KEY_EMAIL = "Email";
-    public static String KEY_FIRSTNAME = "FirstName";
-    public static String KEY_LASTNAME = "LastName";
-    public static String KEY_MIDDLENAME = "MiddleName";
-    public static String KEY_GENDER = "Gender";
-    public static String KEY_DOB = "DOB";
-    public static String KEY_MARITALSTATUS = "MarritalStatusIDFK";
-    public static String KEY_HEIGHT = "Height";
-    public static String KEY_WEIGHT = "Weight";
-    public static String KEY_CONTACTNUMBER = "ContactNumber";
-    public static String KEY_RELIGION = "ReligionIDFK";
-    public static String KEY_CAST = "CastIDFK";
-    public static String KEY_PROFILEFOR = "ProfileForTypeIDFK";
+    public static String API = "api";
+    public static String DEVICEID = "device";
+    public static String VERSION = "version";
+    public static String DATA = "data";
 
-    public static String KEY_STATUSMESSAGE = "StatusMessage";
-    public static String KEY_STATUSCODE = "StatusCode";
+    public static String STATUS = "status";
+    public static String MESSAGE = "msg";
+
+    public static String PROFILEFOR = "profile_for";
+    public static String NAME = "name";
+    public static String GENDER = "gender";
+    public static String DOB = "dob";
+    public static String RELIGION = "religion";
+    public static String MOTHERTONGUE = "mother_tongue";
+    public static String COUNTRYCODE = "country_code";
+    public static String PHONENUMBER = "ph_number";
+    public static String EMAIL = "email";
+    public static String PASSWORD = "password";
+    public static String MARITALSTATUS = "marital_status";
+    public static String CASTE = "caste";
+    public static String DOSHAM = "dosham";
+    public static String MARRYOTHERCASTE = "marry_other_caste";
+    public static String HEIGHT = "height";
+    public static String PHYSICALSTATUS = "physical_status";
+    public static String EDUCATION = "edulevel_id";
+    public static String OCCUPATION = "occupation_id";
+    public static String EMPLOYEDIN = "employed_in";
+    public static String CURRENCY = "currency_id";
+    public static String ANNUALINCOME = "annual_income";
+    public static String FAMILYSTATUS = "family_status";
+    public static String FAMILYTYPE = "family_type";
+    public static String FAMILYVALUES = "family_values";
+    public static String ABOUT = "about";
+    public static String LATITUDE = "lat";
+    public static String LONGITUDE = "lng";
+    public static String LOCALITY = "locality";
+    public static String SUBLOCALITY = "sublocality";
+    public static String ADMINISTRATIVEAREA = "administrative_area_level_1";
+    public static String COUNTRY = "country";
+    public static String PINCODE = "pincode";
+    public static String FORMATTEDADDRESS = "formatted_address";
+
+
+
 
     String regStatus;
     public String getRegStatus() {

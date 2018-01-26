@@ -44,7 +44,12 @@ public class Constants {
 
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
-    public static String TAG_GET_MASTERS = "get_masters";
+    public static final String TAG_GET_MASTERS = "get_masters";
+
+    //REGISTER USER
+    public static String URL_REGISTER_USER = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_REGISTER_USER = "register_user";
+
 
 
     public static Map<String, String> getHeader() throws AuthFailureError {
