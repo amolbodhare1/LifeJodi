@@ -1,6 +1,9 @@
 package com.lifejodi.utils;
 
 import android.Manifest;
+import android.util.Base64;
+
+import com.android.volley.AuthFailureError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,7 +11,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +23,12 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-    public static String[] PERMISSIONSSTORAGE = {Manifest.permission.ACCESS_FINE_LOCATION};
+    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE};
 
     //sharedPref KEYS
     public static String LATITUDE="latitude";
     public static String LONGITUDE="longitude";
+    public static String REGSTATUS="registration_status";
 
 
     public static String PROFILEFOR="profile_for";
@@ -36,26 +42,20 @@ public class Constants {
     public static String FBGENDER="fb_gender";
     public static String USERNAME="username";
 
-    //GET RELIGION
-    public static String URL_GET_RELIGION = "http://lifejodi.coinage.in/api/MasterData/GetReligion?ID=0";
-    public static String TAG_GET_RELIGION = "get_religion";
-
-    //GET CATSTS
-    public static String URL_GET_CAST = "http://lifejodi.coinage.in/api/MasterData/GetCasts?ID=0";
-    public static  String TAG_GET_CAST = "get_casts";
-
-    //GET MARITAL STATUS
-    public static String URL_GET_MARITALSTATUS = "http://lifejodi.coinage.in/api/MasterData/GetMarritalStatus?ID=0";
-    public static  String TAG_GET_MARITALSTATUS = "get_marital_status";
-
-    //USER REGISTRATION
-    public static String URL_REGISTER_USER = "http://lifejodi.coinage.in/api/UserAccount/RegisterWithDetails";
-    public static  String TAG_REGISTER_USER = "register_user";
+    //GET MASTERS DATA
+    public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String TAG_GET_MASTERS = "get_masters";
 
 
-    public static String[] PERMISSIONS = {
-                            /*Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN*/};
-
+    public static Map<String, String> getHeader() throws AuthFailureError {
+        Map<String,String> headers = new HashMap<>();
+        String credentials = "admin:1234";
+        String auth = "Basic "
+                + Base64.encodeToString(credentials.getBytes(), Base64.DEFAULT);
+        headers.put("Authorization", auth);
+        headers.put("x-api-key", "123456");
+        return headers;
+    }
     public static JSONArray getArrayValueFromJsonObject(JSONObject jsonObject, String key) {
         try {
             if (jsonObject.has(key)) {

@@ -37,7 +37,7 @@ public class UserRegManager implements VolleyResponse {
 
     public void registerUser(JSONObject dataObject)
     {
-        mVolleyRequest.volleyJsonRequest(Request.Method.POST,Constants.URL_REGISTER_USER,Constants.TAG_REGISTER_USER,dataObject);
+      //  mVolleyRequest.volleyJsonRequest(Request.Method.POST,Constants.URL_REGISTER_USER,Constants.TAG_REGISTER_USER,dataObject);
     }
     @Override
     public void getResponse(JSONObject jsonObject, String tag) throws JSONException {
@@ -46,10 +46,10 @@ public class UserRegManager implements VolleyResponse {
 
     @Override
     public void getResponse(String strResponse, String tag) {
-       if(tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER))
+       /*if(tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER))
        {
            parseRegisterUserResponse(strResponse,tag);
-       }
+       }*/
     }
 
     @Override

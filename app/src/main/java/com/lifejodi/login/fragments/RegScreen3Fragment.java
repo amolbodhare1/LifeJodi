@@ -22,8 +22,6 @@ import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.login.data.RegSpinnersStaticData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
-import com.lifejodi.login.manager.RegSpinnersManager;
-import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
@@ -44,7 +42,7 @@ import butterknife.Unbinder;
  * Created by Ajay on 07-12-2017.
  */
 
-public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterface {
+public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     @BindView(R.id.spinner_marital_status)
     Spinner spinnerMaritalStatus;
@@ -60,27 +58,28 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     Unbinder unbinder;
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
-    @BindView(R.id.text_get_current_location)
-    CustomTextBeatles textGetCurrentLocation;
+    @BindView(R.id.spinner_current_location)
+    Spinner spinnerCurrentLocation;
 
     private boolean fragmentResume = false;
     private boolean fragmentVisible = false;
     private boolean fragmentOnCreated = false;
 
+    String maritalStatus = "", dosham = "", country = "", cast = "", willingtoMarryOtherCommunities = "";
+
+    RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
+    UserRegData userRegData = UserRegData.getInstance();
+    SetRegistrationFragment setRegistrationFragment;
+    View view;
+    SharedPreference sharedPreference;
+    CustomSpinnerAdapter customSpinnerAdapter;
+
     ArrayList<HashMap<String, String>> maritalStatusList = new ArrayList<>();
     ArrayList<HashMap<String, String>> casteList = new ArrayList<>();
     List<String> doshamList = new ArrayList<>();
-    List<String> livingCountryList = new ArrayList<>();
-    String maritalStatus = "", dosham = "", country = "", cast = "", willingtoMarryOtherCommunities = "";
+    ArrayList<HashMap<String, String>> countriesList = new ArrayList<>();
 
-    RegSpinnersData registerData = RegSpinnersData.getInstance();
-    RegSpinnersManager registrationManager = RegSpinnersManager.getInstance();
-    UserRegData userRegData = UserRegData.getInstance();
-    SetRegistrationFragment setRegistrationFragment;
-    SpinnerAdapter spinnerAdapter;
-    CustomSpinnerAdapter customSpinnerAdapter;
-    View view;
-    SharedPreference sharedPreference;
+
 
     @Nullable
     @Override
@@ -90,9 +89,6 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
 
         initialization();
         if (!fragmentResume && fragmentVisible) {
-            registrationManager.initialize(this, getActivity());
-            progressLayout.setVisibility(View.VISIBLE);
-            registrationManager.getCasts();
 
         }
         return view;
@@ -105,9 +101,6 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
             fragmentResume = true;
             fragmentVisible = false;
             fragmentOnCreated = true;
-            registrationManager.initialize(this, getActivity());
-            progressLayout.setVisibility(View.VISIBLE);
-            registrationManager.getCasts();
 
 
         } else if (isVisibleToUser) {        // only at fragment onCreated
@@ -125,13 +118,23 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
     public void initialization() {
         sharedPreference = SharedPreference.getSharedInstance();
         sharedPreference.initialize(getActivity());
+
+        maritalStatusList = regSpinnersData.getMaritalStatusList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), maritalStatusList, regSpinnersData.MARITALSTATUS);
+        spinnerMaritalStatus.setAdapter(customSpinnerAdapter);
+
+        casteList = regSpinnersData.getCastsList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), casteList, regSpinnersData.CASTE);
+        spinnerCaste.setAdapter(customSpinnerAdapter);
+
+        countriesList = regSpinnersData.getCountriesList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), countriesList, regSpinnersData.COUNTRY);
+        spinnerCurrentLocation.setAdapter(customSpinnerAdapter);
+
         doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), doshamList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(),doshamList);
         spinnerDosham.setAdapter(spinnerAdapter);
 
-        /*livingCountryList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryLivingInArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), livingCountryList);
-        spinnerCurrentLocation.setAdapter(spinnerAdapter);*/
 
         setListeners();
 
@@ -141,7 +144,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
         spinnerDosham.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                dosham = doshamList.get(i);
+
             }
 
             @Override
@@ -177,12 +180,12 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
             }
         });
 
-        textGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
+       /* textGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setLocation();
             }
-        });
+        });*/
     }
 
     @Override
@@ -191,62 +194,9 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
         unbinder.unbind();
     }
 
-    @Override
-    public void successCallBack(String msg, String tag) {
-        if (tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
-            setCastSpinner();
-            registrationManager.initialize(this, getActivity());
-            registrationManager.getMaritalStatus();
-        } else if (tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
-            setMarritalStatusSpinner();
-        }
-    }
-
-    @Override
-    public void errorCallBack(String msg, String tag) {
-        progressLayout.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public void setCastSpinner() {
-        casteList = registerData.getCastsList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), casteList, getActivity().getResources().getString(R.string.select_cast), Constants.TAG_GET_CAST);
-        spinnerCaste.setAdapter(customSpinnerAdapter);
-        spinnerCaste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //HashMap<String,String> dataMap = religionList.get(i);
-                cast = String.valueOf(i);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
-
-    public void setMarritalStatusSpinner() {
-        progressLayout.setVisibility(View.GONE);
-        maritalStatusList = registerData.getMaritalStatusList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), maritalStatusList, getActivity().getResources().getString(R.string.select_marital_status), Constants.TAG_GET_MARITALSTATUS);
-        spinnerMaritalStatus.setAdapter(customSpinnerAdapter);
-        spinnerMaritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                maritalStatus = String.valueOf(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
 
     public void checkAllFields() {
-        if (maritalStatus.equalsIgnoreCase("") || maritalStatus.equalsIgnoreCase("0")) {
+       /* if (maritalStatus.equalsIgnoreCase("") || maritalStatus.equalsIgnoreCase("0")) {
             Toast.makeText(getActivity(), "Select marital status", Toast.LENGTH_SHORT).show();
         } else {
             if (cast.equals("") || cast.equalsIgnoreCase("0")) {
@@ -274,15 +224,22 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
                     }
                 }
             }
+        }*/
+
+        try {
+            userRegData.regDataObject.put(userRegData.KEY_MARITALSTATUS, maritalStatus);
+            userRegData.regDataObject.put(userRegData.KEY_CAST, cast);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        setRegistrationFragment = (SetRegistrationFragment) getActivity();
+        setRegistrationFragment.setRegFragment(3);
     }
 
-    public void setLocation()
-    {
+    public void setLocation() {
         String latitude = sharedPreference.getSharedPrefData(Constants.LATITUDE);
         String longitude = sharedPreference.getSharedPrefData(Constants.LONGITUDE);
-        if(latitude!="" && longitude!="")
-        {
+        if (latitude != "" && longitude != "") {
             double lats = Double.valueOf(latitude);
             double longis = Double.valueOf(longitude);
             Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
@@ -297,7 +254,7 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
                     String country = addresses.get(0).getCountryName();
                     String postalCode = addresses.get(0).getPostalCode();
                     String knownName = addresses.get(0).getFeatureName();
-                    textGetCurrentLocation.setText(locality+","+state+","+country);
+                 //   textGetCurrentLocation.setText(locality + "," + state + "," + country);
 
                 }
             } catch (Exception e) {
@@ -305,5 +262,29 @@ public class RegScreen3Fragment extends Fragment implements VolleyCallbackInterf
                 Toast.makeText(getActivity(), "Error fetching location", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+        Spinner spinner = (Spinner) adapterView;
+        switch (spinner.getId()) {
+            case R.id.spinner_marital_status:
+                maritalStatus = maritalStatusList.get(pos).get(regSpinnersData.VALUE);
+                break;
+            case R.id.spinner_caste:
+                cast = casteList.get(pos).get(regSpinnersData.NAME);
+                break;
+            case R.id.spinner_dosham:
+                dosham = doshamList.get(pos);
+                break;
+            case R.id.spinner_current_location:
+                country = countriesList.get(pos).get(regSpinnersData.NAME);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

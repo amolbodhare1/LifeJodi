@@ -18,14 +18,71 @@ public class RegSpinnersData {
         return registerData;
     }
 
-    public static String KEY_ISACTIVE = "IsActive";
-    public static String KEY_CREATEDON = "CreatedOn";
-    public static String KEY_CREATEDBY = "CreatedBy";
+    public static String API = "api";
+    public static String VERSION = "version";
+    public static String DEVICEID = "device_id";
+    public static String DATA = "data";
+
+
+    public static final String RESPONSE = "response";
+    public static final String PROFILEFOR = "profile_for";
+    public static final String MARITALSTATUS = "marital_status";
+    public static final String PHYSICALSTATUS = "physical_status";
+    public static final String FAMILYSTATUS = "family_status";
+    public static final String FAMILYTYPE = "family_type";
+    public static final String FAMILYVALUES = "family_values";
+    public static final String RELIGION = "religion";
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String ACTIVE = "active";
+    public static final String MOTHERTOUNGUE = "mothertongue";
+    public static final String CASTE = "caste";
+    public static final String RELIGIONID = "religion_id";
+    public static final String COUNTRY = "country";
+    public static final String COUNTRYCODE = "country_code";
+    public static final String HEIGHT = "height";
+    public static final String EDUCATION = "education";
+    public static final String OCCUPATION = "occupation";
+    public static final String CURRENCY = "currency";
+    public static final String VALUE = "val";
+
+
+
+
+    //GET PROFILE FOR
+    ArrayList<HashMap<String,String>> profileForList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getProfileForList() {
+        return profileForList;
+    }
+
+    public void setProfileForList(ArrayList<HashMap<String, String>> profileForList) {
+
+        this.profileForList = profileForList;
+    }
+
+
+    //GET MARITAL STATUS LIST
+    ArrayList<HashMap<String,String>> maritalStatusList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getMaritalStatusList() {
+        return maritalStatusList;
+    }
+
+    public void setMaritalStatusList(ArrayList<HashMap<String, String>> maritalStatusList) {
+        this.maritalStatusList = maritalStatusList;
+    }
+
+    //GET PHYSICAL STATUS
+    ArrayList<HashMap<String,String>> physicalStatusList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getPhysicalStatusList() {
+        return physicalStatusList;
+    }
+
+    public void setPhysicalStatusList(ArrayList<HashMap<String, String>> physicalStatusList) {
+        this.physicalStatusList = physicalStatusList;
+    }
+
 
     //GET RELIGIONS
-    public static String KEY_RELIGIONID = "ReligionID";
-    public static String KEY_RELIGIONNAME = "Religion1";
-
     ArrayList<HashMap<String,String>> religionsList = new ArrayList<>();
     public ArrayList<HashMap<String, String>> getReligionsList() {
         return religionsList;
@@ -36,8 +93,6 @@ public class RegSpinnersData {
     }
 
     //GET CATSTS
-    public static String KEY_CASTID = "CastID";
-    public static String KEY_CASTNAME = "Cast";
     ArrayList<HashMap<String,String>> castsList = new ArrayList<>();
     public ArrayList<HashMap<String, String>> getCastsList() {
         return castsList;
@@ -100,18 +155,59 @@ public class RegSpinnersData {
         this.currencyList = currencyList;
     }
 
-    //GET
-    public static String KEY_MARITALSTATUSID = "MarritialStatusID";
-    public static String KEY_MARITALSTATUSNAME = "MarritalStatus";
-
-    ArrayList<HashMap<String,String>> maritalStatusList = new ArrayList<>();
-    public ArrayList<HashMap<String, String>> getMaritalStatusList() {
-        return maritalStatusList;
+    //GET COUNTRIES
+    ArrayList<HashMap<String,String>> countriesList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getCountriesList() {
+        return countriesList;
     }
 
-    public void setMaritalStatusList(ArrayList<HashMap<String, String>> maritalStatusList) {
-        this.maritalStatusList = maritalStatusList;
+    public void setCountriesList(ArrayList<HashMap<String, String>> countriesList) {
+        this.countriesList = countriesList;
     }
+
+    //GET FAMILY STATUS
+    ArrayList<HashMap<String,String>> familyStatus = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getFamilyStatus() {
+        return familyStatus;
+    }
+
+    public void setFamilyStatus(ArrayList<HashMap<String, String>> familyStatus) {
+        this.familyStatus = familyStatus;
+    }
+
+    //GET FAMILY TYPE
+    ArrayList<HashMap<String,String>> familyType = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(ArrayList<HashMap<String, String>> familyType) {
+        this.familyType = familyType;
+    }
+
+
+    //GET FAMILY VALUES
+    ArrayList<HashMap<String,String>> familyValues = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getFamilyValues() {
+        return familyValues;
+    }
+
+    public void setFamilyValues(ArrayList<HashMap<String, String>> familyValues) {
+        this.familyValues = familyValues;
+    }
+
+
+
+    //GET DOSHAM
+    ArrayList<HashMap<String,String>> doshamList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getDoshamList() {
+        return doshamList;
+    }
+
+    public void setDoshamList(ArrayList<HashMap<String, String>> doshamList) {
+        this.doshamList = doshamList;
+    }
+
 
 
 }

@@ -42,7 +42,7 @@ import butterknife.Unbinder;
  * Created by Ajay on 11-11-2017.
  */
 
-public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterface {
+public class RegScreen2Fragment extends Fragment {
 
 
     @BindView(R.id.spinner_religion)
@@ -67,18 +67,17 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
     private boolean fragmentVisible = false;
     private boolean fragmentOnCreated = false;
 
-    ArrayList<HashMap<String, String>> religionList = new ArrayList<>();
-    List<String> motherToungueList = new ArrayList<>();
-    List<String> countryCodesList = new ArrayList<>();
     String religion = "", motherTongue = "", mobileNumber = "", countryCode = "", email = "", password = "";
+    ArrayList<HashMap<String,String>> religionsList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> motherToungueList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> countryCodesList = new ArrayList<>();
 
-    RegSpinnersManager registrationManager = RegSpinnersManager.getInstance();
-    RegSpinnersData registerData = RegSpinnersData.getInstance();
+    RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
-    SpinnerAdapter spinnerAdapter;
-    CustomSpinnerAdapter customSpinnerAdapter;
+
     SetRegistrationFragment setRegistrationFragment;
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    CustomSpinnerAdapter customSpinnerAdapter;
 
     @Nullable
     @Override
@@ -87,26 +86,26 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         unbinder = ButterKnife.bind(this, view);
         initialization();
         if (!fragmentResume && fragmentVisible) {
-            registrationManager.initialize(this, getActivity());
-            progressLayout.setVisibility(View.VISIBLE);
-            registrationManager.getReligions();
+
         }
         return view;
     }
 
     public void initialization() {
         sharedPreference.initialize(getActivity());
-        motherToungueList = Constants.getArraylistFromArray(RegSpinnersStaticData.motherTongueArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), motherToungueList);
-        spinnerMotherToungue.setAdapter(spinnerAdapter);
-
-        countryCodesList = Constants.getArraylistFromArray(RegSpinnersStaticData.countryCodesArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), countryCodesList);
-        spinnerCode.setAdapter(spinnerAdapter);
         if(sharedPreference.getSharedPrefData(Constants.FACEBOOKSIGNUP).equalsIgnoreCase("1"))
         {
             editEmail.setText(sharedPreference.getSharedPrefData(Constants.FBEMAIL));
         }
+        religionsList = regSpinnersData.getReligionsList();
+        motherToungueList = regSpinnersData.getMotherTongueList();
+        countryCodesList = regSpinnersData.getCountriesList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),religionsList,regSpinnersData.RELIGION);
+        spinnerReligion.setAdapter(customSpinnerAdapter);
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),motherToungueList,regSpinnersData.MOTHERTOUNGUE);
+        spinnerMotherToungue.setAdapter(customSpinnerAdapter);
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),countryCodesList,regSpinnersData.COUNTRYCODE);
+        spinnerCode.setAdapter(customSpinnerAdapter);
         setListeners();
     }
 
@@ -117,9 +116,6 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
             fragmentResume = true;
             fragmentVisible = false;
             fragmentOnCreated = true;
-            registrationManager.initialize(this, getActivity());
-            progressLayout.setVisibility(View.VISIBLE);
-            registrationManager.getReligions();
 
         } else if (isVisibleToUser) {        // only at fragment onCreated
             fragmentResume = false;
@@ -147,7 +143,7 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                countryCode = countryCodesList.get(i);
+                countryCode = countryCodesList.get(i).get(regSpinnersData.COUNTRYCODE);
             }
 
             @Override
@@ -159,7 +155,19 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
         spinnerMotherToungue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                motherTongue = motherToungueList.get(i);
+                motherTongue = motherToungueList.get(i).get(regSpinnersData.NAME);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerReligion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                religion = religionsList.get(i).get(regSpinnersData.NAME);
             }
 
             @Override
@@ -175,39 +183,6 @@ public class RegScreen2Fragment extends Fragment implements VolleyCallbackInterf
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void successCallBack(String msg, String tag) {
-        if (tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
-            setReligionSpinner();
-        }
-    }
-
-    @Override
-    public void errorCallBack(String msg, String tag) {
-        progressLayout.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public void setReligionSpinner() {
-        progressLayout.setVisibility(View.GONE);
-        religionList = registerData.getReligionsList();
-        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(), religionList, getActivity().getResources().getString(R.string.select_religion), Constants.TAG_GET_RELIGION);
-        spinnerReligion.setAdapter(customSpinnerAdapter);
-        spinnerReligion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //HashMap<String,String> dataMap = religionList.get(i);
-                religion = String.valueOf(i);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     public void checkAllFields() {

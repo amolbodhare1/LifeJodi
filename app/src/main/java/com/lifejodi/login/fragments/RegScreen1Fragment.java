@@ -29,6 +29,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.lifejodi.R;
+import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.login.data.RegSpinnersStaticData;
@@ -44,6 +45,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,17 +83,16 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
     private boolean fragmentVisible = false;
     private boolean fragmentOnCreated = false;
 
-    List<String> profileList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> profileForList = new ArrayList<>();
     String profileFor = "", name = "", gender = "", dob = "";
     String fbName="",fbEmail="",fbGender="";
     View view;
 
-    RegSpinnersStaticData spinnersRegistrationData = RegSpinnersStaticData.getInstance();
-    RegSpinnersData registerData = RegSpinnersData.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
+    RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
 
     SetRegistrationFragment setRegistrationFragment;
-    SpinnerAdapter spinnerAdapter;
+    CustomSpinnerAdapter customSpinnerAdapter;
     SharedPreference sharedPreference;
 
     CallbackManager callbackManager;
@@ -215,9 +216,9 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
 
         sharedPreference = SharedPreference.getSharedInstance();
         sharedPreference.initialize(getActivity());
-        profileList = Constants.getArraylistFromArray(RegSpinnersStaticData.profileForArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), profileList);
-        spinnerProfile.setAdapter(spinnerAdapter);
+        profileForList = regSpinnersData.getProfileForList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),profileForList,regSpinnersData.PROFILEFOR);
+        spinnerProfile.setAdapter(customSpinnerAdapter);
 
         //check if sign up with facebook
 
@@ -228,8 +229,8 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
         spinnerProfile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                profileFor = String.valueOf(pos - 1);
-                sharedPreference.putSharedPrefData(Constants.PROFILEFOR, profileList.get(pos));
+                profileFor = profileForList.get(pos).get(RegSpinnersData.NAME);
+                sharedPreference.putSharedPrefData(Constants.PROFILEFOR, profileForList.get(pos).get(regSpinnersData.NAME));
             }
 
             @Override

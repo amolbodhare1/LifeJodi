@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.login.activity.LoginActivity;
+import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.login.data.RegSpinnersStaticData;
@@ -33,6 +34,7 @@ import com.lifejodi.utils.customfonts.CustomTextBeatles;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,23 +77,22 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
     CustomTextBeatles textAboutYou;
     Unbinder unbinder;
 
-    List<String> heightList = new ArrayList<>();
-    List<String> physicalStatusList = new ArrayList<>();
-    List<String> educationList = new ArrayList<>();
-    List<String> occupationList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> physicalStatusList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> educationList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> occupationList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> currencyList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> familyStatusList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> familyValuesList = new ArrayList<>();
     List<String> employedInList = new ArrayList<>();
-    List<String> currencyList = new ArrayList<>();
-    List<String> familyStatusList = new ArrayList<>();
-    List<String> familyValuesList = new ArrayList<>();
     String height = "", physicalStatus = "", education = "", occupation = "", employedIn = "", currency = "", annualIncome = "", familyStatus = "";
     String familyType = "", familyValues = "", aboutFriend = "",profile="";
 
-    RegSpinnersData registerData = RegSpinnersData.getInstance();
-    RegSpinnersManager regSpinnersManager = RegSpinnersManager.getInstance();
+    RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
     UserRegManager userRegManager = UserRegManager.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
     SpinnerAdapter spinnerAdapter;
     SharedPreference sharedPreference;
+    CustomSpinnerAdapter customSpinnerAdapter;
 
     View view;
     RadioButton radioButton;
@@ -120,37 +121,40 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
             textAboutYou.setText("About your "+profile);
             editAboutFriend.setHint("Enter about your "+profile);
         }
-        heightList = Constants.getArraylistFromArray(RegSpinnersStaticData.heightArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), heightList);
-        spinnerHeight.setAdapter(spinnerAdapter);
+        physicalStatusList = regSpinnersData.getPhysicalStatusList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),physicalStatusList,regSpinnersData.PHYSICALSTATUS);
+        spinnerPhysicalStatus.setAdapter(customSpinnerAdapter);
 
-        physicalStatusList = Constants.getArraylistFromArray(RegSpinnersStaticData.physicalStatusArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), physicalStatusList);
-        spinnerPhysicalStatus.setAdapter(spinnerAdapter);
+        educationList = regSpinnersData.getEducationList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),educationList,regSpinnersData.EDUCATION);
+        spinnerEducation.setAdapter(customSpinnerAdapter);
 
-        educationList = Constants.getArraylistFromArray(RegSpinnersStaticData.educationArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), educationList);
-        spinnerEducation.setAdapter(spinnerAdapter);
+        occupationList = regSpinnersData.getOccupationList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),occupationList,regSpinnersData.OCCUPATION);
+        spinnerOccupation.setAdapter(customSpinnerAdapter);
 
-        occupationList = Constants.getArraylistFromArray(RegSpinnersStaticData.occupationArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), occupationList);
-        spinnerOccupation.setAdapter(spinnerAdapter);
+        currencyList = regSpinnersData.getCurrencyList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),currencyList,regSpinnersData.CURRENCY);
+        spinnerCurrencyCode.setAdapter(customSpinnerAdapter);
+
+        familyStatusList = regSpinnersData.getFamilyStatus();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),familyStatusList,regSpinnersData.FAMILYSTATUS);
+        spinnerFamilyStatus.setAdapter(customSpinnerAdapter);
+
+        familyValuesList = regSpinnersData.getFamilyValues();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),familyValuesList,regSpinnersData.FAMILYVALUES);
+        spinnerFamilyValues.setAdapter(customSpinnerAdapter);
 
         employedInList = Constants.getArraylistFromArray(RegSpinnersStaticData.employedInArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), employedInList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(),employedInList);
         spinnerEmployedIn.setAdapter(spinnerAdapter);
 
-        currencyList = Constants.getArraylistFromArray(RegSpinnersStaticData.currencyArray);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), currencyList);
-        spinnerCurrencyCode.setAdapter(spinnerAdapter);
 
-        familyStatusList = Constants.getArraylistFromArray(RegSpinnersStaticData.familyStatus);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), familyStatusList);
-        spinnerFamilyStatus.setAdapter(spinnerAdapter);
 
-        familyValuesList = Constants.getArraylistFromArray(RegSpinnersStaticData.familyValues);
-        spinnerAdapter = new SpinnerAdapter(getActivity(), familyValuesList);
-        spinnerFamilyValues.setAdapter(spinnerAdapter);
+
+
+
+
 
         setListeners();
     }
@@ -193,28 +197,28 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
         Spinner spinner = (Spinner) adapterView;
         switch (spinner.getId()) {
             case R.id.spinner_height:
-                height = heightList.get(pos);
+             //   height = heightList.get(pos);
                 break;
             case R.id.spinner_physical_status:
-                physicalStatus = physicalStatusList.get(pos);
+                physicalStatus = physicalStatusList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_education:
-                education = educationList.get(pos);
+                education = educationList.get(pos).get(regSpinnersData.NAME);
                 break;
             case R.id.spinner_occupation:
-                occupation = occupationList.get(pos);
+                occupation = occupationList.get(pos).get(regSpinnersData.NAME);
                 break;
             case R.id.spinner_employed_in:
                 employedIn = employedInList.get(pos);
                 break;
             case R.id.spinner_currency_code:
-                currency = currencyList.get(pos);
+                currency = currencyList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_family_status:
-                familyStatus = familyStatusList.get(pos);
+                familyStatus = familyStatusList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_family_values:
-                familyValues = familyValuesList.get(pos);
+                familyValues = familyValuesList.get(pos).get(regSpinnersData.VALUE);
                 break;
         }
     }
@@ -287,14 +291,14 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public void successCallBack(String msg, String tag) {
-        if (tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER)) {
+      /*  if (tag.equalsIgnoreCase(Constants.TAG_REGISTER_USER)) {
             progressLayout.setVisibility(View.GONE);
             //String status = userRegData.getRegStatus();
             Toast.makeText(getActivity(), "You are registered successfully.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             getActivity().finish();
-        }
+        }*/
     }
 
     @Override

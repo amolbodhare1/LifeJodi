@@ -22,12 +22,12 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
 
     ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
     Context context;
-    String hintText,tag;
+    String tag;
+    RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
 
-    public CustomSpinnerAdapter(Context mcontext,ArrayList<HashMap<String,String>> list,String text,String mtag) {
+    public CustomSpinnerAdapter(Context mcontext,ArrayList<HashMap<String,String>> list,String mtag) {
         context = mcontext;
         dataList =  list;
-        hintText = text;
         tag = mtag;
     }
 
@@ -53,19 +53,51 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
         TextView tv_spinner = (TextView) convertView.findViewById(R.id.spinnertext);
 
         HashMap<String,String> dataMap = dataList.get(position);
-        if (position == 0){
-            tv_spinner.setText(hintText);
-            tv_spinner.setTextColor(context.getResources().getColor(R.color.light_gray));
-        }else {
-            if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
-                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_RELIGIONNAME));
-            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
-                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_CASTNAME));
-            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
-                tv_spinner.setText(dataMap.get(RegSpinnersData.KEY_MARITALSTATUSNAME));
+
+            switch (tag) {
+                case RegSpinnersData.PROFILEFOR:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.RELIGION:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.MOTHERTOUNGUE:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.COUNTRYCODE:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.COUNTRYCODE));
+                    break;
+                case RegSpinnersData.MARITALSTATUS:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.CASTE:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.COUNTRY:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.PHYSICALSTATUS:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.EDUCATION:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.OCCUPATION:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.CURRENCY:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.FAMILYSTATUS:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.FAMILYVALUES:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
             }
+
             tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
-        }
+
         tv_spinner.setPadding(10, 0, 0, 0);
         return convertView;
     }
@@ -75,28 +107,53 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_spinner_dropdown,null);
         TextView tv_spinner_drop = (TextView) convertView.findViewById(R.id.spinnertext_drop);
         HashMap<String,String> dataMap = dataList.get(position);
-        //HashMap<String,String> dataMap = spinner_list.get(position);
-        if(position==0)
-        {
-            tv_spinner_drop.setText(hintText);
-            tv_spinner_drop.setPadding(10,10, 0, 0);
-            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.light_gray));
-            tv_spinner_drop.setTextSize(18);
 
-        }
-        else
-        {
-            if(tag.equalsIgnoreCase(Constants.TAG_GET_RELIGION)) {
-                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_RELIGIONNAME));
-            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_CAST)) {
-                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_CASTNAME));
-            }else if(tag.equalsIgnoreCase(Constants.TAG_GET_MARITALSTATUS)) {
-                tv_spinner_drop.setText(dataMap.get(RegSpinnersData.KEY_MARITALSTATUSNAME));
+            switch (tag)
+            {
+                case RegSpinnersData.PROFILEFOR:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.RELIGION:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.MOTHERTOUNGUE:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.COUNTRYCODE:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.COUNTRYCODE));
+                    break;
+                case RegSpinnersData.MARITALSTATUS:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.CASTE:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.COUNTRY:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.PHYSICALSTATUS:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.EDUCATION:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.OCCUPATION:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
+                case RegSpinnersData.CURRENCY:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.FAMILYSTATUS:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
+                case RegSpinnersData.FAMILYVALUES:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
+                    break;
             }
             tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
             tv_spinner_drop.setPadding(30,0, 0, 0);
 
-        }
+      //  }
         return convertView;
     }
 
