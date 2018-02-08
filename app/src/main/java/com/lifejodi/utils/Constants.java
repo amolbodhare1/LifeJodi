@@ -42,6 +42,9 @@ public class Constants {
     public static String FBGENDER="fb_gender";
     public static String USERNAME="username";
 
+    public static String LOGINNAME="login_name";
+    public static String LOGINEMAIL="login_email";
+
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_GET_MASTERS = "get_masters";
@@ -50,6 +53,13 @@ public class Constants {
     public static String URL_REGISTER_USER = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_REGISTER_USER = "register_user";
 
+    //LOGIN
+    public static String URL_LOGIN = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_LOGIN= "login";
+
+    //FORGOT PASSWORD
+    public static String URL_FORGOTPASSWORD = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_FORGOTPASSWORD= "forgot_password";
 
 
     public static Map<String, String> getHeader() throws AuthFailureError {

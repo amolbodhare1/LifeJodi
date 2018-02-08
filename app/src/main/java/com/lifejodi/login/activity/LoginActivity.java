@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.home.activity.HomeActivity;
+import com.lifejodi.login.manager.LoginManager;
+import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
+
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -30,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements VolleyCallbackInterface {
 
     @BindView(R.id.edit_email)
     EditText editEmail;
@@ -46,11 +50,14 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout layoutFbLogin;
     @BindView(R.id.text_sign_up)
     TextView textSignUp;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
 
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
-    String userEmail="",userMobile="",userPassword="",enteredEmail="",enteredPassword="";
+    String enteredEmail="",enteredPassword="";
     AppController appController;
+    LoginManager loginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,22 +109,20 @@ public class LoginActivity extends AppCompatActivity {
     {
         enteredEmail = editEmail.getText().toString();
         enteredPassword = editPassword.getText().toString();
-        userEmail = sharedPreference.getSharedPrefData(Constants.SAVEDEMAIL);
-        userMobile = sharedPreference.getSharedPrefData(Constants.SAVEDMOBILE);
-        userPassword = sharedPreference.getSharedPrefData(Constants.SAVEDPASSWORD);
 
-        if(enteredEmail.equalsIgnoreCase("") ) {
-            Toast.makeText(this, "Enter email id", Toast.LENGTH_SHORT).show();}else {
+        if(enteredEmail.equalsIgnoreCase("") || !Constants.isEmailValid(enteredEmail) ) {
+            Toast.makeText(this, "Enter valid email id", Toast.LENGTH_SHORT).show();}else {
             if(enteredPassword.equalsIgnoreCase("")) {
                 Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();}else {
-                if(enteredEmail.equals(userEmail) || enteredEmail.equals(userMobile)) {
-                   if(enteredPassword.equals(userPassword)) {
-                        sharedPreference.putSharedPrefData(Constants.LOGINSTATUS,"1");
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                   }else {Toast.makeText(this, "Incorrect password.Try again", Toast.LENGTH_SHORT).show();}
-                }else {Toast.makeText(this, "Incorrect email.Try again", Toast.LENGTH_SHORT).show();}
+                loginManager = LoginManager.getInstance();
+                loginManager.initialize(this,LoginActivity.this);
+                progressLayout.setVisibility(View.VISIBLE);
+             //   JSONObject jsonObject = loginManager.getLoginDataObject()
+              //  loginManager.loginUser();
+               /* Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();*/
+
             }
         }
     }
@@ -134,6 +139,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         } catch (PackageManager.NameNotFoundException e) {
         } catch (NoSuchAlgorithmException e) {
+        }
+    }
+
+    @Override
+    public void successCallBack(String msg, String tag) {
+        switch (tag)
+        {
+            case Constants.TAG_LOGIN:
+                break;
+        }
+    }
+
+    @Override
+    public void errorCallBack(String msg, String tag) {
+        switch (tag)
+        {
+            case Constants.TAG_LOGIN:
+                break;
         }
     }
 }
