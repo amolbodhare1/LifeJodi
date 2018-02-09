@@ -31,6 +31,16 @@ public class LoginData {
     public static String PROFILEID = "profile_id";
     public static String FULLNAME = "full_name";
 
+
+    String loginmessage="";
+    public String getLoginmessage() {
+        return loginmessage;
+    }
+
+    public void setLoginmessage(String loginmessage) {
+        this.loginmessage = loginmessage;
+    }
+
     String loginStatus="";
     public String getLoginStatus() {
         return loginStatus;
@@ -50,5 +60,24 @@ public class LoginData {
         this.loginInfoMap = loginInfoMap;
     }
 
+    //FORGOT PASSWORD
+
+    String forgotPassStatus="";
+    public String getForgotPassStatus() {
+        return forgotPassStatus;
+    }
+
+    public void setForgotPassStatus(String forgotPassStatus) {
+        this.forgotPassStatus = forgotPassStatus;
+    }
+
+    String forgotPassMessage = "";
+    public String getForgotPassMessage() {
+        return forgotPassMessage;
+    }
+
+    public void setForgotPassMessage(String forgotPassMessage) {
+        this.forgotPassMessage = forgotPassMessage;
+    }
 
 }

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import com.facebook.FacebookSdk;
 import com.google.android.gms.common.ConnectionResult;
@@ -34,14 +35,14 @@ import butterknife.ButterKnife;
  * Created by Ajay on 11-11-2017.
  */
 
-public class RegisterActivity extends AppCompatActivity implements SetRegistrationFragment, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class RegisterActivity extends AppCompatActivity implements SetRegistrationFragment {
 
     @BindView(R.id.view_pager)
     CustomViewPager viewPager;
     CustomViewPagerAdapter customViewPagerAdapter;
 
     AppController appController;
-    GoogleApiClient googleApiClient;
+
     SharedPreference sharedPreference;
 
     @Override
@@ -65,23 +66,9 @@ public class RegisterActivity extends AppCompatActivity implements SetRegistrati
         {
             appController.requestPermission(Constants.PERMISSIONS);
         }
-        googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
+
         customViewPagerAdapter = new CustomViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(customViewPagerAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        googleApiClient.disconnect();
-        super.onStop();
     }
 
     @Override
@@ -89,26 +76,12 @@ public class RegisterActivity extends AppCompatActivity implements SetRegistrati
         viewPager.setCurrentItem(pos);
     }
 
-
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        @SuppressLint("MissingPermission")
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        double latitude = lastLocation.getLatitude();
-        double longitude = lastLocation.getLongitude();
-        sharedPreference.putSharedPrefData(Constants.LATITUDE, String.valueOf(latitude));
-        sharedPreference.putSharedPrefData(Constants.LONGITUDE, String.valueOf(longitude));
-
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            finish();
+        }
+        return false;
     }
 }

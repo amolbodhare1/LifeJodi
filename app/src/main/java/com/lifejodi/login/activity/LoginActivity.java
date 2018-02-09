@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.home.activity.HomeActivity;
+import com.lifejodi.login.data.LoginData;
 import com.lifejodi.login.manager.LoginManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.AppController;
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
     String enteredEmail="",enteredPassword="";
     AppController appController;
     LoginManager loginManager;
+    LoginData loginData  =LoginData.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,6 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
         }
 
 
-
     }
 
     @OnClick({R.id.text_forgot_password, R.id.button_login, R.id.text_login_via_otp, R.id.layout_fb_login, R.id.text_sign_up})
@@ -98,8 +100,8 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
             case R.id.layout_fb_login:
                 break;
             case R.id.text_sign_up:
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent1);
                 finish();
                 break;
         }
@@ -117,11 +119,9 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
                 loginManager = LoginManager.getInstance();
                 loginManager.initialize(this,LoginActivity.this);
                 progressLayout.setVisibility(View.VISIBLE);
-             //   JSONObject jsonObject = loginManager.getLoginDataObject()
-              //  loginManager.loginUser();
-               /* Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();*/
+                String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                JSONObject jsonObject = loginManager.getLoginDataObject(androidDeviceId,loginManager.getLoginInputs(enteredEmail,enteredPassword));
+                loginManager.loginUser(jsonObject);
 
             }
         }
@@ -147,6 +147,23 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
         switch (tag)
         {
             case Constants.TAG_LOGIN:
+                progressLayout.setVisibility(View.GONE);
+                String message = loginData.getLoginmessage();
+                String status = loginData.getLoginStatus();
+                if(status.equals("1"))
+                {
+                    sharedPreference.putSharedPrefData(Constants.LOGINSTATUS,"1");
+                    Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                    Intent homeIntent = new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(homeIntent);
+                    finish();
+                }else if(status.equals("0"))
+                {
+                    Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                    editEmail.setText("");
+                    editPassword.setText("");
+                }
+
                 break;
         }
     }
@@ -156,6 +173,8 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
         switch (tag)
         {
             case Constants.TAG_LOGIN:
+                progressLayout.setVisibility(View.GONE);
+                Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -84,7 +84,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
     private boolean fragmentOnCreated = false;
 
     ArrayList<HashMap<String,String>> profileForList = new ArrayList<>();
-    String profileFor = "", name = "", gender = "", dob = "";
+    String profileFor = "", name = "", gender = "", dob = "",profId="";
     String fbName="",fbEmail="",fbGender="";
     View view;
 
@@ -230,6 +230,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 profileFor = profileForList.get(pos).get(RegSpinnersData.NAME);
+                profId = profileForList.get(pos).get(RegSpinnersData.ID);
                 sharedPreference.putSharedPrefData(Constants.PROFILEFOR, profileForList.get(pos).get(regSpinnersData.NAME));
             }
 
@@ -270,6 +271,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
                 );
+
                 Calendar calendar = Calendar.getInstance();
                 dpd.setMaxDate(calendar);
                 dpd.show(getActivity().getFragmentManager(), "");
@@ -297,7 +299,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
                     } else {
                         try {
                             sharedPreference.putSharedPrefData(Constants.USERNAME,name);
-                            userRegData.regDataObject.put(userRegData.PROFILEFOR, profileFor);
+                            userRegData.regDataObject.put(userRegData.PROFILEFOR, profId);
                             userRegData.regDataObject.put(userRegData.NAME, name);
                             userRegData.regDataObject.put(userRegData.GENDER,gender);
                             userRegData.regDataObject.put(userRegData.DOB, dob);

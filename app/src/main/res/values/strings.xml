@@ -19,13 +19,14 @@
     <string name="select_cast">Select caste</string>
     <string name="select_marital_status">Select Marital Status</string>
     <string name="select_country">Country living in</string>
-    <string name="select_height"></string>
+    <string name="select_height">Height</string>
     <string name="select_physicalstatus">Physical status</string>
     <string name="select_education">Education</string>
     <string name="select_occupation">Occupation</string>
     <string name="select_currency">Currency</string>
     <string name="select_family_status">Family status</string>
     <string name="select_family_values">Family values</string>
+    <string name="get_current_location">Get my current location</string>
 
 
 

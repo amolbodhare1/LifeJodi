@@ -26,6 +26,7 @@ public class RegSpinnersData {
 
     public static final String RESPONSE = "response";
     public static final String PROFILEFOR = "profile_for";
+    public static final String EMPLOYEDIN = "employed_in";
     public static final String MARITALSTATUS = "marital_status";
     public static final String PHYSICALSTATUS = "physical_status";
     public static final String FAMILYSTATUS = "family_status";
@@ -209,6 +210,17 @@ public class RegSpinnersData {
         this.doshamList = doshamList;
     }
 
+
+
+    //GET EMPLOYED IN
+    ArrayList<HashMap<String,String>> employedInList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getEmployedInList() {
+        return employedInList;
+    }
+
+    public void setEmployedInList(ArrayList<HashMap<String, String>> employedInList) {
+        this.employedInList = employedInList;
+    }
 
 
 }

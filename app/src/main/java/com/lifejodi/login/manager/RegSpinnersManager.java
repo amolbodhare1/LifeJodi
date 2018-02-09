@@ -103,6 +103,7 @@ public class RegSpinnersManager implements VolleyResponse {
         ArrayList<HashMap<String,String>> familyStatusList = new ArrayList<>();
         ArrayList<HashMap<String,String>> familyTypeList = new ArrayList<>();
         ArrayList<HashMap<String,String>> familyValuesList = new ArrayList<>();
+        ArrayList<HashMap<String,String>> employedInList = new ArrayList<>();
         ArrayList<String> heightList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(strResponse);
@@ -327,7 +328,23 @@ public class RegSpinnersManager implements VolleyResponse {
                 RegSpinnersData.getInstance().setFamilyValues(familyValuesList);
 
             }
+            if(jsonObject.has(RegSpinnersData.EMPLOYEDIN))
+            {
 
+                JSONArray employedInArray = jsonObject.getJSONArray(RegSpinnersData.EMPLOYEDIN);
+                for(int i=0;i<employedInArray.length();i++)
+                {
+                    HashMap<String,String> employedInMap = new HashMap<>();
+                    JSONObject employedInObj= employedInArray.getJSONObject(i);
+                    employedInMap.put(RegSpinnersData.ID,Constants.getStringValueOfJsonObject(employedInObj,RegSpinnersData.ID,RegSpinnersData.ID));
+                    employedInMap.put(RegSpinnersData.NAME,Constants.getStringValueOfJsonObject(employedInObj,RegSpinnersData.NAME,RegSpinnersData.NAME));
+                    employedInMap.put(RegSpinnersData.ACTIVE,Constants.getStringValueOfJsonObject(employedInObj,RegSpinnersData.ACTIVE,RegSpinnersData.ACTIVE));
+                    employedInList.add(employedInMap);
+                }
+
+                RegSpinnersData.getInstance().setEmployedInList(employedInList);
+
+            }
             if(jsonObject.has(RegSpinnersData.HEIGHT))
             {
                 JSONArray heightArray = jsonObject.getJSONArray(RegSpinnersData.HEIGHT);

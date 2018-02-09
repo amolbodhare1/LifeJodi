@@ -1,6 +1,7 @@
 package com.lifejodi.login.manager;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.facebook.login.Login;
@@ -77,6 +78,32 @@ public class LoginManager implements VolleyResponse {
         mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_LOGIN,Constants.TAG_LOGIN,jsonObject);
     }
 
+
+    //FORGOT PASSWORD
+    public  JSONObject getForgotPassParams(String deviceId,String email)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(LoginData.API,"forgot");
+            jsonObject.put(LoginData.DEVICE,deviceId);
+            jsonObject.put(LoginData.VERSION,"1.0");
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put(LoginData.EMAIL,email);
+            jsonObject.put(LoginData.DATA,dataObj);
+            return jsonObject;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public void getForgotPassword(JSONObject jsonObject)
+    {
+        mVolleyRequest.volleyJsonRequest(Request.Method.POST,Constants.URL_FORGOTPASSWORD,Constants.TAG_FORGOTPASSWORD,jsonObject);
+    }
+
     @Override
     public void getResponse(JSONObject jsonObject, String tag) throws JSONException {
 
@@ -89,6 +116,9 @@ public class LoginManager implements VolleyResponse {
             case Constants.TAG_LOGIN:
                 parseLoginResponse(strResponse,tag);
                 break;
+            case Constants.TAG_FORGOTPASSWORD:
+                parseForgotpasswordResponse(strResponse,tag);
+                break;
         }
 
     }
@@ -100,13 +130,19 @@ public class LoginManager implements VolleyResponse {
 
     public void parseLoginResponse(String strResponse, String tag)
     {
-        String status = "";
+        String status = "",message = "";
         HashMap<String,String> dataMap = new HashMap<>();
         try{
             JSONObject jsonObject = new JSONObject(strResponse);
             if(jsonObject.has(LoginData.MESSAGE))
             {
-                status = Constants.getStringValueOfJsonObject(jsonObject,LoginData.MESSAGE,LoginData.MESSAGE);
+                message = Constants.getStringValueOfJsonObject(jsonObject,LoginData.MESSAGE,LoginData.MESSAGE);
+                LoginData.getInstance().setLoginmessage(message);
+            }
+            if(jsonObject.has(LoginData.STATUS))
+            {
+                status = Constants.getStringValueOfJsonObject(jsonObject,LoginData.STATUS,LoginData.STATUS);
+                LoginData.getInstance().setLoginStatus(status);
             }
             if(jsonObject.has(LoginData.DATA))
             {
@@ -127,11 +163,12 @@ public class LoginManager implements VolleyResponse {
 
                     sharedPreference.putSharedPrefData(Constants.LOGINNAME,Constants.getStringValueOfJsonObject(dataObject,LoginData.FULLNAME,LoginData.FULLNAME));
                     sharedPreference.putSharedPrefData(Constants.LOGINEMAIL,Constants.getStringValueOfJsonObject(dataObject,LoginData.EMAIL,LoginData.EMAIL));
+                    sharedPreference.putSharedPrefData(Constants.PROFILEID,Constants.getStringValueOfJsonObject(dataObject,LoginData.ID,LoginData.ID));
                 }
 
-                LoginData.getInstance().setLoginStatus(status);
                 LoginData.getInstance().setLoginInfoMap(dataMap);
             }
+
             mVolleyCallbackInterface.successCallBack("success",tag);
         }catch (Exception e)
         {
@@ -139,4 +176,26 @@ public class LoginManager implements VolleyResponse {
         }
     }
 
+    public void parseForgotpasswordResponse(String strResponse, String tag)
+    {
+        String status = "",message = "";
+        try
+        {
+            JSONObject jsonObject = new JSONObject(strResponse);
+            if(jsonObject.has(LoginData.MESSAGE))
+            {
+                message = Constants.getStringValueOfJsonObject(jsonObject,LoginData.MESSAGE,LoginData.MESSAGE);
+                LoginData.getInstance().setForgotPassMessage(message);
+            }
+            if(jsonObject.has(LoginData.STATUS))
+            {
+                status = Constants.getStringValueOfJsonObject(jsonObject,LoginData.STATUS,LoginData.STATUS);
+                LoginData.getInstance().setForgotPassStatus(status);
+            }
+            mVolleyCallbackInterface.successCallBack("success",tag);
+        }catch (Exception e)
+        {
+            mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
+        }
+    }
 }

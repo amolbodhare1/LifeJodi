@@ -42,7 +42,7 @@ import butterknife.Unbinder;
  * Created by Ajay on 11-11-2017.
  */
 
-public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class RegScreen2Fragment extends Fragment{
 
 
     @BindView(R.id.spinner_religion)
@@ -68,6 +68,7 @@ public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSe
     private boolean fragmentOnCreated = false;
 
     String religion = "", motherTongue = "", mobileNumber = "", countryCode = "", email = "", password = "";
+    String religionId="",motherTongueId = "";
     ArrayList<HashMap<String,String>> religionsList = new ArrayList<>();
     ArrayList<HashMap<String,String>> motherToungueList = new ArrayList<>();
     ArrayList<HashMap<String,String>> countryCodesList = new ArrayList<>();
@@ -106,9 +107,50 @@ public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSe
         spinnerMotherToungue.setAdapter(customSpinnerAdapter);
         customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),countryCodesList,regSpinnersData.COUNTRYCODE);
         spinnerCode.setAdapter(customSpinnerAdapter);
+        setListeners();
 
     }
 
+    public void setListeners()
+    {
+        spinnerReligion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                religion = religionsList.get(pos).get(regSpinnersData.NAME);
+                religionId = religionsList.get(pos).get(regSpinnersData.ID);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerMotherToungue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                motherTongue = motherToungueList.get(pos).get(regSpinnersData.NAME);
+                motherTongueId = motherToungueList.get(pos).get(regSpinnersData.ID);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                countryCode = countryCodesList.get(pos).get(regSpinnersData.COUNTRYCODE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -172,8 +214,8 @@ public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSe
                                     sharedPreference.putSharedPrefData(Constants.SAVEDPASSWORD,password);
                                     sharedPreference.putSharedPrefData(Constants.SAVEDMOBILE,mobileNumber);
 
-                                    userRegData.regDataObject.put(userRegData.RELIGION, religion);
-                                    userRegData.regDataObject.put(userRegData.MOTHERTONGUE, motherTongue);
+                                    userRegData.regDataObject.put(userRegData.RELIGION, religionId);
+                                    userRegData.regDataObject.put(userRegData.MOTHERTONGUE, motherTongueId);
                                     userRegData.regDataObject.put(userRegData.COUNTRYCODE, countryCode);
                                     userRegData.regDataObject.put(userRegData.PHONENUMBER, mobileNumber);
                                     userRegData.regDataObject.put(userRegData.EMAIL, email);
@@ -192,24 +234,6 @@ public class RegScreen2Fragment extends Fragment implements AdapterView.OnItemSe
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-        Spinner spinner = (Spinner) adapterView;
-        switch (spinner.getId()) {
-            case R.id.spinner_religion:
-                 religion = religionsList.get(pos).get(regSpinnersData.NAME);
-                break;
-            case R.id.spinner_mother_toungue:
-                 motherTongue = motherToungueList.get(pos).get(regSpinnersData.NAME);
-                break;
-            case R.id.spinner_code:
-                 countryCode = countryCodesList.get(pos).get(regSpinnersData.COUNTRYCODE);
-                break;
-        }
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
 }

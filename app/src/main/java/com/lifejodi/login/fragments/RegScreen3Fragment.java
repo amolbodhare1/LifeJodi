@@ -1,8 +1,11 @@
 package com.lifejodi.login.fragments;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +16,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.R;
+import com.lifejodi.login.activity.GetCurrentLocationActivity;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
@@ -38,11 +43,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 /**
  * Created by Ajay on 07-12-2017.
  */
 
-public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class RegScreen3Fragment extends Fragment{
 
     @BindView(R.id.spinner_marital_status)
     Spinner spinnerMaritalStatus;
@@ -60,13 +67,14 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
     RelativeLayout progressLayout;
     @BindView(R.id.spinner_current_location)
     Spinner spinnerCurrentLocation;
+    public static TextView textGetCurrentLocation;
 
     private boolean fragmentResume = false;
     private boolean fragmentVisible = false;
     private boolean fragmentOnCreated = false;
 
     String maritalStatus = "", dosham = "", country = "", cast = "", willingtoMarryOtherCommunities = "";
-
+    String maritalStatusId = "", castId = "", willingtoMarryOtherCommunitiesId = "";
     RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
     SetRegistrationFragment setRegistrationFragment;
@@ -86,7 +94,7 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
         view = inflater.inflate(R.layout.fragment_reg_screen3, null);
         unbinder = ButterKnife.bind(this, view);
 
-        initialization();
+        initialization(view);
         if (!fragmentResume && fragmentVisible) {
 
         }
@@ -114,7 +122,8 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
         }
     }
 
-    public void initialization() {
+    public void initialization(View v) {
+        textGetCurrentLocation = (TextView)v.findViewById(R.id.text_get_current_location);
         sharedPreference = SharedPreference.getSharedInstance();
         sharedPreference.initialize(getActivity());
 
@@ -131,7 +140,7 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
         spinnerCurrentLocation.setAdapter(customSpinnerAdapter);
 
         doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(),doshamList);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(), doshamList);
         spinnerDosham.setAdapter(spinnerAdapter);
 
 
@@ -145,6 +154,13 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 radioButton = (RadioButton) view.findViewById(i);
                 willingtoMarryOtherCommunities = radioButton.getText().toString();
+                if(willingtoMarryOtherCommunities.equals("Yes"))
+                {
+                    willingtoMarryOtherCommunitiesId = "1";
+                }else if(willingtoMarryOtherCommunities.equals("No"))
+                {
+                    willingtoMarryOtherCommunities = "0";
+                }
             }
         });
 
@@ -155,12 +171,76 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
             }
         });
 
-       /* textGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
+        textGetCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setLocation();
+                LocationManager locationManager = (LocationManager)getActivity().getSystemService(LOCATION_SERVICE);
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    //location service is enabled
+
+                    Intent intent = new Intent(getActivity(), GetCurrentLocationActivity.class);
+                    getActivity().startActivity(intent);
+
+                } else {
+                    //location service is disabled
+                    Intent intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent1);
+
+
+                }
+
             }
-        });*/
+        });
+
+        spinnerMaritalStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                maritalStatus = maritalStatusList.get(pos).get(regSpinnersData.VALUE);
+                maritalStatusId = maritalStatusList.get(pos).get(regSpinnersData.ID);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerCaste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                cast = casteList.get(pos).get(regSpinnersData.NAME);
+                castId = casteList.get(pos).get(regSpinnersData.ID);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerDosham.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                dosham = doshamList.get(pos);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerCurrentLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                country = countriesList.get(pos).get(regSpinnersData.NAME);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -186,17 +266,23 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
                         if (country.equalsIgnoreCase("") || country.equalsIgnoreCase(getResources().getString(R.string.select_country))) {
                             Toast.makeText(getActivity(), "Select country", Toast.LENGTH_SHORT).show();
                         } else {
-                            try {
-                                userRegData.regDataObject.put(userRegData.MARITALSTATUS, maritalStatus);
-                                userRegData.regDataObject.put(userRegData.CASTE, cast);
-                                userRegData.regDataObject.put(userRegData.DOSHAM, dosham);
-                                userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, willingtoMarryOtherCommunities);
-                                userRegData.regDataObject.put(userRegData.COUNTRY, country);
-                                setRegistrationFragment = (SetRegistrationFragment) getActivity();
-                                setRegistrationFragment.setRegFragment(3);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            if(textGetCurrentLocation.getText().equals("") || textGetCurrentLocation.getText().equals(getResources().getString(R.string.get_current_location)))
+                            {
+                                Toast.makeText(getActivity(), "Set current location", Toast.LENGTH_SHORT).show();
+                            }else {
+                                try {
+                                    userRegData.regDataObject.put(userRegData.MARITALSTATUS, maritalStatusId);
+                                    userRegData.regDataObject.put(userRegData.CASTE, castId);
+                                    userRegData.regDataObject.put(userRegData.DOSHAM, dosham);
+                                    userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, willingtoMarryOtherCommunitiesId);
+                                    userRegData.regDataObject.put(userRegData.COUNTRY, country);
+                                    setRegistrationFragment = (SetRegistrationFragment) getActivity();
+                                    setRegistrationFragment.setRegFragment(3);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
+
 
                         }
                     }
@@ -206,55 +292,10 @@ public class RegScreen3Fragment extends Fragment implements AdapterView.OnItemSe
 
     }
 
-    public void setLocation() {
-        String latitude = sharedPreference.getSharedPrefData(Constants.LATITUDE);
-        String longitude = sharedPreference.getSharedPrefData(Constants.LONGITUDE);
-        if (latitude != "" && longitude != "") {
-            double lats = Double.valueOf(latitude);
-            double longis = Double.valueOf(longitude);
-            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-            List<Address> addresses;
-            try {
-                addresses = gcd.getFromLocation(lats, longis, 1);
-                if (addresses.size() > 0) {
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    String locality = addresses.get(0).getLocality();
-                    String subLocality = addresses.get(0).getSubLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String knownName = addresses.get(0).getFeatureName();
-                 //   textGetCurrentLocation.setText(locality + "," + state + "," + country);
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getActivity(), "Error fetching location", Toast.LENGTH_SHORT).show();
-            }
-        }
+    public static void setCurrentLocation(String text)
+    {
+        textGetCurrentLocation.setText(text);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-        Spinner spinner = (Spinner) adapterView;
-        switch (spinner.getId()) {
-            case R.id.spinner_marital_status:
-                maritalStatus = maritalStatusList.get(pos).get(regSpinnersData.VALUE);
-                break;
-            case R.id.spinner_caste:
-                cast = casteList.get(pos).get(regSpinnersData.NAME);
-                break;
-            case R.id.spinner_dosham:
-                dosham = doshamList.get(pos);
-                break;
-            case R.id.spinner_current_location:
-                country = countriesList.get(pos).get(regSpinnersData.NAME);
-                break;
-        }
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

@@ -51,7 +51,11 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
 
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_spinner_list,null);
         TextView tv_spinner = (TextView) convertView.findViewById(R.id.spinnertext);
-
+        if (position == 0){
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.light_gray));
+        }else {
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
+        }
         HashMap<String,String> dataMap = dataList.get(position);
 
             switch (tag) {
@@ -94,9 +98,12 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
                 case RegSpinnersData.FAMILYVALUES:
                     tv_spinner.setText(dataMap.get(RegSpinnersData.VALUE));
                     break;
+                case RegSpinnersData.EMPLOYEDIN:
+                    tv_spinner.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
             }
 
-            tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
+         //   tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
 
         tv_spinner.setPadding(10, 0, 0, 0);
         return convertView;
@@ -107,7 +114,11 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_spinner_dropdown,null);
         TextView tv_spinner_drop = (TextView) convertView.findViewById(R.id.spinnertext_drop);
         HashMap<String,String> dataMap = dataList.get(position);
-
+        if (position == 0){
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.light_gray));
+        }else {
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
+        }
             switch (tag)
             {
                 case RegSpinnersData.PROFILEFOR:
@@ -149,8 +160,11 @@ public class CustomSpinnerAdapter  extends BaseAdapter {
                 case RegSpinnersData.FAMILYVALUES:
                     tv_spinner_drop.setText(dataMap.get(RegSpinnersData.VALUE));
                     break;
+                case RegSpinnersData.EMPLOYEDIN:
+                    tv_spinner_drop.setText(dataMap.get(RegSpinnersData.NAME));
+                    break;
             }
-            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
+        //    tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
             tv_spinner_drop.setPadding(30,0, 0, 0);
 
       //  }

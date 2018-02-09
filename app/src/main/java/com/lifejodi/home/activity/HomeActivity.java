@@ -26,6 +26,7 @@ import com.lifejodi.NotificationActivity;
 import com.lifejodi.ProfileActivity;
 import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
+import com.lifejodi.home.adapters.HomeViewPagerAdapter;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     AppController appController = AppController.getInstance();
+    HomeViewPagerAdapter homeViewPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,9 +94,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabs.addTab(tabs.newTab().setText("SHORTLISTED"));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         View view = navView.getHeaderView(0);
         tvHeaderName = (TextView)view.findViewById(R.id.nav_header_username);
         tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.USERNAME));
+
+        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(homeViewPagerAdapter);
+
     }
 
     @Override

@@ -58,6 +58,7 @@ public class UserRegData {
     public static String COUNTRY = "country";
     public static String PINCODE = "pincode";
     public static String FORMATTEDADDRESS = "formatted_address";
+    public static String USERID = "user_id";
 
 
 
@@ -70,6 +71,26 @@ public class UserRegData {
     public void setRegStatus(String regStatus) {
         this.regStatus = regStatus;
     }
+
+    //EDIT PROFILE
+    String editProfStatus = "";
+    public String getEditProfStatus() {
+        return editProfStatus;
+    }
+
+    public void setEditProfStatus(String editProfStatus) {
+        this.editProfStatus = editProfStatus;
+    }
+
+    String editProfMessage = "";
+    public String getEditProfMessage() {
+        return editProfMessage;
+    }
+
+    public void setEditProfMessage(String editProfMessage) {
+        this.editProfMessage = editProfMessage;
+    }
+
 
 
 

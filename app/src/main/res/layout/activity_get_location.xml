@@ -7,14 +7,24 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/blue"/>
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+       >
         <com.google.android.gms.maps.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.google.android.gms.maps.MapView>
-    </LinearLayout>
+        <com.lifejodi.utils.customfonts.CustomButtonBeatles
+            android:layout_gravity="bottom|center"
+            android:id="@+id/button_set_current_location"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:text="Set location"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_background"/>
+    </FrameLayout>
 
 </LinearLayout>

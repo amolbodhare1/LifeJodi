@@ -28,7 +28,18 @@ public class Constants {
     //sharedPref KEYS
     public static String LATITUDE="latitude";
     public static String LONGITUDE="longitude";
+    public static String LOCALOTY="locality";
+    public static String SUBLOCALITY="sub_locality";
+    public static String ADMINISTRATIVEADDR="admin_addr";
+    public static String COUNTRY="country";
+    public static String PINCODE="pincode";
     public static String REGSTATUS="registration_status";
+    public static String FORMATTEDADDR="formatted_addr";
+    public static String LOCATION_DATA_EXTRA = "location_data";
+    public static String RECEIVER = "receiver";
+    public static String RESULT_DATA_KEY = "address_result";
+    public static int FAILURE_RESULT = 1;
+    public static int  SUCCESS_RESULT =0;
 
 
     public static String PROFILEFOR="profile_for";
@@ -44,23 +55,48 @@ public class Constants {
 
     public static String LOGINNAME="login_name";
     public static String LOGINEMAIL="login_email";
+    public static String PROFILEID="profile_id";
 
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_GET_MASTERS = "get_masters";
 
     //REGISTER USER
-    public static String URL_REGISTER_USER = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String URL_REGISTER_USER = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_REGISTER_USER = "register_user";
 
     //LOGIN
-    public static String URL_LOGIN = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String URL_LOGIN = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_LOGIN= "login";
 
     //FORGOT PASSWORD
-    public static String URL_FORGOTPASSWORD = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String URL_FORGOTPASSWORD = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_FORGOTPASSWORD= "forgot_password";
 
+    //HOME MATCHES
+    public static String URL_HOME_MATCHES = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_HOME_MATCHES= "home_matches";
+
+    //HOME NEW MATCHES
+    public static String URL_HOME_NEWMATCHES = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_HOME_NEWMATCHES= "home_new_matches";
+
+    //SHORTLISTUSER
+    public static String URL_SHORTLIST_USER = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_SHORTLIST_USER= "shortlist_user";
+
+    //SHORTLISTUSERs LIST
+    public static String URL_SHORTLISTED_USERSLIST = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_SHORTLISTED_USERSLIST= "shortlistes_users_list";
+
+
+    //SHORTLISTUSERs LIST
+    public static String URL_SHORTLISTED_USERSDETAILS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_SHORTLISTED_USERSDETAILS= "shortlisted_details";
+
+    //DAILY RECOMMENDATIONS
+    public static String URL_DAILY_RECOMMENDATIONS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_DAILY_RECOMMENDATIONS= "daily_recommendations";
 
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();

@@ -2,6 +2,7 @@ package com.lifejodi.login.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -84,9 +85,10 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
     ArrayList<HashMap<String,String>> familyStatusList = new ArrayList<>();
     ArrayList<HashMap<String,String>> familyValuesList = new ArrayList<>();
     ArrayList<String> heightList = new ArrayList<>();
-    List<String> employedInList = new ArrayList<>();
+    ArrayList<HashMap<String,String>> employedInList = new ArrayList<>();
     String height = "", physicalStatus = "", education = "", occupation = "", employedIn = "", currency = "", annualIncome = "", familyStatus = "";
-    String familyType = "", familyValues = "", aboutFriend = "",profile="";
+    String familyType = "", familyValues = "", aboutFriend = "",profile="",familyTypeId = "";
+
 
     RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
     UserRegManager userRegManager = UserRegManager.getInstance();
@@ -146,19 +148,13 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
         customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),familyValuesList,regSpinnersData.FAMILYVALUES);
         spinnerFamilyValues.setAdapter(customSpinnerAdapter);
 
-        employedInList = Constants.getArraylistFromArray(RegSpinnersStaticData.employedInArray);
-        SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getActivity(),employedInList);
-        spinnerEmployedIn.setAdapter(spinnerAdapter);
+        employedInList = regSpinnersData.getEmployedInList();
+        customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),employedInList,regSpinnersData.EMPLOYEDIN);
+        spinnerEmployedIn.setAdapter(customSpinnerAdapter);
 
         heightList = regSpinnersData.getHeightList();
         SpinnerAdapter spinnerAdapter1 = new SpinnerAdapter(getActivity(),heightList);
         spinnerHeight.setAdapter(spinnerAdapter1);
-
-
-
-
-
-
 
 
         setListeners();
@@ -179,6 +175,12 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 radioButton = (RadioButton) view.findViewById(i);
                 familyType = radioButton.getText().toString();
+                if (familyType.equals("Joint")) {
+                        familyTypeId = "1";
+                } else if (familyType.equals("Nuclear")){
+                    familyTypeId = "0";
+
+            }
             }
         });
 
@@ -205,25 +207,25 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                 height = heightList.get(pos);
                 break;
             case R.id.spinner_physical_status:
-                physicalStatus = physicalStatusList.get(pos).get(regSpinnersData.VALUE);
+                physicalStatus = physicalStatusList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_education:
-                education = educationList.get(pos).get(regSpinnersData.NAME);
+                education = educationList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_occupation:
-                occupation = occupationList.get(pos).get(regSpinnersData.NAME);
+                occupation = occupationList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_employed_in:
-                employedIn = employedInList.get(pos);
+                employedIn = employedInList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_currency_code:
-                currency = currencyList.get(pos).get(regSpinnersData.VALUE);
+                currency = currencyList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_family_status:
-                familyStatus = familyStatusList.get(pos).get(regSpinnersData.VALUE);
+                familyStatus = familyStatusList.get(pos).get(regSpinnersData.ID);
                 break;
             case R.id.spinner_family_values:
-                familyValues = familyValuesList.get(pos).get(regSpinnersData.VALUE);
+                familyValues = familyValuesList.get(pos).get(regSpinnersData.ID);
                 break;
         }
     }
@@ -251,30 +253,58 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                         if (employedIn.equals("") || employedIn.equalsIgnoreCase("Employed in")) {
                             Toast.makeText(getActivity(), "Select employed in", Toast.LENGTH_SHORT).show();
                         } else {
-                            if (currency.equals("") || currency.equalsIgnoreCase(getResources().getString(R.string.select_currency))) {
+                            if (currency.equals("") || currency.equals("0")|| currency.equalsIgnoreCase(getResources().getString(R.string.select_currency))) {
                                 Toast.makeText(getActivity(), "Select currency", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (annualIncome.equalsIgnoreCase("")) {
                                     Toast.makeText(getActivity(), "Enter annual income", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (familyStatus.equals("") || familyStatus.equalsIgnoreCase("Family status")) {
+                                    if (familyStatus.equals("") || familyStatus.equalsIgnoreCase(getResources().getString(R.string.select_family_status))) {
                                         Toast.makeText(getActivity(), "Select family status", Toast.LENGTH_SHORT).show();
                                     } else {
                                         if (familyType.equalsIgnoreCase("")) {
                                             Toast.makeText(getActivity(), "Select family type", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            if (familyValues.equals("") || familyValues.equalsIgnoreCase("Family values")) {
+                                            if (familyValues.equals("") || familyValues.equalsIgnoreCase(getResources().getString(R.string.select_family_values))) {
                                                 Toast.makeText(getActivity(), "Select family values", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 if (aboutFriend.equalsIgnoreCase("")) {
-                                                    Toast.makeText(getActivity(), "Enter about your friend", Toast.LENGTH_SHORT).show();
+                                                    if(profile.equalsIgnoreCase("Myself"))
+                                                    {
+
+                                                        Toast.makeText(getActivity(), "Enter about yourself", Toast.LENGTH_SHORT).show();
+
+                                                    }else {
+
+                                                        Toast.makeText(getActivity(), "Enter about your "+profile, Toast.LENGTH_SHORT).show();
+
+                                                    }
+
                                                 } else {
                                                     try {
                                                         userRegData.regDataObject.put(userRegData.HEIGHT, height);
-                                                      //  userRegData.regDataObject.put(userRegData.KEY_WEIGHT, " ");
+                                                        userRegData.regDataObject.put(userRegData.PHYSICALSTATUS, physicalStatus);
+                                                        userRegData.regDataObject.put(userRegData.EDUCATION, education);
+                                                        userRegData.regDataObject.put(userRegData.OCCUPATION, occupation);
+                                                        userRegData.regDataObject.put(userRegData.EMPLOYEDIN, employedIn);
+                                                        userRegData.regDataObject.put(userRegData.CURRENCY, currency);
+                                                        userRegData.regDataObject.put(userRegData.ANNUALINCOME, annualIncome);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYSTATUS, familyStatus);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYTYPE, familyType);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYVALUES, familyValues);
+                                                        userRegData.regDataObject.put(userRegData.ABOUT, aboutFriend);
+
+                                                        userRegData.regDataObject.put(userRegData.LATITUDE, sharedPreference.getSharedPrefData(Constants.LATITUDE));
+                                                        userRegData.regDataObject.put(userRegData.LONGITUDE, sharedPreference.getSharedPrefData(Constants.LONGITUDE));
+                                                        userRegData.regDataObject.put(userRegData.LOCALITY, sharedPreference.getSharedPrefData(Constants.LOCALOTY));
+                                                        userRegData.regDataObject.put(userRegData.SUBLOCALITY, sharedPreference.getSharedPrefData(Constants.SUBLOCALITY));
+                                                        userRegData.regDataObject.put(userRegData.ADMINISTRATIVEAREA, sharedPreference.getSharedPrefData(Constants.ADMINISTRATIVEADDR));
+                                                        userRegData.regDataObject.put(userRegData.PINCODE, sharedPreference.getSharedPrefData(Constants.PINCODE));
+                                                        userRegData.regDataObject.put(userRegData.FORMATTEDADDRESS, sharedPreference.getSharedPrefData(Constants.FORMATTEDADDR));
+                                                        String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                                                         userRegManager.initialize(this, getActivity());
                                                         progressLayout.setVisibility(View.VISIBLE);
-                                                        userRegManager.registerUser(userRegData.regDataObject);
+                                                        userRegManager.registerUser(userRegManager.regUserInputParams(androidDeviceId,userRegData.regDataObject));
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
                                                     }
@@ -304,14 +334,20 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
             startActivity(intent);
             getActivity().finish();
         }*/
+        progressLayout.setVisibility(View.GONE);
+        Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
+        /*if(msg.equalsIgnoreCase("Already Registered !") || msg.equalsIgnoreCase("Successfully Registered!!"))
+        {
+            sharedPreference.putSharedPrefData(Constants.REGSTATUS,"1");
+        }*/
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
         progressLayout.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), "You are registered successfully.", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+        Toast.makeText(getActivity(),msg, Toast.LENGTH_SHORT).show();
     }
 }

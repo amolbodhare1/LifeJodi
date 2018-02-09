@@ -68,6 +68,7 @@ public class UserRegManager implements VolleyResponse {
            case Constants.TAG_REGISTER_USER:
                parseRegisterUserResponse(strResponse,tag);
                break;
+
        }
     }
 
