@@ -40,6 +40,8 @@ public class Constants {
     public static String RESULT_DATA_KEY = "address_result";
     public static int FAILURE_RESULT = 1;
     public static int  SUCCESS_RESULT =0;
+    public static String  USERID ="userid";
+    public static String  USERDATA ="user_data";
 
 
     public static String PROFILEFOR="profile_for";
@@ -56,7 +58,7 @@ public class Constants {
     public static String LOGINNAME="login_name";
     public static String LOGINEMAIL="login_email";
     public static String PROFILEID="profile_id";
-
+    public static String UID="uid";
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_GET_MASTERS = "get_masters";

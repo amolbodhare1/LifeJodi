@@ -300,6 +300,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
                         try {
                             sharedPreference.putSharedPrefData(Constants.USERNAME,name);
                             userRegData.regDataObject.put(userRegData.PROFILEFOR, profId);
+                            userRegData.regDataObject.put(userRegData.PROFILEFORNAME, profileFor);
                             userRegData.regDataObject.put(userRegData.NAME, name);
                             userRegData.regDataObject.put(userRegData.GENDER,gender);
                             userRegData.regDataObject.put(userRegData.DOB, dob);

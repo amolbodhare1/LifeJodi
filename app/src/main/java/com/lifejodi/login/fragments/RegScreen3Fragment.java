@@ -272,7 +272,9 @@ public class RegScreen3Fragment extends Fragment{
                             }else {
                                 try {
                                     userRegData.regDataObject.put(userRegData.MARITALSTATUS, maritalStatusId);
+                                    userRegData.regDataObject.put(userRegData.MARITALSTATUSNAME, maritalStatus);
                                     userRegData.regDataObject.put(userRegData.CASTE, castId);
+                                    userRegData.regDataObject.put(userRegData.CASTENAME, cast);
                                     userRegData.regDataObject.put(userRegData.DOSHAM, dosham);
                                     userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, willingtoMarryOtherCommunitiesId);
                                     userRegData.regDataObject.put(userRegData.COUNTRY, country);

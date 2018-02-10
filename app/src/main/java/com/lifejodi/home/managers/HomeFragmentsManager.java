@@ -57,7 +57,7 @@ public class HomeFragmentsManager implements VolleyResponse {
             jsonObject.put(HomeFragmentsData.VERSION,"1.0");
 
             JSONObject dataObject = new JSONObject();
-            dataObject.put(HomeFragmentsData.PROFILEID,profileId);
+            dataObject.put(HomeFragmentsData.USERID,profileId);
 
             jsonObject.put(HomeFragmentsData.DATA,dataObject);
 

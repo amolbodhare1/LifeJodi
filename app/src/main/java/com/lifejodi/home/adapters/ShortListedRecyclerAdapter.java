@@ -10,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lifejodi.R;
-import com.lifejodi.home.activity.ProfileListActivity;
-import com.lifejodi.home.data.HomeFragmentsData;
+import com.lifejodi.home.activity.ProfileDetailsActivity;
 import com.lifejodi.home.data.ShortlistData;
+import com.lifejodi.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +49,7 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
         holder.tvName.setText(dataMap.get(ShortlistData.FULLNAME));
         holder.tvAge.setText(dataMap.get(ShortlistData.AGE)+" yrs");
         String imageUrl = dataMap.get(ShortlistData.PROFILEPIC);
+        imageUrl = imageUrl.replace("https","http");
         if(dataMap.get(ShortlistData.GENDER).equalsIgnoreCase("Male"))
         {
             defaultImage = R.drawable.picture;
@@ -67,7 +66,8 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ProfileListActivity.class);
+                Intent intent = new Intent(context, ProfileDetailsActivity.class);
+                intent.putExtra(Constants.USERID,dataMap.get(ShortlistData.ID));
                 context.startActivity(intent);
             }
         });

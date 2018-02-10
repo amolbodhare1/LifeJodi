@@ -23,10 +23,11 @@ import android.widget.TextView;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
-import com.lifejodi.ProfileActivity;
 import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
+import com.lifejodi.navigation.activities.DailyRecommActivity;
+import com.lifejodi.navigation.activities.EditProfileActivity;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    TextView tvHeaderName;
+    TextView tvHeaderName,tvHeaderProfId;
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     AppController appController = AppController.getInstance();
@@ -113,7 +114,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View view = navView.getHeaderView(0);
         tvHeaderName = (TextView)view.findViewById(R.id.nav_header_username);
-        tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.USERNAME));
+        tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
+        tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
+        tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.UID));
 
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
@@ -125,6 +128,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_my_matches) {
             // Handle the camera action
+            viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_inbox) {
             startActivity(new Intent(getApplicationContext(),InboxActivity.class));
         } else if (id == R.id.nav_upgrade_account) {
@@ -132,11 +136,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_chat) {
 
         } else if (id == R.id.nav_edit_profile) {
-            startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+            Intent editIntent= new Intent(HomeActivity.this, EditProfileActivity.class);
+            startActivity(editIntent);
+
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_daily_recomm) {
-
+            Intent dailyRecommintent = new Intent(HomeActivity.this, DailyRecommActivity.class);
+            startActivity(dailyRecommintent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -215,7 +215,9 @@ public class RegScreen2Fragment extends Fragment{
                                     sharedPreference.putSharedPrefData(Constants.SAVEDMOBILE,mobileNumber);
 
                                     userRegData.regDataObject.put(userRegData.RELIGION, religionId);
+                                    userRegData.regDataObject.put(userRegData.RELIGIONNAME, religion);
                                     userRegData.regDataObject.put(userRegData.MOTHERTONGUE, motherTongueId);
+                                    userRegData.regDataObject.put(userRegData.MOTHERTONGUENAME, motherTongue);
                                     userRegData.regDataObject.put(userRegData.COUNTRYCODE, countryCode);
                                     userRegData.regDataObject.put(userRegData.PHONENUMBER, mobileNumber);
                                     userRegData.regDataObject.put(userRegData.EMAIL, email);

@@ -14,15 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.lifejodi.R;
-import com.lifejodi.home.adapters.MatchesRecyclerAdapter;
 import com.lifejodi.home.adapters.ShortListedRecyclerAdapter;
-import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
-import com.lifejodi.home.managers.HomeFragmentsManager;
 import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +37,8 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
     Unbinder unbinder;
+    @BindView(R.id.text_no_shortlisted_data)
+    CustomTextBeatles textNoShortlistedData;
 
     private boolean fragmentResume = false;
     private boolean fragmentVisible = false;
@@ -69,9 +69,9 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
             profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             shortListManager = ShortListManager.getInstance();
-            shortListManager.initialize(this,getActivity());
+            shortListManager.initialize(this, getActivity());
             progressLayout.setVisibility(View.VISIBLE);
-            shortListManager.getShortListedUsersList(shortListManager.getShortlistedUsersListParams(androidDeviceId,profId));
+            shortListManager.getShortListedUsersList(shortListManager.getShortlistedUsersListParams(androidDeviceId, profId));
 
         }
         return view;
@@ -87,9 +87,9 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
             profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             shortListManager = ShortListManager.getInstance();
-            shortListManager.initialize(this,getActivity());
+            shortListManager.initialize(this, getActivity());
             progressLayout.setVisibility(View.VISIBLE);
-            shortListManager.getShortListedUsersList(shortListManager.getShortlistedUsersListParams(androidDeviceId,profId));
+            shortListManager.getShortListedUsersList(shortListManager.getShortlistedUsersListParams(androidDeviceId, profId));
 
 
         } else if (isVisibleToUser) {        // only at fragment onCreated
@@ -112,19 +112,26 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
 
     @Override
     public void successCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_SHORTLISTED_USERSLIST:
                 progressLayout.setVisibility(View.GONE);
                 String status = shortlistData.getShortListedUsersStatus();
                 String message = shortlistData.getShortListedUsersMessage();
-                if(status.equals("1"))
-                {
-                    shortListedRecyclerAdapter = new ShortListedRecyclerAdapter(getActivity(),shortlistData.getShortListedUsersList());
-                    recFragmentShortlisted.setAdapter(shortListedRecyclerAdapter);
-                }else {
-                    Toast.makeText(getActivity(), ""+message, Toast.LENGTH_SHORT).show();
-
+                if (status.equals("1")) {
+                    if(shortlistData.getShortListedUsersList().size()>0) {
+                        textNoShortlistedData.setVisibility(View.GONE);
+                        recFragmentShortlisted.setVisibility(View.VISIBLE);
+                        shortListedRecyclerAdapter = new ShortListedRecyclerAdapter(getActivity(), shortlistData.getShortListedUsersList());
+                        recFragmentShortlisted.setAdapter(shortListedRecyclerAdapter);
+                    }else {
+                        textNoShortlistedData.setVisibility(View.VISIBLE);
+                        recFragmentShortlisted.setVisibility(View.GONE);
+                    }
+                } else {
+                    //Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+                    textNoShortlistedData.setVisibility(View.VISIBLE);
+                    textNoShortlistedData.setText(message);
+                    recFragmentShortlisted.setVisibility(View.GONE);
                 }
 
                 break;
@@ -133,11 +140,10 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
 
     @Override
     public void errorCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_SHORTLISTED_USERSLIST:
                 progressLayout.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

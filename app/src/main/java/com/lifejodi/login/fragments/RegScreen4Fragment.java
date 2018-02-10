@@ -89,6 +89,8 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
     String height = "", physicalStatus = "", education = "", occupation = "", employedIn = "", currency = "", annualIncome = "", familyStatus = "";
     String familyType = "", familyValues = "", aboutFriend = "",profile="",familyTypeId = "";
 
+    String physicalStatusName="",eduName="",occupationName="",employedInName="",currencyCodeName="",famStatusNAme="",famValuesName="";
+
 
     RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
     UserRegManager userRegManager = UserRegManager.getInstance();
@@ -208,24 +210,31 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                 break;
             case R.id.spinner_physical_status:
                 physicalStatus = physicalStatusList.get(pos).get(regSpinnersData.ID);
+                physicalStatusName = physicalStatusList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_education:
                 education = educationList.get(pos).get(regSpinnersData.ID);
+                eduName = educationList.get(pos).get(regSpinnersData.NAME);
                 break;
             case R.id.spinner_occupation:
                 occupation = occupationList.get(pos).get(regSpinnersData.ID);
+                occupationName = occupationList.get(pos).get(regSpinnersData.NAME);
                 break;
             case R.id.spinner_employed_in:
                 employedIn = employedInList.get(pos).get(regSpinnersData.ID);
+                employedInName = employedInList.get(pos).get(regSpinnersData.NAME);
                 break;
             case R.id.spinner_currency_code:
                 currency = currencyList.get(pos).get(regSpinnersData.ID);
+                currencyCodeName = currencyList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_family_status:
                 familyStatus = familyStatusList.get(pos).get(regSpinnersData.ID);
+                famStatusNAme = familyStatusList.get(pos).get(regSpinnersData.VALUE);
                 break;
             case R.id.spinner_family_values:
                 familyValues = familyValuesList.get(pos).get(regSpinnersData.ID);
+                famValuesName = familyValuesList.get(pos).get(regSpinnersData.VALUE);
                 break;
         }
     }
@@ -290,9 +299,18 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                                                         userRegData.regDataObject.put(userRegData.CURRENCY, currency);
                                                         userRegData.regDataObject.put(userRegData.ANNUALINCOME, annualIncome);
                                                         userRegData.regDataObject.put(userRegData.FAMILYSTATUS, familyStatus);
-                                                        userRegData.regDataObject.put(userRegData.FAMILYTYPE, familyType);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYTYPE, familyTypeId);
                                                         userRegData.regDataObject.put(userRegData.FAMILYVALUES, familyValues);
                                                         userRegData.regDataObject.put(userRegData.ABOUT, aboutFriend);
+
+                                                        userRegData.regDataObject.put(userRegData.PHYSICALSTATUSNAME, physicalStatusName);
+                                                        userRegData.regDataObject.put(userRegData.EDUCATIONNAME, eduName);
+                                                        userRegData.regDataObject.put(userRegData.OCCUPATIONNAME, occupationName);
+                                                        userRegData.regDataObject.put(userRegData.EMPLOYEDINNAME, employedInName);
+                                                        userRegData.regDataObject.put(userRegData.CURRENCYNAME, currencyCodeName);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYSTATUSNAME, famStatusNAme);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYVALUESNAME, famValuesName);
+                                                        userRegData.regDataObject.put(userRegData.FAMILYTYPENAME, familyType);
 
                                                         userRegData.regDataObject.put(userRegData.LATITUDE, sharedPreference.getSharedPrefData(Constants.LATITUDE));
                                                         userRegData.regDataObject.put(userRegData.LONGITUDE, sharedPreference.getSharedPrefData(Constants.LONGITUDE));
@@ -301,6 +319,8 @@ public class RegScreen4Fragment extends Fragment implements AdapterView.OnItemSe
                                                         userRegData.regDataObject.put(userRegData.ADMINISTRATIVEAREA, sharedPreference.getSharedPrefData(Constants.ADMINISTRATIVEADDR));
                                                         userRegData.regDataObject.put(userRegData.PINCODE, sharedPreference.getSharedPrefData(Constants.PINCODE));
                                                         userRegData.regDataObject.put(userRegData.FORMATTEDADDRESS, sharedPreference.getSharedPrefData(Constants.FORMATTEDADDR));
+
+                                                        sharedPreference.putSharedPrefData(Constants.USERDATA,userRegData.regDataObject.toString());
                                                         String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
                                                         userRegManager.initialize(this, getActivity());
                                                         progressLayout.setVisibility(View.VISIBLE);

@@ -11,21 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lifejodi.R;
-import com.lifejodi.home.activity.ProfileListActivity;
+import com.lifejodi.home.activity.ProfileDetailsActivity;
 import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +40,9 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
 
     ShortListManager shortListManager;
     ShortlistData shortlistData = ShortlistData.getInstance();
-    RelativeLayout progressLayout;
+
+    int pos=0;
+
 
     public MatchesRecyclerAdapter(Context con,ArrayList<HashMap<String,String>> matchesList)
     {
@@ -58,12 +58,14 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
     }
 
     @Override
-    public void onBindViewHolder(final MatchesHolder holder, int position) {
+    public void onBindViewHolder(final MatchesHolder holder, final int position) {
         int defaultImage=0;
+
         final HashMap<String,String> dataMap = dataList.get(position);
         holder.tvName.setText(dataMap.get(HomeFragmentsData.FULLNAME));
         holder.tvAge.setText(dataMap.get(HomeFragmentsData.AGE)+" yrs");
         String imageUrl = dataMap.get(HomeFragmentsData.PROFILEPIC);
+        imageUrl = imageUrl.replace("https","http");
         if(dataMap.get(HomeFragmentsData.GENDER).equalsIgnoreCase("Male"))
         {
              defaultImage = R.drawable.picture;
@@ -80,7 +82,8 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ProfileListActivity.class);
+                Intent intent = new Intent(context, ProfileDetailsActivity.class);
+                intent.putExtra(Constants.USERID,dataMap.get(HomeFragmentsData.ID));
                 context.startActivity(intent);
             }
         });
@@ -93,10 +96,12 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
                 String userId = dataMap.get(HomeFragmentsData.ID);
                 shortListManager = ShortListManager.getInstance();
                 shortListManager.initialize(MatchesRecyclerAdapter.this,context);
-                progressLayout.setVisibility(View.VISIBLE);
+                holder.progressLayout.setVisibility(View.VISIBLE);
                 shortListManager.shortListUser(shortListManager.getShortlistUserParams(androidDeviceId,profId,userId));
             }
         });
+        holder.progressLayout.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -109,9 +114,9 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         switch (tag)
         {
             case Constants.TAG_SHORTLIST_USER:
-                progressLayout.setVisibility(View.GONE);
                 String message = shortlistData.getShortlistingMessage();
                 Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
                 break;
         }
     }
@@ -121,8 +126,8 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         switch (tag)
         {
             case Constants.TAG_SHORTLIST_USER:
-                progressLayout.setVisibility(View.GONE);
                 Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
                 break;
         }
 
@@ -134,6 +139,7 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         ImageView ivProfPic;
         FloatingActionButton fabChat,fabShortlist;
         TextView tvName,tvAge;
+        RelativeLayout progressLayout;
         public MatchesHolder(View itemView) {
             super(itemView);
             layout = (FrameLayout) itemView.findViewById(R.id.layout_home_list);
@@ -142,7 +148,7 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
             fabShortlist = (FloatingActionButton) itemView.findViewById(R.id.button_matches_shortlist);
             tvName = (TextView) itemView.findViewById(R.id.text_matches_name);
             tvAge = (TextView) itemView.findViewById(R.id.text_matches_age);
-            progressLayout = (RelativeLayout)itemView.findViewById(R.id.progressLayout);
+            progressLayout = (RelativeLayout)itemView.findViewById(R.id.progressLayout_shortlist_user);
         }
     }
 }

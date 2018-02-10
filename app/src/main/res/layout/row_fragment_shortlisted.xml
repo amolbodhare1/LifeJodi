@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 app:layout_anchor="@+id/image_shortlisted_profpic"
                 app:layout_anchorGravity="bottom|end"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:src="@mipmap/ic_chat_white"
                 app:fabSize="mini"/>
            <!-- <android.support.design.widget.FloatingActionButton

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,13 +25,14 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:scaleType="centerCrop"
+                    android:id="@+id/image_prof_details_pic"
+                    android:scaleType="fitXY"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/images"/>
+                    />
 
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
-                    android:id="@+id/text_name"
+                    android:id="@+id/text_prof_details_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -35,8 +40,8 @@
                     android:layout_marginBottom="11dp"
                     android:layout_marginStart="14dp"
                     android:text="Jola87 allen"
-                    android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textColor="@color/pink"
+                    android:textSize="16dp" />
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -52,7 +57,7 @@
                 android:gravity="center">
 
                 <LinearLayout
-                    android:id="@+id/layout_shortlist"
+                    android:id="@+id/layout_profdetails_shortlist"
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,7 +79,7 @@
                         android:textSize="14dp"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/layout_call_now"
+                    android:id="@+id/layout_profdetails_call"
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +101,7 @@
                         android:textSize="14dp"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/layout_chat_now"
+                    android:id="@+id/layout_profdetails_chat"
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,6 +125,9 @@
 
             </LinearLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <LinearLayout
                 android:paddingTop="10dp"
                 android:paddingLeft="20dp"
@@ -151,7 +159,7 @@
 
                         android:textSize="14dp"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
-                        android:id="@+id/text_dob"
+                        android:id="@+id/text_prof_details_dob"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="11 Nov 1987"
@@ -171,7 +179,7 @@
 
                         android:textSize="14dp"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
-                        android:id="@+id/text_religion"
+                        android:id="@+id/text_prof_details_religion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Catholic"
@@ -191,7 +199,48 @@
 
                         android:textSize="14dp"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
-                        android:id="@+id/text_mother_toungue"
+                        android:id="@+id/text_prof_details_mothertongue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"
+                        android:textSize="14dp"
+
+                        android:textColor="@color/dark_grey"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Age : "
+
+                        android:textSize="14dp"/>
+                    <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:id="@+id/text_prof_details_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"
+                        android:textSize="14dp"
+
+                        android:textColor="@color/dark_grey"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender : "
+
+                        android:textSize="14dp"/>
+                    <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:id="@+id/text_prof_details_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="English"
@@ -214,7 +263,7 @@
 
                         android:textColor="@color/blue"/>
                     <com.lifejodi.utils.customfonts.CustomButtonBeatles
-                        android:id="@+id/button_yes"
+                        android:id="@+id/button_profdetails_yes"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
@@ -224,20 +273,33 @@
                         android:textColor="@color/pink"
                         android:background="@drawable/button_white_background"/>
                     <com.lifejodi.utils.customfonts.CustomButtonBeatles
-                        android:id="@+id/button_skip"
+                        android:id="@+id/button_profdetails_skip"
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:text="skip"
                         android:textSize="14dp"
-
                         android:textColor="@color/pink"
                         android:background="@drawable/button_white_background"/>
                 </LinearLayout>
 
             </LinearLayout>
-
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+</RelativeLayout>

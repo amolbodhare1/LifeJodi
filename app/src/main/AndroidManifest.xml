@@ -31,12 +31,13 @@
         <activity android:name=".event.activity.EventsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".event.activity.EventRegistrationActivity" android:screenOrientation="portrait"/>
         <activity android:name=".PaymentActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ProfileActivity" android:screenOrientation="portrait"/>
         <activity android:name=".VideoCallActivity" android:screenOrientation="portrait"/>
         <activity android:name=".SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name=".login.activity.LoginViaOTPActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".home.activity.ProfileListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".login.activity.GetCurrentLocationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".home.activity.ProfileDetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".navigation.activities.DailyRecommActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".navigation.activities.EditProfileActivity" android:screenOrientation="portrait"/>
         <service android:name=".login.service.FetchAddressIntentService"
             android:exported="false"/>
 
