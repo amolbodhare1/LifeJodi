@@ -27,7 +27,7 @@ import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
 import com.lifejodi.navigation.activities.DailyRecommActivity;
-import com.lifejodi.navigation.activities.EditProfileActivity;
+import com.lifejodi.navigation.activities.ShowProfileDataActivity;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_chat) {
 
         } else if (id == R.id.nav_edit_profile) {
-            Intent editIntent= new Intent(HomeActivity.this, EditProfileActivity.class);
+            Intent editIntent= new Intent(HomeActivity.this, ShowProfileDataActivity.class);
             startActivity(editIntent);
 
         } else if (id == R.id.nav_setting) {

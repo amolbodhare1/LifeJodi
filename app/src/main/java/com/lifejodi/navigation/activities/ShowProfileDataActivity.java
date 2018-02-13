@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2/10/2018.
  */
 
-public class EditProfileActivity extends AppCompatActivity {
+public class ShowProfileDataActivity extends AppCompatActivity {
 
     @BindView(R.id.tools_edit)
     Toolbar toolsEdit;
@@ -84,7 +84,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_show_profile_data);
         ButterKnife.bind(this);
         initialization();
     }
