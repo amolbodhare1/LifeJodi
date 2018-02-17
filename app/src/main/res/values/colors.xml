@@ -5,9 +5,13 @@
     <color name="colorAccent">#eb5795</color>
 
     <color name="line_color">#bdbdbd</color>
+    <color name="bottomline_color">#e0e0e0</color>
     <color name="dark_grey">#424242</color>
-    <color name="hint_color">#9e9e9e</color>
+    <color name="hint_color">#bdbdbd</color>
+    <color name="light_gray">#9e9e9e</color>
     <color name="blue">#333379</color>
     <color name="pink">#eb5795</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
 </resources>

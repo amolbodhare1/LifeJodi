@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">LifeJodi</string>
+    <string name="facebook_app_id">515103778873176</string>
+    <string name="fb_login_protocol_scheme">fb515103778873176</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,4 +11,23 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_search">Search</string>
     <string name="title_events">Events</string>
+
+    <string name="profile_for">Profile created for</string>
+    <string name="select_dob">Select date of birth</string>
+    <string name="select_religion">Select Religion</string>
+    <string name="select_mother_tongue">Mother tongue</string>
+    <string name="select_cast">Select caste</string>
+    <string name="select_marital_status">Select Marital Status</string>
+    <string name="select_country">Country living in</string>
+    <string name="select_height">Height</string>
+    <string name="select_physicalstatus">Physical status</string>
+    <string name="select_education">Education</string>
+    <string name="select_occupation">Occupation</string>
+    <string name="select_currency">Currency</string>
+    <string name="select_family_status">Family status</string>
+    <string name="select_family_values">Family values</string>
+    <string name="get_current_location">Get my current location</string>
+
+
+
 </resources>

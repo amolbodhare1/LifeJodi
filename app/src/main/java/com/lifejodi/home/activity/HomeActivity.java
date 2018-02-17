@@ -15,14 +15,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
-import com.lifejodi.ProfileActivity;
 import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
+import com.lifejodi.home.adapters.HomeViewPagerAdapter;
+import com.lifejodi.navigation.activities.DailyRecommActivity;
+import com.lifejodi.navigation.activities.ShowProfileDataActivity;
+import com.lifejodi.utils.AppController;
+import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.SharedPreference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +55,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    TextView tvHeaderName,tvHeaderProfId;
+    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+
+    AppController appController = AppController.getInstance();
+    HomeViewPagerAdapter homeViewPagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +71,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initialization() {
-
-
+        sharedPreference.initialize(this);
+        appController.initialize(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -81,6 +94,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tabs.addTab(tabs.newTab().setText("NEW MATCHES"));
         tabs.addTab(tabs.newTab().setText("SHORTLISTED"));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        View view = navView.getHeaderView(0);
+        tvHeaderName = (TextView)view.findViewById(R.id.nav_header_username);
+        tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
+        tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
+        tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.UID));
+
+        homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(homeViewPagerAdapter);
+
     }
 
     @Override
@@ -88,6 +128,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.nav_my_matches) {
             // Handle the camera action
+            viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_inbox) {
             startActivity(new Intent(getApplicationContext(),InboxActivity.class));
         } else if (id == R.id.nav_upgrade_account) {
@@ -95,11 +136,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_chat) {
 
         } else if (id == R.id.nav_edit_profile) {
-            startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+            Intent editIntent= new Intent(HomeActivity.this, ShowProfileDataActivity.class);
+            startActivity(editIntent);
+
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_daily_recomm) {
-
+            Intent dailyRecommintent = new Intent(HomeActivity.this, DailyRecommActivity.class);
+            startActivity(dailyRecommintent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -132,4 +176,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return false;
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            appController.doubleTapToExit(HomeActivity.this);
+        }
+        return true;
+    }
 }

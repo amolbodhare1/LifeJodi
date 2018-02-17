@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.lifejodi.utils.Constants;
 
 import org.json.JSONObject;
 
@@ -110,7 +111,13 @@ public class VolleyRequest {
                         sendError(error, tag);
                         Log.d(TAG, "volleyStringRequest " + "Fail");
                     }
-                });
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return Constants.getHeader();
+            }
+        };
 
 
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(

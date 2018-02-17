@@ -1,5 +1,6 @@
 package com.lifejodi.login.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.lifejodi.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ajay on 07-12-2017.
@@ -17,10 +19,12 @@ import java.util.ArrayList;
 
 public class SpinnerAdapter extends BaseAdapter {
 
-    ArrayList<String> list = new ArrayList<>();
+    List<String> list = new ArrayList<>();
+    Context context;
 
-    public SpinnerAdapter(ArrayList<String> list) {
-        this.list = list;
+    public SpinnerAdapter(Context mcontext,List<String> dataList) {
+        context = mcontext;
+        list = dataList;
     }
 
     @Override
@@ -46,9 +50,9 @@ public class SpinnerAdapter extends BaseAdapter {
 
         tv_spinner.setText(list.get(position));
         if (position == 0){
-            tv_spinner.setHintTextColor(Color.parseColor("#9e9e9e"));
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.light_gray));
         }else {
-            tv_spinner.setTextColor(Color.parseColor("#424242"));
+            tv_spinner.setTextColor(context.getResources().getColor(R.color.dark_grey));
         }
         tv_spinner.setPadding(10, 0, 0, 0);
         return convertView;
@@ -63,13 +67,13 @@ public class SpinnerAdapter extends BaseAdapter {
         if(position==0)
         {
             tv_spinner_drop.setPadding(10,10, 0, 0);
-            tv_spinner_drop.setTextColor(Color.parseColor("#424242"));
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.light_gray));
             tv_spinner_drop.setTextSize(18);
 
         }
         else
         {
-            tv_spinner_drop.setTextColor(Color.parseColor("#424242"));
+            tv_spinner_drop.setTextColor(context.getResources().getColor(R.color.dark_grey));
             tv_spinner_drop.setPadding(30,0, 0, 0);
 
         }
@@ -77,4 +81,6 @@ public class SpinnerAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+
 }

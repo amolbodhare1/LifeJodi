@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="15dp"
+        android:gravity="center">
     <com.lifejodi.utils.customfonts.CustomTextBeatles
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
@@ -21,6 +31,14 @@
         android:layout_width="260dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal">
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+           />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -43,7 +61,7 @@
     <LinearLayout
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -73,17 +91,20 @@
     <Spinner
         android:layout_marginTop="15dp"
         android:id="@+id/spinner_profile"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        android:spinnerMode="dialog"
+        app:backgroundTint="@color/bottomline_color"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:textColor="@color/dark_grey"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+         />
 
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_marginTop="18dp"
-        android:layout_width="320dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
@@ -101,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:hint="Name"
-                    android:textColorHint="@color/colorPrimary"
+                    android:textColorHint="@color/hint_color"
                     android:textColor="@color/dark_grey"
                     android:textSize="14dp"
                     android:background="@null"
@@ -113,14 +134,14 @@
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/line_color"/>
+            android:background="@color/bottomline_color"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
 
@@ -139,6 +160,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radiobutton_male"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,6 +169,7 @@
                 android:textColor="@color/pink"
                 android:buttonTint="@color/pink"/>
             <RadioButton
+                android:id="@+id/radiobutton_female"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -161,7 +184,7 @@
         android:id="@+id/layout_select_dob"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -176,7 +199,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select date of birth"
+            android:text="@string/select_dob"
             android:textColor="@color/dark_grey"
             android:textSize="14dp"/>
     </LinearLayout>
@@ -184,11 +207,12 @@
     <com.lifejodi.utils.customfonts.CustomButtonBeatles
         android:layout_gravity="center"
         android:id="@+id/button_next"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_width="280dp"
         android:layout_height="40dp"
         android:text="Next"
         android:textColor="@color/white"
         android:textSize="14dp"
         android:background="@drawable/button_background"/>
+</LinearLayout>
 </LinearLayout>
