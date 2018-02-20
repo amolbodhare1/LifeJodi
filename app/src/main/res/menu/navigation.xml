@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/navigation_search"
-        android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/title_search"
-        app:showAsAction="always|withText"/>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/navigation_mail"
-        android:enabled="true"
         android:icon="@drawable/ic_mail"
         android:title="@string/title_dashboard"
-        app:showAsAction="always|withText"/>
+        app:showAsAction="never"/>
     <item
         android:id="@+id/navigation_home"
-        android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="@string/title_home"
-        app:showAsAction="always|withText"/>
+        android:title="@string/title_home" />
+
     <item
         android:id="@+id/navigation_notifications"
-        android:enabled="true"
         android:icon="@drawable/ic_notifications"
         android:title="@string/title_notifications"
-        app:showAsAction="always|withText"/>
-
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/navigation_events"
-        android:enabled="true"
-        android:icon="@drawable/icon_calender"
+        android:icon="@drawable/ic_calender_icon"
         android:title="@string/title_events"
-        app:showAsAction="always|withText"/>
+        app:showAsAction="never"/>
 </menu>

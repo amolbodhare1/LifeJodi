@@ -1,12 +1,9 @@
 package com.lifejodi.login.manager;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
-import com.facebook.login.Login;
 import com.lifejodi.login.data.LoginData;
-import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
@@ -149,6 +146,7 @@ public class LoginManager implements VolleyResponse {
                 JSONArray jsonArray = jsonObject.getJSONArray(LoginData.DATA);
                 for(int i=0;i<jsonArray.length();i++)
                 {
+
                     JSONObject dataObject = jsonArray.getJSONObject(i);
                     dataMap.put(LoginData.ID,Constants.getStringValueOfJsonObject(dataObject,LoginData.ID,LoginData.ID));
                     dataMap.put(LoginData.EMAIL,Constants.getStringValueOfJsonObject(dataObject,LoginData.EMAIL,LoginData.EMAIL));
@@ -165,6 +163,7 @@ public class LoginManager implements VolleyResponse {
                     sharedPreference.putSharedPrefData(Constants.LOGINEMAIL,Constants.getStringValueOfJsonObject(dataObject,LoginData.EMAIL,LoginData.EMAIL));
                     sharedPreference.putSharedPrefData(Constants.PROFILEID,Constants.getStringValueOfJsonObject(dataObject,LoginData.ID,LoginData.ID));
                     sharedPreference.putSharedPrefData(Constants.UID,Constants.getStringValueOfJsonObject(dataObject,LoginData.PROFILEID,LoginData.PROFILEID));
+
                 }
 
                 LoginData.getInstance().setLoginInfoMap(dataMap);

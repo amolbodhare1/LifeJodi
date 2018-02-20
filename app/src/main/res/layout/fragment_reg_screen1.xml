@@ -192,7 +192,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/icon_calender"/>
+            android:src="@mipmap/ic_calender"/>
         <com.lifejodi.utils.customfonts.CustomTextBeatles
             android:id="@+id/text_dob"
             android:layout_marginLeft="10dp"

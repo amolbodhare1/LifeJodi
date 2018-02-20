@@ -86,7 +86,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        bottomNavigation.setSelectedItemId(R.id.navigation_home);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setTabTextColors(Color.parseColor("#FFDCDADA"), Color.parseColor("#ffffff"));
@@ -176,6 +175,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return false;
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigation.setSelectedItemId(R.id.navigation_home);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

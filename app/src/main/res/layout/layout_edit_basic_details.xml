@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+
+    <com.lifejodi.utils.customfonts.CustomEditBeatles
+        android:id="@+id/edittext_edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Name"
+        android:gravity="center"/>
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_height"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_marital_status"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_mother_tongue"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_physical_status"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_created_by"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+</LinearLayout>

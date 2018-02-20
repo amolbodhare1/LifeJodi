@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+
+    <Spinner
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_education"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_occupation"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_employedin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+    <com.lifejodi.utils.customfonts.CustomEditBeatles
+        android:layout_marginTop="8dp"
+        android:id="@+id/edittext_edit_annualincome"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Annual Income"
+        android:gravity="center"/>
+
+    <Spinner
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:id="@+id/spinner_edit_currency"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/dark_grey"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+</LinearLayout>

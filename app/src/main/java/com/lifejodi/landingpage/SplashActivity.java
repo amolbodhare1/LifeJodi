@@ -91,7 +91,6 @@ public class SplashActivity extends AppCompatActivity implements VolleyCallbackI
                 finish();
             }
         }
-
     }
 
     @Override

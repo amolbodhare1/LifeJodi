@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -60,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
     String enteredEmail="",enteredPassword="";
     AppController appController;
     LoginManager loginManager;
-    LoginData loginData  =LoginData.getInstance();
+    LoginData loginData  = LoginData.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

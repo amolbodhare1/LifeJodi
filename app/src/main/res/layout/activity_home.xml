@@ -50,6 +50,7 @@
             app:menu="@menu/navigation"
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white" />
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
