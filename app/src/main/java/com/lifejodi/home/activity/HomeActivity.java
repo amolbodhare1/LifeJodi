@@ -20,12 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
 import com.lifejodi.R;
 import com.lifejodi.SearchActivity;
+import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
+import com.lifejodi.login.activity.LoginActivity;
 import com.lifejodi.navigation.activities.DailyRecommActivity;
 import com.lifejodi.navigation.activities.ShowProfileDataActivity;
 import com.lifejodi.utils.AppController;
@@ -139,6 +140,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(editIntent);
 
         } else if (id == R.id.nav_setting) {
+
+        }else if (id == R.id.nav_logout) {
+
+            sharedPreference.putSharedPrefData(Constants.LOGINSTATUS,"1");
+            Intent homeIntent = new Intent(HomeActivity.this,LoginActivity.class);
+            startActivity(homeIntent);
+            finish();
 
         } else if (id == R.id.nav_daily_recomm) {
             Intent dailyRecommintent = new Intent(HomeActivity.this, DailyRecommActivity.class);

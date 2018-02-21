@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
         {
             appController.requestPermission(Constants.PERMISSIONS);
         }
-
-
     }
 
     @OnClick({R.id.text_forgot_password, R.id.button_login, R.id.text_login_via_otp, R.id.layout_fb_login, R.id.text_sign_up})

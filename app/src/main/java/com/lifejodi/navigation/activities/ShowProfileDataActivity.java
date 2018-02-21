@@ -20,7 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.lifejodi.R;
+import com.lifejodi.login.adapter.CustomSpinnerAdapter;
+import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
+import com.lifejodi.login.data.RegSpinnersStaticData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
@@ -30,6 +33,8 @@ import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -296,8 +301,24 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     private void setEditProfileData() {
 
+        spinnerHeight.setAdapter(new SpinnerAdapter(this,regSpinnersData.getHeightList()));
+        spinnerCountry.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCountriesList(),regSpinnersData.COUNTRY));
+        spinnerFamilyStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getFamilyStatus(),regSpinnersData.FAMILYSTATUS));
+        spinnerCurrency.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCurrencyList(),regSpinnersData.CURRENCY));
+        spinnerFamilyValues.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getFamilyValues(),regSpinnersData.FAMILYVALUES));
+        spinnerEmployedIn.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getEmployedInList(),regSpinnersData.EMPLOYEDIN));
+        spinnerOccupation.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getOccupationList(),regSpinnersData.OCCUPATION));
+        spinnerEducation.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getEducationList(),regSpinnersData.EDUCATION));
 
+        List<String> doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
+        spinnerDosham.setAdapter(new SpinnerAdapter(this,doshamList));
 
+        spinnerCaste.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCastsList(),regSpinnersData.CASTE));
+        spinnerReligion.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getReligionsList(),regSpinnersData.RELIGION));
+        spinnerPhysicalStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getPhysicalStatusList(),regSpinnersData.PHYSICALSTATUS));
+        spinnerCreatedBy.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getProfileForList(),regSpinnersData.PROFILEFOR));
+        spinnerMotherTongue.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getMotherTongueList(),regSpinnersData.MOTHERTOUNGUE));
+        spinnerMaritalStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getMaritalStatusList(),regSpinnersData.MARITALSTATUS));
 
     }
 }

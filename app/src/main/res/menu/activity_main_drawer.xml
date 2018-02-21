@@ -30,6 +30,12 @@
             android:id="@+id/nav_daily_recomm"
             android:icon="@mipmap/ic_calender"
             android:title="Daily recommendations" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@mipmap/ic_logout"
+            android:title="Logout" />
+
     </group>
 
 </menu>

@@ -28,8 +28,10 @@ public class UserRegData {
     public static String PROFILEFOR = "profile_for";
     public static String PROFILEFORNAME = "profile_for_name";
     public static String NAME = "name";
+    public static String FULLNAME = "fullname";
     public static String GENDER = "gender";
     public static String DOB = "dob";
+    public static String PROFILEID = "profile_id";
     public static String RELIGION = "religion";
     public static String RELIGIONNAME = "religion_name";
     public static String MOTHERTONGUE = "mother_tongue";
@@ -71,7 +73,7 @@ public class UserRegData {
     public static String COUNTRY = "country";
     public static String PINCODE = "pincode";
     public static String FORMATTEDADDRESS = "formatted_address";
-    public static String USERID = "user_id";
+    public static String USERID = "id";
 
 
 
