@@ -21,7 +21,7 @@ public class LoginData {
     public static String STATUS = "status";
     public static String MESSAGE = "msg";
 
-    public static String ID = "id";
+    public static String ID = "user_id";
     public static String CONTACTNAME = "contact_name";
     public static String PROFILEFOR  = "profile_for";
     public static String GENDER = "gender";
@@ -30,7 +30,6 @@ public class LoginData {
     public static String BIRTHPLACE = "birth_place";
     public static String PROFILEID = "profile_id";
     public static String FULLNAME = "full_name";
-
 
     public static String PROFILEFORNAME = "profile_for_name";
     public static String NAME = "name";

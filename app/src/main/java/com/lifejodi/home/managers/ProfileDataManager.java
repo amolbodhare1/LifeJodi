@@ -45,6 +45,25 @@ public class ProfileDataManager implements VolleyResponse {
 
     }
     //GET SHORTLISTED PROFILE DETAILS
+
+    public JSONObject getUpdateProfileParams(String devId,JSONObject json)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(ShortlistData.API,"editProfile");
+            jsonObject.put(ShortlistData.DEVICE,devId);
+            jsonObject.put(ShortlistData.VERSION,"1.0");
+
+            jsonObject.put(ProfilesData.DATA,json);
+
+            return jsonObject;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
     public JSONObject getShortListedDetailsParams(String devId,String profId)
     {
         JSONObject jsonObject = new JSONObject();
@@ -72,6 +91,11 @@ public class ProfileDataManager implements VolleyResponse {
     }
     //GET  PROFILE DETAILS
 
+
+    public void getUpdateProfile(JSONObject jsonObject)
+    {
+        mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_UPDATE_PROFILE,Constants.TAG_UPDATE_PROFILE,jsonObject);
+    }
     @Override
     public void getResponse(JSONObject jsonObject, String tag) throws JSONException {
 
@@ -85,6 +109,9 @@ public class ProfileDataManager implements VolleyResponse {
             case Constants.TAG_SHORTLISTED_USERSDETAILS:
                 parseShortlistedDetails(strResponse,tag);
                 break;
+            case Constants.TAG_UPDATE_PROFILE:
+                parseUpdateProfileResponse(strResponse,tag);
+                break;
         }
     }
 
@@ -97,6 +124,24 @@ public class ProfileDataManager implements VolleyResponse {
                 break;
         }
     }
+    private void parseUpdateProfileResponse(String strResponse, String tag) {
+
+        try {
+            JSONObject jsonObject = new JSONObject(strResponse);
+            if (jsonObject.has(ProfilesData.STATUS)) {
+            String status = Constants.getStringValueOfJsonObject(jsonObject, ProfilesData.STATUS, ProfilesData.STATUS);
+            if(status.equals("1")){
+                mVolleyCallbackInterface.successCallBack("success",tag);
+            }else {
+                mVolleyCallbackInterface.errorCallBack("Update failed",tag);
+            }
+            }
+        }catch (Exception e){
+            mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
+        }
+
+    }
+
 
     //PARSE SHORTLISTED DETAILS RESPONSE
     public void parseShortlistedDetails(String strResponse, String tag)

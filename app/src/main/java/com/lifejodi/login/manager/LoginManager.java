@@ -152,12 +152,9 @@ public class LoginManager implements VolleyResponse {
                     JSONObject dataObject = jsonArray.getJSONObject(0);
                     dataMap.put(LoginData.ID,Constants.getStringValueOfJsonObject(dataObject,LoginData.ID,LoginData.ID));
                     dataMap.put(LoginData.EMAIL,Constants.getStringValueOfJsonObject(dataObject,LoginData.EMAIL,LoginData.EMAIL));
-                    dataMap.put(LoginData.CONTACTNAME,Constants.getStringValueOfJsonObject(dataObject,LoginData.CONTACTNAME,LoginData.CONTACTNAME));
                     dataMap.put(LoginData.PROFILEFOR,Constants.getStringValueOfJsonObject(dataObject,LoginData.PROFILEFOR,LoginData.PROFILEFOR));
                     dataMap.put(LoginData.GENDER,Constants.getStringValueOfJsonObject(dataObject,LoginData.GENDER,LoginData.GENDER));
                     dataMap.put(LoginData.DOB,Constants.getStringValueOfJsonObject(dataObject,LoginData.DOB,LoginData.DOB));
-                    dataMap.put(LoginData.BIRTHTIME,Constants.getStringValueOfJsonObject(dataObject,LoginData.BIRTHTIME,LoginData.BIRTHTIME));
-                    dataMap.put(LoginData.BIRTHPLACE,Constants.getStringValueOfJsonObject(dataObject,LoginData.BIRTHPLACE,LoginData.BIRTHPLACE));
                     dataMap.put(LoginData.PROFILEID,Constants.getStringValueOfJsonObject(dataObject,LoginData.PROFILEID,LoginData.PROFILEID));
                     dataMap.put(LoginData.FULLNAME,Constants.getStringValueOfJsonObject(dataObject,LoginData.FULLNAME,LoginData.FULLNAME));
 
@@ -168,9 +165,9 @@ public class LoginManager implements VolleyResponse {
 
                     userRegData.regDataObject = new JSONObject();
 
-
                     userRegData.regDataObject.put(UserRegData.USERID,Constants.getStringValueOfJsonObject(dataObject,UserRegData.USERID,UserRegData.USERID));
                     userRegData.regDataObject.put(UserRegData.EMAIL,Constants.getStringValueOfJsonObject(dataObject,UserRegData.EMAIL,UserRegData.EMAIL));
+                    userRegData.regDataObject.put(UserRegData.PHONENUMBER,Constants.getStringValueOfJsonObject(dataObject,UserRegData.PHONENUMBER,UserRegData.PHONENUMBER));
                     userRegData.regDataObject.put(UserRegData.PROFILEFOR,Constants.getStringValueOfJsonObject(dataObject,UserRegData.PROFILEFOR,UserRegData.PROFILEFOR));
                     userRegData.regDataObject.put(UserRegData.GENDER,Constants.getStringValueOfJsonObject(dataObject,UserRegData.GENDER,UserRegData.GENDER));
                     userRegData.regDataObject.put(UserRegData.DOB,Constants.getStringValueOfJsonObject(dataObject,UserRegData.DOB,UserRegData.DOB));
@@ -179,24 +176,23 @@ public class LoginManager implements VolleyResponse {
 
                     userRegData.regDataObject.put(userRegData.HEIGHT, Constants.getStringValueOfJsonObject(dataObject,UserRegData.HEIGHT,UserRegData.HEIGHT));
                     userRegData.regDataObject.put(userRegData.PHYSICALSTATUS, Constants.getStringValueOfJsonObject(dataObject,UserRegData.PHYSICALSTATUS,UserRegData.PHYSICALSTATUS));
-                    userRegData.regDataObject.put(userRegData.EDUCATION, Constants.getStringValueOfJsonObject(dataObject,UserRegData.EDUCATION,UserRegData.EDUCATION));
-                    userRegData.regDataObject.put(userRegData.OCCUPATION, Constants.getStringValueOfJsonObject(dataObject,UserRegData.OCCUPATION,UserRegData.OCCUPATION));
-                    userRegData.regDataObject.put(userRegData.EMPLOYEDIN, Constants.getStringValueOfJsonObject(dataObject,UserRegData.EMPLOYEDIN,UserRegData.EMPLOYEDIN));
+                    userRegData.regDataObject.put(userRegData.MARITALSTATUS, Constants.getStringValueOfJsonObject(dataObject,UserRegData.MARITALSTATUS,UserRegData.MARITALSTATUS));
+                    userRegData.regDataObject.put(userRegData.MOTHERTONGUE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.MOTHERTONGUE,UserRegData.MOTHERTONGUE));
                     userRegData.regDataObject.put(userRegData.CURRENCY, Constants.getStringValueOfJsonObject(dataObject,UserRegData.CURRENCY,UserRegData.CURRENCY));
                     userRegData.regDataObject.put(userRegData.ANNUALINCOME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.ANNUALINCOME,UserRegData.ANNUALINCOME));
                     userRegData.regDataObject.put(userRegData.FAMILYSTATUS, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYSTATUS,UserRegData.FAMILYSTATUS));
                     userRegData.regDataObject.put(userRegData.FAMILYTYPE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYTYPE,UserRegData.FAMILYTYPE));
                     userRegData.regDataObject.put(userRegData.FAMILYVALUES, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYVALUES,UserRegData.FAMILYVALUES));
-                    userRegData.regDataObject.put(userRegData.ABOUT, Constants.getStringValueOfJsonObject(dataObject,UserRegData.ABOUT,UserRegData.ABOUT));
+                    userRegData.regDataObject.put(userRegData.ABOUT_COMMENT, Constants.getStringValueOfJsonObject(dataObject,UserRegData.ABOUT,UserRegData.ABOUT));
 
-                    userRegData.regDataObject.put(userRegData.PHYSICALSTATUSNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.PHYSICALSTATUSNAME,UserRegData.PHYSICALSTATUSNAME));
+                    userRegData.regDataObject.put(userRegData.RELIGION, Constants.getStringValueOfJsonObject(dataObject,UserRegData.RELIGION,UserRegData.RELIGION));
+                    userRegData.regDataObject.put(userRegData.CASTE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.CASTE,UserRegData.CASTE));
+                    userRegData.regDataObject.put(userRegData.DOSHAM, Constants.getStringValueOfJsonObject(dataObject,UserRegData.DOSHAM,UserRegData.DOSHAM));
+                    userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.MARRYOTHERCASTE,UserRegData.MARRYOTHERCASTE));
+
                     userRegData.regDataObject.put(userRegData.EDUCATIONNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.EDUCATIONNAME,UserRegData.EDUCATIONNAME));
                     userRegData.regDataObject.put(userRegData.OCCUPATIONNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.OCCUPATIONNAME,UserRegData.OCCUPATIONNAME));
                     userRegData.regDataObject.put(userRegData.EMPLOYEDINNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.EMPLOYEDINNAME,UserRegData.EMPLOYEDINNAME));
-                    userRegData.regDataObject.put(userRegData.CURRENCYNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.CURRENCYNAME,UserRegData.CURRENCYNAME));
-                    userRegData.regDataObject.put(userRegData.FAMILYSTATUSNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYSTATUSNAME,UserRegData.FAMILYSTATUSNAME));
-                    userRegData.regDataObject.put(userRegData.FAMILYVALUESNAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYVALUESNAME,UserRegData.FAMILYVALUESNAME));
-                    userRegData.regDataObject.put(userRegData.FAMILYTYPENAME, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FAMILYTYPENAME,UserRegData.FAMILYTYPENAME));
 
                     userRegData.regDataObject.put(userRegData.LATITUDE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.LATITUDE,UserRegData.LATITUDE));
                     userRegData.regDataObject.put(userRegData.LONGITUDE,Constants.getStringValueOfJsonObject(dataObject,UserRegData.LONGITUDE,UserRegData.LONGITUDE));
@@ -204,6 +200,8 @@ public class LoginManager implements VolleyResponse {
                     userRegData.regDataObject.put(userRegData.SUBLOCALITY, Constants.getStringValueOfJsonObject(dataObject,UserRegData.SUBLOCALITY,UserRegData.SUBLOCALITY));
                     userRegData.regDataObject.put(userRegData.ADMINISTRATIVEAREA, Constants.getStringValueOfJsonObject(dataObject,UserRegData.ADMINISTRATIVEAREA,UserRegData.ADMINISTRATIVEAREA));
                     userRegData.regDataObject.put(userRegData.PINCODE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.PINCODE,UserRegData.PINCODE));
+                    userRegData.regDataObject.put(userRegData.COUNTRY, Constants.getStringValueOfJsonObject(dataObject,UserRegData.COUNTRY,UserRegData.COUNTRY));
+                    userRegData.regDataObject.put(userRegData.COUNTRYCODE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.COUNTRYCODE,UserRegData.COUNTRYCODE));
                     userRegData.regDataObject.put(userRegData.FORMATTEDADDRESS, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FORMATTEDADDRESS,UserRegData.FORMATTEDADDRESS));
 
                     sharedPreference.putSharedPrefData(Constants.USERDATA,userRegData.regDataObject.toString());

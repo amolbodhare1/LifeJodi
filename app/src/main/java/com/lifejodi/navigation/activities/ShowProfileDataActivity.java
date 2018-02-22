@@ -15,11 +15,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.lifejodi.R;
+import com.lifejodi.home.managers.ProfileDataManager;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
@@ -96,27 +98,33 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
     CustomTextBeatles textEditprofFamilyStatus;
     @BindView(R.id.text_editprof_country)
     CustomTextBeatles textEditprofCountry;
+    @BindView(R.id.button_update_profile)
+    Button buttonUpdateProfile;
 
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
     JSONObject userDataObject = new JSONObject();
 
     Dialog dialogEditProfile;
-    EditText editName,editAnnualIncome;
-    RadioGroup familtyType;
+    EditText editName, editAnnualIncome;
+    RadioGroup radiofamiltyType;
+    RadioButton radioButtonNuclear, radioButtonJoint;
     TextView dialogTitle;
     Button dialogSave;
-    Spinner spinnerHeight,spinnerMaritalStatus,spinnerMotherTongue,spinnerPhysicalStatus,spinnerCreatedBy,
-            spinnerReligion,spinnerCaste,spinnerDosham,spinnerEducation,spinnerOccupation,spinnerEmployedIn,
-    spinnerCurrency,spinnerFamilyValues,spinnerFamilyStatus,spinnerCountry;
-    View layoutBasicDetails,layoutFamilyDetails,layoutProfessionalDetails,layoutReligiousDetails;
+    Spinner spinnerHeight, spinnerMaritalStatus, spinnerMotherTongue, spinnerPhysicalStatus, spinnerCreatedBy,
+            spinnerReligion, spinnerCaste, spinnerDosham, spinnerEducation, spinnerOccupation, spinnerEmployedIn,
+            spinnerCurrency, spinnerFamilyValues, spinnerFamilyStatus, spinnerCountry;
+    View layoutBasicDetails, layoutFamilyDetails, layoutProfessionalDetails, layoutReligiousDetails;
 
     RegSpinnersManager regSpinnersManager = RegSpinnersManager.getInstance();
     RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
+    ProfileDataManager profileDataManager = ProfileDataManager.getInstance();
 
-    String deviceId,userId,profileFor,name,gender,religion,motherTongue,countryCode,phoneNumber,email,
-    maritalStatus,dosham,caste,height,physicalStatus,education,educationId,currency,currencyId,annualIncome,familyStatus,
-    familyStatusId,familyType,familyTypeId,familyValues,familyValuesId,description,lat,lng,sublocality,locality,
-    administrativeArea,country,pincode,address;
+    String deviceId, userId, profileFor, profileForId, name, gender, religion, religionId, motherTongue, motherTongueId, countryCode, phoneNumber, email,
+            maritalStatus, maritalStatusId, dosham, caste, casteId, height, physicalStatus, physicalStatusId, education, educationId, occupation, occupationId,
+            employedIn, employedInId, currency, currencyId, annualIncome, familyStatus,
+            familyStatusId, familyType, familyTypeId, familyValues, familyValuesId, description, lat, lng, sublocality, locality,
+            administrativeArea, country, pincode, address,dateOfBirth,maryOtherCaste,maryOtherCasteId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,8 +134,8 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         initialization();
     }
 
-    public void initialization()
-    {
+    @SuppressLint("MissingPermission")
+    public void initialization() {
 
         setSupportActionBar(toolsEdit);
         toolsEdit.setNavigationIcon(R.drawable.ic_back);
@@ -144,7 +152,8 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         String userData = sharedPreference.getSharedPrefData(Constants.USERDATA);
         try {
             userDataObject = new JSONObject(userData);
-            setProfileData(userDataObject);
+            setData(userDataObject);
+            setProfileData();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -154,58 +163,106 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         dialogEditProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogEditProfile.setContentView(R.layout.dialog_edit_profile);
 
-        editName = (EditText)dialogEditProfile.findViewById(R.id.edittext_edit_name);
-        editAnnualIncome = (EditText)dialogEditProfile.findViewById(R.id.edittext_edit_annualincome);
+        editName = (EditText) dialogEditProfile.findViewById(R.id.edittext_edit_name);
+        editAnnualIncome = (EditText) dialogEditProfile.findViewById(R.id.edittext_edit_annualincome);
 
-        familtyType = (RadioGroup)dialogEditProfile.findViewById(R.id.radiogroup_edit_family_type);
+        radiofamiltyType = (RadioGroup) dialogEditProfile.findViewById(R.id.radiogroup_edit_family_type);
 
-        spinnerHeight = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_height);
-        spinnerMaritalStatus = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_marital_status);
-        spinnerMotherTongue = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_mother_tongue);
-        spinnerCreatedBy = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_created_by);
-        spinnerPhysicalStatus = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_physical_status);
-        spinnerReligion = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_religion);
-        spinnerCaste = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_caste);
-        spinnerDosham = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_dosham);
-        spinnerEducation = (Spinner)dialogEditProfile.findViewById(R.id.spinner_education);
-        spinnerOccupation = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_occupation);
-        spinnerEmployedIn = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_employedin);
-        spinnerCurrency = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_currency);
-        spinnerFamilyValues = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_family_values);
-        spinnerFamilyStatus = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_family_status);
-        spinnerCountry = (Spinner)dialogEditProfile.findViewById(R.id.spinner_edit_country);
+        spinnerHeight = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_height);
+        spinnerMaritalStatus = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_marital_status);
+        spinnerMotherTongue = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_mother_tongue);
+        spinnerCreatedBy = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_created_by);
+        spinnerPhysicalStatus = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_physical_status);
+        spinnerReligion = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_religion);
+        spinnerCaste = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_caste);
+        spinnerDosham = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_dosham);
+        spinnerEducation = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_education);
+        spinnerOccupation = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_occupation);
+        spinnerEmployedIn = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_employedin);
+        spinnerCurrency = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_currency);
+        spinnerFamilyValues = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_family_values);
+        spinnerFamilyStatus = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_family_status);
+        spinnerCountry = (Spinner) dialogEditProfile.findViewById(R.id.spinner_edit_country);
 
-        layoutBasicDetails = (View)dialogEditProfile.findViewById(R.id.layout_basic_details);
-        layoutProfessionalDetails = (View)dialogEditProfile.findViewById(R.id.layout_professional_details);
-        layoutFamilyDetails = (View)dialogEditProfile.findViewById(R.id.layout_family_details);
-        layoutReligiousDetails = (View)dialogEditProfile.findViewById(R.id.layout_religious_details);
+        radioButtonNuclear = (RadioButton) dialogEditProfile.findViewById(R.id.radiobutton_type_nuclear);
+        radioButtonJoint = (RadioButton) dialogEditProfile.findViewById(R.id.radiobutton_type_joint);
 
-        dialogTitle = (TextView)dialogEditProfile.findViewById(R.id.text_edit_title);
-        dialogSave = (Button)dialogEditProfile.findViewById(R.id.button_edit_save);
+        layoutBasicDetails = (View) dialogEditProfile.findViewById(R.id.layout_basic_details);
+        layoutProfessionalDetails = (View) dialogEditProfile.findViewById(R.id.layout_professional_details);
+        layoutFamilyDetails = (View) dialogEditProfile.findViewById(R.id.layout_family_details);
+        layoutReligiousDetails = (View) dialogEditProfile.findViewById(R.id.layout_religious_details);
+
+        dialogTitle = (TextView) dialogEditProfile.findViewById(R.id.text_edit_title);
+        dialogSave = (Button) dialogEditProfile.findViewById(R.id.button_edit_save);
+
+        regSpinnersManager.initialize(this, this);
+        profileDataManager.initialize(this,this);
+        deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.e("DEVICEID", deviceId);
+        if (deviceId != null || deviceId != "") {
+            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
+        } else {
+            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+            deviceId = telephonyManager.getDeviceId();
+            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
+        }
 
         dialogSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogEditProfile.dismiss();
+
+                if (dialogTitle.getText().toString().equals("Basic Details")) {
+                    name = editName.getText().toString();
+                    height = regSpinnersData.getHeightList().get(spinnerHeight.getSelectedItemPosition());
+                    maritalStatus = regSpinnersData.getMaritalStatusList().get(spinnerMaritalStatus.getSelectedItemPosition()).get(regSpinnersData.VALUE);
+                    maritalStatusId = regSpinnersData.getMaritalStatusList().get(spinnerMaritalStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    motherTongue = regSpinnersData.getMotherTongueList().get(spinnerMotherTongue.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    motherTongueId = regSpinnersData.getMotherTongueList().get(spinnerMotherTongue.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    physicalStatus = regSpinnersData.getPhysicalStatusList().get(spinnerPhysicalStatus.getSelectedItemPosition()).get(regSpinnersData.VALUE);
+                    physicalStatusId = regSpinnersData.getPhysicalStatusList().get(spinnerPhysicalStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    profileFor = regSpinnersData.getProfileForList().get(spinnerCreatedBy.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    profileForId = regSpinnersData.getProfileForList().get(spinnerCreatedBy.getSelectedItemPosition()).get(regSpinnersData.ID);
+                } else if (dialogTitle.getText().toString().equals("Religious Details")) {
+                    religion = regSpinnersData.getReligionsList().get(spinnerReligion.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    religionId = regSpinnersData.getReligionsList().get(spinnerReligion.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    caste = regSpinnersData.getCastsList().get(spinnerCaste.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    casteId = regSpinnersData.getCastsList().get(spinnerCaste.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    List<String> doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
+                    dosham = doshamList.get(spinnerDosham.getSelectedItemPosition());
+                } else if (dialogTitle.getText().toString().equals("Professional Details")) {
+                    education = regSpinnersData.getEducationList().get(spinnerEducation.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    educationId = regSpinnersData.getEducationList().get(spinnerEducation.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    occupation = regSpinnersData.getOccupationList().get(spinnerOccupation.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    occupationId = regSpinnersData.getOccupationList().get(spinnerOccupation.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    employedIn = regSpinnersData.getEmployedInList().get(spinnerEmployedIn.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                    employedInId = regSpinnersData.getEmployedInList().get(spinnerEmployedIn.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    annualIncome = editAnnualIncome.getText().toString();
+                    currency = regSpinnersData.getCurrencyList().get(spinnerCurrency.getSelectedItemPosition()).get(regSpinnersData.VALUE);
+                    currencyId = regSpinnersData.getCurrencyList().get(spinnerCurrency.getSelectedItemPosition()).get(regSpinnersData.ID);
+                } else if (dialogTitle.getText().toString().equals("Family Details")) {
+                    familyValues = regSpinnersData.getFamilyValues().get(spinnerFamilyValues.getSelectedItemPosition()).get(regSpinnersData.VALUE);
+                    familyValuesId = regSpinnersData.getFamilyValues().get(spinnerFamilyValues.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    familyStatus = regSpinnersData.getFamilyStatus().get(spinnerFamilyStatus.getSelectedItemPosition()).get(regSpinnersData.VALUE);
+                    familyStatusId = regSpinnersData.getFamilyStatus().get(spinnerFamilyStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
+                    if (radioButtonJoint.isChecked()) {
+                        familyType = radioButtonJoint.getText().toString();
+                        familyTypeId = regSpinnersData.getFamilyType().get(0).get(regSpinnersData.ID);
+                    } else if (radioButtonNuclear.isChecked()) {
+                        familyType = radioButtonNuclear.getText().toString();
+                        familyTypeId = regSpinnersData.getFamilyType().get(1).get(regSpinnersData.ID);
+                    }
+                    country = regSpinnersData.getCountriesList().get(spinnerCountry.getSelectedItemPosition()).get(regSpinnersData.NAME);
+                }
+                setProfileData();
             }
         });
 
 
-        regSpinnersManager.initialize(this,this);
-        String androidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        Log.e("DEVICEID",androidDeviceId);
-        if(androidDeviceId!=null || androidDeviceId!="")
-        {
-            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(androidDeviceId));
-        }else {
-            TelephonyManager telephonyManager = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-            @SuppressLint("MissingPermission") String deviceId = telephonyManager.getDeviceId();
-            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
-        }
     }
 
-    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails})
+    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails,R.id.button_update_profile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_edit_basicdetails:
@@ -252,48 +309,94 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
                 dialogEditProfile.show();
 
                 break;
+
+            case R.id.button_update_profile:
+
+                updateProfile();
+
+                break;
         }
     }
 
-    public void setProfileData(JSONObject jsonObject)
-    {
+    public void setData(JSONObject jsonObject) {
+
         try {
+            dateOfBirth = jsonObject.getString(UserRegData.DOB);
+            userId = jsonObject.getString(UserRegData.USERID);
+            phoneNumber = jsonObject.getString(UserRegData.PHONENUMBER);
+            maryOtherCaste = jsonObject.getString(UserRegData.MARRYOTHERCASTE);
+            email = jsonObject.getString(UserRegData.EMAIL);
+            name = jsonObject.getString(UserRegData.FULLNAME);
+            gender = jsonObject.getString(UserRegData.GENDER);
+            height = jsonObject.getString(UserRegData.HEIGHT);
+            maritalStatus = jsonObject.getString(UserRegData.MARITALSTATUS);
+            motherTongue = jsonObject.getString(UserRegData.MOTHERTONGUE);
+            physicalStatus = jsonObject.getString(UserRegData.PHYSICALSTATUS);
+            profileFor = jsonObject.getString(UserRegData.PROFILEFOR);
+            religion = jsonObject.getString(UserRegData.RELIGION);
+            caste = jsonObject.getString(UserRegData.CASTE);
+            dosham = jsonObject.getString(UserRegData.DOSHAM);
+            education = jsonObject.getString(UserRegData.EDUCATIONNAME);
+            occupation = jsonObject.getString(UserRegData.OCCUPATIONNAME);
+            employedIn = jsonObject.getString(UserRegData.EMPLOYEDINNAME);
+            annualIncome = jsonObject.getString(UserRegData.ANNUALINCOME);
+            currency = jsonObject.getString(UserRegData.CURRENCY);
+            familyValues = jsonObject.getString(UserRegData.FAMILYVALUES);
+            familyStatus = jsonObject.getString(UserRegData.FAMILYSTATUS);
+            familyType = jsonObject.getString(UserRegData.FAMILYTYPE);
+            country = jsonObject.getString(UserRegData.COUNTRY);
+            lat = jsonObject.getString(UserRegData.LATITUDE);
+            lng = jsonObject.getString(UserRegData.LONGITUDE);
+            locality = jsonObject.getString(UserRegData.LOCALITY);
+            sublocality = jsonObject.getString(UserRegData.SUBLOCALITY);
+            administrativeArea = jsonObject.getString(UserRegData.ADMINISTRATIVEAREA);
+            address = jsonObject.getString(UserRegData.FORMATTEDADDRESS);
+            countryCode = jsonObject.getString(UserRegData.COUNTRYCODE);
+            pincode = jsonObject.getString(UserRegData.PINCODE);
+            description = jsonObject.getString(UserRegData.ABOUT_COMMENT);
+        } catch (Exception e) {
 
-            textEditprofName.setText(jsonObject.getString(UserRegData.NAME));
-            textEditprofGender.setText(jsonObject.getString(UserRegData.GENDER));
-            textEditprofHeight.setText(jsonObject.getString(UserRegData.HEIGHT));
-            textEditprofMaritalStatus.setText(jsonObject.getString(UserRegData.MARITALSTATUSNAME));
-            textEditprofMothertongue.setText(jsonObject.getString(UserRegData.MOTHERTONGUENAME));
-            textEditprofPhysicalStatus.setText(jsonObject.getString(UserRegData.PHYSICALSTATUSNAME));
-            textEditprofProfilefor.setText(jsonObject.getString(UserRegData.PROFILEFORNAME));
-
-            textEditprofReligion.setText(jsonObject.getString(UserRegData.RELIGIONNAME));
-            textEditprofCaste.setText(jsonObject.getString(UserRegData.CASTENAME));
-            textEditprofDosham.setText(jsonObject.getString(UserRegData.DOSHAM));
-
-            textEditprofEducation.setText(jsonObject.getString(UserRegData.EDUCATIONNAME));
-            textEditprofOccupation.setText(jsonObject.getString(UserRegData.OCCUPATIONNAME));
-            textEditprofEmployedin.setText(jsonObject.getString(UserRegData.EMPLOYEDINNAME));
-            textEditprofIncome.setText(jsonObject.getString(UserRegData.ANNUALINCOME));
-            textEditprofCurrency.setText(jsonObject.getString(UserRegData.CURRENCYNAME));
-
-            textEditprofFamilyValues.setText(jsonObject.getString(UserRegData.FAMILYVALUESNAME));
-            textEditprofFamilyStatus.setText(jsonObject.getString(UserRegData.FAMILYSTATUSNAME));
-            textEditprofFamilyType.setText(jsonObject.getString(UserRegData.FAMILYTYPENAME));
-            textEditprofCountry.setText(jsonObject.getString(UserRegData.COUNTRY));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
+
+    }
+
+    public void setProfileData() {
+
+        textEditprofName.setText(name);
+        textEditprofGender.setText(gender);
+        textEditprofHeight.setText(height);
+        textEditprofMaritalStatus.setText(maritalStatus);
+        textEditprofMothertongue.setText(motherTongue);
+        textEditprofPhysicalStatus.setText(physicalStatus);
+        textEditprofProfilefor.setText(profileFor);
+
+        textEditprofReligion.setText(religion);
+        textEditprofCaste.setText(caste);
+        textEditprofDosham.setText(dosham);
+
+        textEditprofEducation.setText(education);
+        textEditprofOccupation.setText(occupation);
+        textEditprofEmployedin.setText(employedIn);
+        textEditprofIncome.setText(annualIncome);
+        textEditprofCurrency.setText(currency);
+
+        textEditprofFamilyValues.setText(familyValues);
+        textEditprofFamilyStatus.setText(familyStatus);
+        textEditprofFamilyType.setText(familyType);
+        textEditprofCountry.setText(country);
+
     }
 
     @Override
     public void successCallBack(String msg, String tag) {
-        if(tag.equals(Constants.TAG_GET_MASTERS))
-        {
+        if (tag.equals(Constants.TAG_GET_MASTERS)) {
             setEditProfileData();
+        }else  if (tag.equals(Constants.TAG_UPDATE_PROFILE)) {
+            finish();
         }
     }
+
     @Override
     public void errorCallBack(String msg, String tag) {
 
@@ -301,24 +404,112 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     private void setEditProfileData() {
 
-        spinnerHeight.setAdapter(new SpinnerAdapter(this,regSpinnersData.getHeightList()));
-        spinnerCountry.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCountriesList(),regSpinnersData.COUNTRY));
-        spinnerFamilyStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getFamilyStatus(),regSpinnersData.FAMILYSTATUS));
-        spinnerCurrency.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCurrencyList(),regSpinnersData.CURRENCY));
-        spinnerFamilyValues.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getFamilyValues(),regSpinnersData.FAMILYVALUES));
-        spinnerEmployedIn.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getEmployedInList(),regSpinnersData.EMPLOYEDIN));
-        spinnerOccupation.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getOccupationList(),regSpinnersData.OCCUPATION));
-        spinnerEducation.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getEducationList(),regSpinnersData.EDUCATION));
+        spinnerHeight.setAdapter(new SpinnerAdapter(this, regSpinnersData.getHeightList()));
+        spinnerCountry.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getCountriesList(), regSpinnersData.COUNTRY));
+        spinnerFamilyStatus.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getFamilyStatus(), regSpinnersData.FAMILYSTATUS));
+        spinnerCurrency.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getCurrencyList(), regSpinnersData.CURRENCY));
+        spinnerFamilyValues.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getFamilyValues(), regSpinnersData.FAMILYVALUES));
+        spinnerEmployedIn.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getEmployedInList(), regSpinnersData.EMPLOYEDIN));
+        spinnerOccupation.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getOccupationList(), regSpinnersData.OCCUPATION));
+        spinnerEducation.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getEducationList(), regSpinnersData.EDUCATION));
 
-        List<String> doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
-        spinnerDosham.setAdapter(new SpinnerAdapter(this,doshamList));
+        final List<String> doshamList = Constants.getArraylistFromArray(RegSpinnersStaticData.doshamArray);
+        spinnerDosham.setAdapter(new SpinnerAdapter(this, doshamList));
 
-        spinnerCaste.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getCastsList(),regSpinnersData.CASTE));
-        spinnerReligion.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getReligionsList(),regSpinnersData.RELIGION));
-        spinnerPhysicalStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getPhysicalStatusList(),regSpinnersData.PHYSICALSTATUS));
-        spinnerCreatedBy.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getProfileForList(),regSpinnersData.PROFILEFOR));
-        spinnerMotherTongue.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getMotherTongueList(),regSpinnersData.MOTHERTOUNGUE));
-        spinnerMaritalStatus.setAdapter(new CustomSpinnerAdapter(this,regSpinnersData.getMaritalStatusList(),regSpinnersData.MARITALSTATUS));
+        spinnerCaste.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getCastsList(), regSpinnersData.CASTE));
+        spinnerReligion.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getReligionsList(), regSpinnersData.RELIGION));
+        spinnerPhysicalStatus.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getPhysicalStatusList(), regSpinnersData.PHYSICALSTATUS));
+        spinnerCreatedBy.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getProfileForList(), regSpinnersData.PROFILEFOR));
+        spinnerMotherTongue.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getMotherTongueList(), regSpinnersData.MOTHERTOUNGUE));
+        spinnerMaritalStatus.setAdapter(new CustomSpinnerAdapter(this, regSpinnersData.getMaritalStatusList(), regSpinnersData.MARITALSTATUS));
 
+        editName.setText(name);
+        editAnnualIncome.setText(annualIncome);
+
+        int index = 0;
+        index = regSpinnersData.getHeightList().contains(height) ? regSpinnersData.getHeightList().indexOf(height) : 0;
+        spinnerHeight.setSelection(index);
+        index = doshamList.contains(dosham) ? doshamList.indexOf(dosham) : 0;
+        spinnerDosham.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getCountriesList(), country);
+        spinnerCountry.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getMaritalStatusList(), maritalStatus);
+        spinnerMaritalStatus.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getCurrencyList(), currency);
+        spinnerCurrency.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getFamilyValues(), familyValues);
+        spinnerFamilyValues.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getEmployedInList(), employedIn);
+        spinnerEmployedIn.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getOccupationList(), occupation);
+        spinnerOccupation.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getEducationList(), education);
+        spinnerEducation.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getCastsList(), caste);
+        spinnerCaste.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getReligionsList(), religion);
+        spinnerReligion.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getPhysicalStatusList(), physicalStatus);
+        spinnerPhysicalStatus.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getProfileForList(), profileFor);
+        spinnerCreatedBy.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getMotherTongueList(), motherTongue);
+        spinnerMotherTongue.setSelection(index);
+        index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getFamilyStatus(), familyStatus);
+        spinnerFamilyStatus.setSelection(index);
+
+        if (familyType.equals("Joint")) {
+            radioButtonJoint.setChecked(true);
+            familyTypeId = regSpinnersData.getFamilyType().get(0).get(regSpinnersData.ID);
+        } else if (familyType.equals("Nuclear")) {
+            radioButtonNuclear.setChecked(true);
+            familyTypeId = regSpinnersData.getFamilyType().get(1).get(regSpinnersData.ID);
+        }
+
+    }
+    public void updateProfile(){
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(UserRegData.USERID,userId);
+            jsonObject.put(UserRegData.PROFILEFOR,profileForId);
+            jsonObject.put(UserRegData.NAME,name);
+            jsonObject.put(UserRegData.GENDER,gender);
+            jsonObject.put(UserRegData.DOB,dateOfBirth);
+            jsonObject.put(UserRegData.RELIGION,religionId);
+            jsonObject.put(UserRegData.MOTHERTONGUE,motherTongueId);
+            jsonObject.put(UserRegData.COUNTRYCODE,countryCode);
+            jsonObject.put(UserRegData.PHONENUMBER,phoneNumber);
+            jsonObject.put(UserRegData.EMAIL,email);
+            jsonObject.put(UserRegData.MARITALSTATUS,maritalStatusId);
+            jsonObject.put(UserRegData.CASTE,casteId);
+            jsonObject.put(UserRegData.DOSHAM,dosham);
+        //    jsonObject.put(UserRegData.MARRYOTHERCASTE,maritalStatusId);
+            jsonObject.put(UserRegData.HEIGHT,height);
+            jsonObject.put(UserRegData.PHYSICALSTATUS,physicalStatus);
+            jsonObject.put(UserRegData.EDUCATION,educationId);
+            jsonObject.put(UserRegData.OCCUPATION,occupationId);
+            jsonObject.put(UserRegData.EMPLOYEDIN,employedInId);
+            jsonObject.put(UserRegData.CURRENCY,currencyId);
+            jsonObject.put(UserRegData.ANNUALINCOME,annualIncome);
+            jsonObject.put(UserRegData.FAMILYSTATUS,familyStatusId);
+            jsonObject.put(UserRegData.FAMILYTYPE,familyTypeId);
+            jsonObject.put(UserRegData.FAMILYVALUES,familyValuesId);
+            jsonObject.put(UserRegData.ABOUT,description);
+            jsonObject.put(UserRegData.LATITUDE,lat);
+            jsonObject.put(UserRegData.LONGITUDE,lng);
+            jsonObject.put(UserRegData.SUBLOCALITY,sublocality);
+            jsonObject.put(UserRegData.LOCALITY,locality);
+            jsonObject.put(UserRegData.ADMINISTRATIVEAREA,administrativeArea);
+            jsonObject.put(UserRegData.COUNTRY,country);
+            jsonObject.put(UserRegData.FORMATTEDADDRESS,address);
+            jsonObject.put(UserRegData.PINCODE,pincode);
+
+
+            profileDataManager.getUpdateProfile(profileDataManager.getUpdateProfileParams(deviceId,jsonObject));
+
+        }catch (Exception e){
+
+        }
     }
 }

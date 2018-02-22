@@ -97,6 +97,10 @@ public class Constants {
     public static String URL_SHORTLISTED_USERSDETAILS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_SHORTLISTED_USERSDETAILS= "shortlisted_details";
 
+    //UPDATE PROFILE
+    public static String URL_UPDATE_PROFILE = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_UPDATE_PROFILE= "update_profile";
+
     //DAILY RECOMMENDATIONS
     public static String URL_DAILY_RECOMMENDATIONS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_DAILY_RECOMMENDATIONS= "daily_recommendations";
@@ -170,6 +174,24 @@ public class Constants {
             isValid = true;
         }
         return isValid;
+    }
+
+    public static int getIndexFromHashMap(String key,ArrayList<HashMap<String,String>> list,String value){
+
+        int index  = 0;
+        ArrayList<String> valuesList = new ArrayList<>();
+        for(int i=0;i<list.size();i++){
+
+            HashMap<String,String> map = list.get(i);
+            valuesList.add(map.get(key));
+
+        }
+
+        if(valuesList.contains(value)){
+            index = valuesList.indexOf(value);
+        }
+
+        return index;
     }
 
 
