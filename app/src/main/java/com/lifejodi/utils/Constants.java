@@ -101,6 +101,10 @@ public class Constants {
     public static String URL_DAILY_RECOMMENDATIONS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_DAILY_RECOMMENDATIONS= "daily_recommendations";
 
+    //UPLOAD PROFILE PIC
+    public static String URL_UPLOAD_PROF_PIC = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_UPLOAD_PROFILE_PIC= "upload_prof_pic";
+
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();
         String credentials = "admin:1234";
