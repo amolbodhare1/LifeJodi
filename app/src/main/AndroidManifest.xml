@@ -38,6 +38,7 @@
         <activity android:name=".home.activity.ProfileDetailsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".navigation.activities.DailyRecommActivity" android:screenOrientation="portrait"/>
         <activity android:name=".navigation.activities.ShowProfileDataActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".event.activity.EventDetailsActivity" android:screenOrientation="portrait"/>
         <service android:name=".login.service.FetchAddressIntentService"
             android:exported="false"/>
 

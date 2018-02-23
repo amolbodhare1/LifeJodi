@@ -28,7 +28,7 @@ public class UserRegData {
     public static String PROFILEFOR = "profile_for";
     public static String PROFILEFORNAME = "profile_for_name";
     public static String NAME = "name";
-    public static String FULLNAME = "fullname";
+    public static String FULLNAME = "full_name";
     public static String GENDER = "gender";
     public static String DOB = "dob";
     public static String PROFILEID = "profile_id";

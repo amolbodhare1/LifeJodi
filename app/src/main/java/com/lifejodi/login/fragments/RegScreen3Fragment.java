@@ -154,10 +154,10 @@ public class RegScreen3Fragment extends Fragment{
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 radioButton = (RadioButton) view.findViewById(i);
                 willingtoMarryOtherCommunities = radioButton.getText().toString();
-                if(willingtoMarryOtherCommunities.equals("Yes"))
+                if(willingtoMarryOtherCommunities.equalsIgnoreCase("Yes"))
                 {
                     willingtoMarryOtherCommunitiesId = "1";
-                }else if(willingtoMarryOtherCommunities.equals("No"))
+                }else if(willingtoMarryOtherCommunities.equalsIgnoreCase("No"))
                 {
                     willingtoMarryOtherCommunities = "0";
                 }

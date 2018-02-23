@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.lifejodi.event.activity.EventDetailsActivity;
 import com.lifejodi.event.activity.EventRegistrationActivity;
 import com.lifejodi.R;
 import com.lifejodi.event.activity.EventsActivity;
@@ -27,10 +29,12 @@ public class AdapterEventsList extends RecyclerView.Adapter<AdapterEventsList.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardEvent;
+        TextView tvFees;
         public ViewHolder(View v) {
             super(v);
 
             cardEvent = (CardView)v.findViewById(R.id.card_event);
+            tvFees = (TextView)v.findViewById(R.id.text_events_reg_fees);
         }
     }
 
@@ -48,10 +52,18 @@ public class AdapterEventsList extends RecyclerView.Adapter<AdapterEventsList.Vi
     @Override
     public void onBindViewHolder(final AdapterEventsList.ViewHolder holder, final int position) {
 
+        if(position==0)
+        {
+            holder.tvFees.setVisibility(View.GONE);
+
+        }else {
+            holder.tvFees.setVisibility(View.VISIBLE);
+            holder.tvFees.setText("$100");
+        }
         holder.cardEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext,EventRegistrationActivity.class));
+                mContext.startActivity(new Intent(mContext,EventDetailsActivity.class));
             }
         });
 

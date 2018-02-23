@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 
 public class EventsActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
+    @BindView(R.id.toolbar_events)
     Toolbar toolbar;
-    @BindView(R.id.recycler_events)
+    @BindView(R.id.recycler_events_list)
     RecyclerView recyclerEvents;
 
     @Override
@@ -49,8 +49,7 @@ public class EventsActivity extends AppCompatActivity {
         });
 
         recyclerEvents.setHasFixedSize(false);
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerEvents.setLayoutManager(layoutManager);
 
         recyclerEvents.setAdapter(new AdapterEventsList(this));
