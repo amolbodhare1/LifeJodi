@@ -24,6 +24,7 @@ import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -171,7 +172,9 @@ public class ProfileDetailsActivity extends AppCompatActivity implements VolleyC
             defaultImage = R.drawable.images;
         }
         try {
-            Glide.with(ProfileDetailsActivity.this).load(imageUrl).placeholder(defaultImage).into(imageProfDetailsPic);
+          //  Glide.with(ProfileDetailsActivity.this).load(imageUrl).placeholder(defaultImage).into(imageProfDetailsPic);
+
+            Picasso.with(ProfileDetailsActivity.this).load(imageUrl).placeholder(defaultImage).into(imageProfDetailsPic);
         }catch (Exception e)
         {
             Log.e("IMAGELOAD",e.getLocalizedMessage());

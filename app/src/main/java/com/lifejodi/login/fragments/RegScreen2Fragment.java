@@ -200,8 +200,8 @@ public class RegScreen2Fragment extends Fragment{
                 if (countryCode.equalsIgnoreCase("")) {
                     Toast.makeText(getActivity(), "Select country code", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (mobileNumber.equalsIgnoreCase("")) {
-                        Toast.makeText(getActivity(), "Enter mobile number", Toast.LENGTH_SHORT).show();
+                    if (mobileNumber.equalsIgnoreCase("") || mobileNumber.length()<10) {
+                        Toast.makeText(getActivity(), "Enter valid mobile number", Toast.LENGTH_SHORT).show();
                     } else {
                         if (email.equalsIgnoreCase("") || (!Constants.isEmailValid(email))) {
                             Toast.makeText(getActivity(), "Enter valid email id", Toast.LENGTH_SHORT).show();

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE};
+    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE};
 
     //sharedPref KEYS
     public static String LATITUDE="latitude";
@@ -54,6 +54,7 @@ public class Constants {
     public static String FBEMAIL="fb_email";
     public static String FBGENDER="fb_gender";
     public static String USERNAME="username";
+
 
     public static String LOGINNAME="login_name";
     public static String LOGINEMAIL="login_email";
@@ -104,6 +105,14 @@ public class Constants {
     //UPLOAD PROFILE PIC
     public static String URL_UPLOAD_PROF_PIC = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_UPLOAD_PROFILE_PIC= "upload_prof_pic";
+
+    //REGISTRATION FOR EVENTS
+    public static String URL_REGISTER_EVENT = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_REGISTER_EVENT= "register_event";
+
+    //GET EVENTS LIST
+    public static String URL_GET_EVENTS_LIST = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_GET_EVENTS_LIST= "get_events_list";
 
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();

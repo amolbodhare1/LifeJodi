@@ -10,20 +10,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lifejodi.event.activity.EventDetailsActivity;
-import com.lifejodi.event.activity.EventRegistrationActivity;
 import com.lifejodi.R;
-import com.lifejodi.event.activity.EventsActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Ajay on 14-11-2017.
  */
 
-public class AdapterEventsList extends RecyclerView.Adapter<AdapterEventsList.ViewHolder> {
+public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> {
 
     Context mContext;
-    public AdapterEventsList(EventsActivity eventsActivity) {
+    ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
+    public EventsListAdapter(Context con, ArrayList<HashMap<String,String>> list) {
 
-        this.mContext = eventsActivity;
+        mContext = con;
+        dataList =list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,13 +47,13 @@ public class AdapterEventsList extends RecyclerView.Adapter<AdapterEventsList.Vi
     }
 
     @Override
-    public AdapterEventsList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_events_list, parent, false);
-        return new AdapterEventsList.ViewHolder(v);
+        return new EventsListAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final AdapterEventsList.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final EventsListAdapter.ViewHolder holder, final int position) {
 
         if(position==0)
         {

@@ -17,6 +17,7 @@ import com.lifejodi.R;
 import com.lifejodi.home.activity.ProfileDetailsActivity;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +59,8 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
             defaultImage = R.drawable.images;
         }
         try {
-            Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
+           // Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
+            Picasso.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
         }catch (Exception e)
         {
             Log.e("IMAGELOAD",e.getLocalizedMessage());

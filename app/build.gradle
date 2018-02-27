@@ -41,4 +41,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services:11.8.0'
     implementation 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.github.nguyenhoanglam:ImagePicker:1.2.1'
+    compile 'com.yalantis:ucrop:2.2.0'
 }

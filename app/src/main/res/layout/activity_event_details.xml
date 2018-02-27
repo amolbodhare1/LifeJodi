@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
    <!-- <android.support.v7.widget.Toolbar
@@ -177,12 +181,48 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:buttonTint="@color/pink"/>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I have read and accept the Terms &amp; Conditions."
+                android:textSize="14dp"
+                android:gravity="left"
+                android:textColor="@color/dark_grey"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
     <com.lifejodi.utils.customfonts.CustomButtonBeatles
         android:id="@+id/button_event_register"
         android:layout_marginTop="30dp"
         android:layout_width="280dp"
         android:layout_height="40dp"
-        android:text="Register"
+        android:text="Confirm"
         android:textColor="@color/white"
         android:textSize="14dp"
         android:layout_marginBottom="30dp"
@@ -190,3 +230,18 @@
         android:background="@drawable/button_background"/>
 
 </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+</RelativeLayout>
