@@ -46,9 +46,6 @@ import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.PickerBuilder;
 import com.lifejodi.utils.SharedPreference;
-import com.nguyenhoanglam.imagepicker.model.Config;
-import com.nguyenhoanglam.imagepicker.model.Image;
-import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -83,7 +80,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    TextView tvHeaderName, tvHeaderProfId;
 
     TextView tvHeaderName,tvHeaderProfId;
     ImageView ivAddProfilePic;
@@ -98,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     UploadProfilePicManager uploadProfilePicManager ;
 
     public final int  PICK_IMAGE_REQUEST= 100;
-    ArrayList<Image> images = new ArrayList<>();
+
     PickerBuilder pickerBuilder;
     String userId="",androidDeviceId="";
 
@@ -167,6 +163,58 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
 
+
+        pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
+        ivAddProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
+                pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                    @Override
+                    public void onImageReceived(Uri imageUri) {
+                        //Toast.makeText(HomeActivity.this,"Got image - " + imageUri,Toast.LENGTH_LONG).show();
+                        ivUserProfilePic.setImageURI(imageUri);
+                        InputStream iStream = null;
+                        // try {
+                        String path = imageUri.getPath();
+                        // iStream = getContentResolver().openInputStream(imageUri);
+                        // byte[] inputData = getBytes(iStream);
+                        //   Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                        Bitmap bitmap = BitmapFactory.decodeFile(path);
+                        //  Bitmap bitmap = ((BitmapDrawable) ivUserProfilePic.getDrawable()).getBitmap();
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream .toByteArray();
+                        // byte[] byteArray = path.getBytes();
+
+                      //  String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        //  String imageString = getResources().getString(R.string.image_string);
+
+                        userId = sharedPreference.getSharedPrefData(Constants.UID);
+                        androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+                        uploadProfilePicManager = UploadProfilePicManager.getInstance();
+                        uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
+                        uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
+                    }/* catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }*/
+
+                    //}
+                })
+                        .setImageName("testImage")
+                        .setImageFolderName("testFolder")
+                        .withTimeStamp(true)
+                        .setCropScreenColor(Color.CYAN)
+                        .start();
+
+            }
+        });
+
+
     }
 
     @OnClick({R.id.layout_search_bottom,R.id.layout_mailbox_bottom,R.id.layout_notifications_bottom,R.id.layout_events_bottom})
@@ -189,56 +237,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-        pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
-        ivAddProfilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
-                            pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-                            @Override
-                            public void onImageReceived(Uri imageUri) {
-                                //Toast.makeText(HomeActivity.this,"Got image - " + imageUri,Toast.LENGTH_LONG).show();
-                                ivUserProfilePic.setImageURI(imageUri);
-                                InputStream iStream = null;
-                               // try {
-                                    String path = imageUri.getPath();
-                                   // iStream = getContentResolver().openInputStream(imageUri);
-                                   // byte[] inputData = getBytes(iStream);
-                                 //   Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-                                      Bitmap bitmap = BitmapFactory.decodeFile(path);
-                                  //  Bitmap bitmap = ((BitmapDrawable) ivUserProfilePic.getDrawable()).getBitmap();
-                                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                                    byte[] byteArray = byteArrayOutputStream .toByteArray();
-                                   // byte[] byteArray = path.getBytes();
-
-                                    String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                                  //  String imageString = getResources().getString(R.string.image_string);
-
-                                    userId = sharedPreference.getSharedPrefData(Constants.UID);
-                                    androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
-                                    uploadProfilePicManager = UploadProfilePicManager.getInstance();
-                                    uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
-                                    uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
-                                }/* catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }*/
-
-                            //}
-                        })
-                        .setImageName("testImage")
-                        .setImageFolderName("testFolder")
-                        .withTimeStamp(true)
-                        .setCropScreenColor(Color.CYAN)
-                        .start();
-
-            }
-        });
-
-    }
     public byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
