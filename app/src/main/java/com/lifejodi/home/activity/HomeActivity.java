@@ -187,8 +187,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         byte[] byteArray = byteArrayOutputStream .toByteArray();
                         // byte[] byteArray = path.getBytes();
 
-                      //  String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        //String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
                         //  String imageString = getResources().getString(R.string.image_string);
 
                         userId = sharedPreference.getSharedPrefData(Constants.UID);
