@@ -88,8 +88,9 @@ public class LoginManager implements VolleyResponse {
             jsonObject.put(LoginData.VERSION,"1.0");
 
             JSONObject dataObj = new JSONObject();
-            dataObj.put(LoginData.EMAIL,email);
+            dataObj.put(LoginData.USERID,email);
             jsonObject.put(LoginData.DATA,dataObj);
+
             return jsonObject;
 
         } catch (JSONException e) {

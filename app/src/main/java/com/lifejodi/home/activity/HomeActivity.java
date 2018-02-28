@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
 import com.lifejodi.R;
-import com.lifejodi.SearchActivity;
+import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
 import com.lifejodi.login.activity.LoginActivity;
@@ -35,6 +35,7 @@ import com.lifejodi.utils.SharedPreference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Ajay on 11-11-2017.
@@ -50,17 +51,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView bottomNavigation;
+    /*@BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigation;*/
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    TextView tvHeaderName,tvHeaderProfId;
+    TextView tvHeaderName, tvHeaderProfId;
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     AppController appController = AppController.getInstance();
     HomeViewPagerAdapter homeViewPagerAdapter;
+
+    @BindView(R.id.layout_search_bottom)
+    LinearLayout layoutSearchBottom;
+    @BindView(R.id.layout_mailbox_bottom)
+    LinearLayout layoutMailboxBottom;
+    @BindView(R.id.layout_notifications_bottom)
+    LinearLayout layoutNotificationsBottom;
+    @BindView(R.id.layout_events_bottom)
+    LinearLayout layoutEventsBottom;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,9 +95,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navView.setNavigationItemSelectedListener(this);
 
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setTabTextColors(Color.parseColor("#FFDCDADA"), Color.parseColor("#ffffff"));
         tabs.addTab(tabs.newTab().setText("MATCHES"));
@@ -102,25 +109,41 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         View view = navView.getHeaderView(0);
-        tvHeaderName = (TextView)view.findViewById(R.id.nav_header_username);
+        tvHeaderName = (TextView) view.findViewById(R.id.nav_header_username);
         tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
-        tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
+        tvHeaderProfId = (TextView) view.findViewById(R.id.text_navigation_profid);
         tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.UID));
 
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
 
+    }
+
+    @OnClick({R.id.layout_search_bottom,R.id.layout_mailbox_bottom,R.id.layout_notifications_bottom,R.id.layout_events_bottom})
+    void Click(View v){
+
+        switch (v.getId()){
+
+            case R.id.layout_search_bottom:
+                startActivity(new Intent(getApplicationContext(),SearchActivity.class));
+                break;
+            case R.id.layout_mailbox_bottom:
+                startActivity(new Intent(getApplicationContext(),InboxActivity.class));
+                break;
+            case R.id.layout_notifications_bottom:
+                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
+                break;
+            case R.id.layout_events_bottom:
+                startActivity(new Intent(getApplicationContext(),EventsActivity.class));
+                break;
+        }
     }
 
     @Override
@@ -129,22 +152,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_my_matches) {
             // Handle the camera action
             viewPager.setCurrentItem(0);
-        } else if (id == R.id.nav_inbox) {
-            startActivity(new Intent(getApplicationContext(),InboxActivity.class));
         } else if (id == R.id.nav_upgrade_account) {
 
         } else if (id == R.id.nav_chat) {
 
         } else if (id == R.id.nav_edit_profile) {
-            Intent editIntent= new Intent(HomeActivity.this, ShowProfileDataActivity.class);
+            Intent editIntent = new Intent(HomeActivity.this, ShowProfileDataActivity.class);
             startActivity(editIntent);
 
         } else if (id == R.id.nav_setting) {
 
-        }else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
 
-            sharedPreference.putSharedPrefData(Constants.LOGINSTATUS,"1");
-            Intent homeIntent = new Intent(HomeActivity.this,LoginActivity.class);
+            sharedPreference.putSharedPrefData(Constants.LOGINSTATUS, "1");
+            Intent homeIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(homeIntent);
             finish();
 
@@ -158,7 +179,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -182,19 +203,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onResume() {
         super.onResume();
-        bottomNavigation.setSelectedItemId(R.id.navigation_home);
+        //    bottomNavigation.setSelectedItemId(R.id.navigation_home);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK)
-        {
-            appController.doubleTapToExit(HomeActivity.this);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (drawerLayout.isDrawerOpen(navView)) {
+                drawerLayout.closeDrawer(navView);
+            } else {
+                appController.doubleTapToExit(HomeActivity.this);
+            }
         }
         return true;
     }

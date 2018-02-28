@@ -4,6 +4,7 @@ import android.Manifest;
 import android.util.Base64;
 
 import com.android.volley.AuthFailureError;
+import com.lifejodi.login.data.RegSpinnersData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,6 +106,10 @@ public class Constants {
     public static String URL_DAILY_RECOMMENDATIONS = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_DAILY_RECOMMENDATIONS= "daily_recommendations";
 
+    //Search
+    public static final String TAG_SEARCH_BY_ID = "searchbyId";
+    public static final String TAG_SEARCH_CUSTOM = "searchcustom";
+
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();
         String credentials = "admin:1234";
@@ -192,6 +197,54 @@ public class Constants {
         }
 
         return index;
+    }
+    public static boolean hasThisValue(ArrayList<HashMap<String,String>> list,String key,String name){
+
+        boolean result = false;
+
+        for (int i=0;i<list.size();i++) {
+            // using ArrayList#contains
+            HashMap<String,String> map = list.get(i);
+            if(map.get(key).equals(name)){
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    public static String getValue(String json,String key){
+
+        String value="";
+
+        try{
+
+            JSONObject jsonObject  = new JSONObject(json);
+            value = jsonObject.getString(key);
+
+        }catch (Exception e){
+        }
+
+
+        return value;
+    }
+
+    public static String getString(ArrayList<HashMap<String,String>> list){
+
+        String value = "";
+
+        for(int i=0;i<list.size();i++){
+
+            HashMap<String,String> map = list.get(i);
+            if(i==(list.size()-1)){
+                value = value+map.get(RegSpinnersData.ID);
+            }else {
+                value = value+map.get(RegSpinnersData.ID)+",";
+            }
+
+        }
+
+        return value;
     }
 
 

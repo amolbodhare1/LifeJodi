@@ -354,6 +354,48 @@ public class RegSpinnersManager implements VolleyResponse {
                 }
                 RegSpinnersData.getInstance().setHeightList(heightList);
             }
+
+            ArrayList<String> ageList = new ArrayList<>();
+            ageList.add("Age");
+            for(int i=0;i<registerData.ListAge.length;i++){
+
+                ageList.add(registerData.ListAge[i]);
+
+            }
+            registerData.setAgeList(ageList);
+
+            ArrayList<String> incomeList = new ArrayList<>();
+            incomeList.add("Income");
+            for(int i=0;i<registerData.ListIncome.length;i++){
+
+                incomeList.add(registerData.ListIncome[i]);
+
+            }
+            registerData.setIncomeList(incomeList);
+
+            ArrayList<HashMap<String,String>> doshamList = new ArrayList<>();
+            HashMap<String,String> map = new HashMap<>();
+            map.put(RegSpinnersData.NAME,"Select Dosham");
+
+            doshamList.add(map);
+
+            map = new HashMap<>();
+            map.put(RegSpinnersData.NAME,"Yes");
+            map.put(RegSpinnersData.ID,"Yes");
+            doshamList.add(map);
+
+            map = new HashMap<>();
+            map.put(RegSpinnersData.NAME,"No");
+            map.put(RegSpinnersData.ID,"No");
+            doshamList.add(map);
+
+            map = new HashMap<>();
+            map.put(RegSpinnersData.NAME,"Don't know");
+            map.put(RegSpinnersData.ID,"Don't know");
+            doshamList.add(map);
+
+            registerData.setDoshamList(doshamList);
+
             mVolleyCallbackInterface.successCallBack("success",tag);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -7,10 +7,6 @@
             android:icon="@mipmap/ic_matches"
             android:title="My Matches" />
         <item
-            android:id="@+id/nav_inbox"
-            android:icon="@mipmap/ic_inbox"
-            android:title="Inbox" />
-        <item
             android:id="@+id/nav_upgrade_account"
             android:icon="@mipmap/ic_upgrade"
             android:title="Upgrade account" />

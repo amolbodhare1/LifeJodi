@@ -1,7 +1,5 @@
 package com.lifejodi.login.data;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +46,10 @@ public class RegSpinnersData {
     public static final String VALUE = "val";
 
 
-
+    public static String[] ListAge = {"18","19","20","21","22","23","24","25","26","27","28","29","30"
+    ,"31","32","33","34","35","36","37","38","39","40"};
+    public static String[] ListIncome = {"100000","300000","500000","700000","1000000","1500000","2000000","3000000",
+    "5000000"};
 
     //GET PROFILE FOR
     ArrayList<HashMap<String,String>> profileForList = new ArrayList<>();
@@ -112,8 +113,26 @@ public class RegSpinnersData {
     public void setMotherTongueList(ArrayList<HashMap<String, String>> motherTongueList) {
         this.motherTongueList = motherTongueList;
     }
+    ArrayList<String> incomeList = new ArrayList<>();
 
+    public ArrayList<String> getIncomeList() {
+        return incomeList;
+    }
 
+    public void setIncomeList(ArrayList<String> incomeList) {
+        this.incomeList = incomeList;
+    }
+
+    //Get Age
+    ArrayList<String> ageList = new ArrayList<>();
+
+    public ArrayList<String> getAgeList() {
+        return ageList;
+    }
+
+    public void setAgeList(ArrayList<String> ageList) {
+        this.ageList = ageList;
+    }
 
     //GET HEIGHT
     ArrayList<String> heightList = new ArrayList<>();

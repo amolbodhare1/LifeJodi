@@ -21,6 +21,10 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,31 +32,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="5dp">
                 <LinearLayout
-                    android:padding="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:padding="10dp">
                     <com.lifejodi.utils.customfonts.CustomEditBeatles
+                        android:id="@+id/edit_search_by_id"
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Search by id"
                         android:textColor="@color/dark_grey"
                         android:textSize="14dp"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"/>
+
+                    <ImageView
+                        android:id="@+id/image_search_by_id"
+                        app:srcCompat="@drawable/ic_search"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:tint="@color/colorAccent"
+                        android:padding="5dp"/>
 
                 </LinearLayout>
 
@@ -66,6 +78,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:visibility="invisible"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -81,6 +94,7 @@
                     android:textColor="@color/pink"
                     android:textSize="14dp" />
                 <LinearLayout
+                    android:visibility="invisible"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -93,130 +107,566 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
-                android:elevation="5dp">
+                android:elevation="5dp"
+                android:layout_marginBottom="50dp">
                 <LinearLayout
-                    android:padding="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                <com.lifejodi.utils.customfonts.CustomTextBeatles
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="    Min Age : "
+                    android:layout_gravity="center_vertical"/>
+
                     <Spinner
-                        android:layout_marginTop="8dp"
                         android:layout_gravity="center"
-                        android:id="@+id/spinner_age"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:id="@+id/spinner_min_age"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
                         android:gravity="center"
                         android:paddingBottom="8dp"
                         android:paddingTop="8dp"
                         android:textColor="@color/dark_grey"
                         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
+                    <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    Max Age : "
+                        android:layout_gravity="center_vertical"/>
+
                     <Spinner
-                        android:layout_marginTop="8dp"
                         android:layout_gravity="center"
-                        android:id="@+id/spinner_height"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:id="@+id/spinner_max_age"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
                         android:gravity="center"
                         android:paddingBottom="8dp"
                         android:paddingTop="8dp"
-                        android:textColor="@color/dark_grey"
-                        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
-
-                    <Spinner
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/spinner_marital_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-                        android:textColor="@color/dark_grey"
-                        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
-
-                    <Spinner
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/spinner_religion"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-
-                        android:textColor="@color/dark_grey"
-                        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
-                    <Spinner
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/spinner_mother_toungue"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-
-                        android:textColor="@color/dark_grey"
-                        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
-                    <Spinner
-                        android:layout_marginTop="8dp"
-                        android:layout_gravity="center"
-                        android:id="@+id/spinner_caste"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-
                         android:textColor="@color/dark_grey"
                         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
-            <com.lifejodi.utils.customfonts.CustomTextBeatles
-                android:id="@+id/text_next"
-                android:layout_gravity="right"
-                android:layout_margin="8dp"
-                android:paddingRight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:visibility="gone"
-                android:textColor="@color/blue"
-                android:textSize="14dp"
-                android:drawableRight="@drawable/ic_arrow_right"/>
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Min Height : "
+                            android:layout_gravity="center_vertical"/>
+
+                        <Spinner
+                            android:layout_gravity="center"
+                            android:id="@+id/spinner_min_height"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@color/dark_grey"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Max Height : "
+                            android:layout_gravity="center_vertical"/>
+
+                        <Spinner
+                            android:layout_gravity="center"
+                            android:id="@+id/spinner_max_height"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@color/dark_grey"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min Income : "
+                            android:layout_gravity="center_vertical"/>
+
+                        <Spinner
+                            android:layout_gravity="center"
+                            android:id="@+id/spinner_min_income"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@color/dark_grey"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Max Income : "
+                            android:layout_gravity="center_vertical"/>
+
+                        <Spinner
+                            android:layout_gravity="center"
+                            android:id="@+id/spinner_max_income"
+                            android:layout_width="80dp"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@color/dark_grey"
+                            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_marital_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Marital Status"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_marital_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_religion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Religion"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_religion"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_mother_tongue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mother tongue"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_mother_tongue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_caste"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Caste"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_caste"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_dosham"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dosham"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_dosham"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Country"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="State"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Occupation"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_occupation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_education"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Education"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_education"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:id="@+id/layout_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="City"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            app:srcCompat="@drawable/ic_expand"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp">
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="Only Show Profiles"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <CheckBox
+                                android:id="@+id/checkbox_show_photo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="With Photo"/>
+                            <CheckBox
+                                android:id="@+id/checkbox_show_horoscope"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="With Horoscope" />
+                        </LinearLayout>
+                        <CheckBox
+                            android:id="@+id/checkbox_show_premium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Premium Members" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp">
+                        <com.lifejodi.utils.customfonts.CustomTextBeatles
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="Don't Show Profiles"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <CheckBox
+                                android:id="@+id/checkbox_dont_contacted"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Already contacted" />
+                            <CheckBox
+                                android:id="@+id/checkbox_dont_shortlisted"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shortlisted" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/checkbox_dont_ignored"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ignored" />
+                            <CheckBox
+                                android:id="@+id/checkbox_dont_visited"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Already visited" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
+    </android.support.v4.widget.NestedScrollView>
+
         <Button
+            android:id="@+id/button_custom_search"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
-            android:text="Search"
+            android:text="Search Here"
             android:textAllCaps="false"
             android:textSize="18dp"/>
 
-    </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        app:backgroundTint="@color/blue"
-        app:srcCompat="@drawable/ic_search" />
+    </RelativeLayout>
 
 </LinearLayout>

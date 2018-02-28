@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.home.managers.ProfileDataManager;
@@ -100,6 +102,8 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
     CustomTextBeatles textEditprofCountry;
     @BindView(R.id.button_update_profile)
     Button buttonUpdateProfile;
+    @BindView(R.id.layout_preogress)
+    RelativeLayout layoutPreogress;
 
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
     JSONObject userDataObject = new JSONObject();
@@ -123,8 +127,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             maritalStatus, maritalStatusId, dosham, caste, casteId, height, physicalStatus, physicalStatusId, education, educationId, occupation, occupationId,
             employedIn, employedInId, currency, currencyId, annualIncome, familyStatus,
             familyStatusId, familyType, familyTypeId, familyValues, familyValuesId, description, lat, lng, sublocality, locality,
-            administrativeArea, country, pincode, address,dateOfBirth,maryOtherCaste,maryOtherCasteId;
-
+            administrativeArea, country, pincode, address, dateOfBirth, maryOtherCaste, maryOtherCasteId, profileId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,7 +160,6 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         dialogEditProfile = new Dialog(this);
         dialogEditProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -196,7 +198,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         dialogSave = (Button) dialogEditProfile.findViewById(R.id.button_edit_save);
 
         regSpinnersManager.initialize(this, this);
-        profileDataManager.initialize(this,this);
+        profileDataManager.initialize(this, this);
         deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         Log.e("DEVICEID", deviceId);
@@ -262,7 +264,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     }
 
-    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails,R.id.button_update_profile})
+    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails, R.id.button_update_profile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_edit_basicdetails:
@@ -312,6 +314,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
             case R.id.button_update_profile:
 
+                layoutPreogress.setVisibility(View.VISIBLE);
                 updateProfile();
 
                 break;
@@ -323,6 +326,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         try {
             dateOfBirth = jsonObject.getString(UserRegData.DOB);
             userId = jsonObject.getString(UserRegData.USERID);
+            profileId = jsonObject.getString(UserRegData.PROFILEID);
             phoneNumber = jsonObject.getString(UserRegData.PHONENUMBER);
             maryOtherCaste = jsonObject.getString(UserRegData.MARRYOTHERCASTE);
             email = jsonObject.getString(UserRegData.EMAIL);
@@ -392,14 +396,17 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
     public void successCallBack(String msg, String tag) {
         if (tag.equals(Constants.TAG_GET_MASTERS)) {
             setEditProfileData();
-        }else  if (tag.equals(Constants.TAG_UPDATE_PROFILE)) {
+        } else if (tag.equals(Constants.TAG_UPDATE_PROFILE)) {
+            layoutPreogress.setVisibility(View.GONE);
+            Toast.makeText(this, "Profile update successfully !!", Toast.LENGTH_SHORT).show();
+            upDateObject();
             finish();
         }
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
-
+        layoutPreogress.setVisibility(View.GONE);
     }
 
     private void setEditProfileData() {
@@ -435,28 +442,51 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         spinnerCountry.setSelection(index);
         index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getMaritalStatusList(), maritalStatus);
         spinnerMaritalStatus.setSelection(index);
+        maritalStatusId = regSpinnersData.getMaritalStatusList().get(spinnerMaritalStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getCurrencyList(), currency);
         spinnerCurrency.setSelection(index);
+        currencyId = regSpinnersData.getCurrencyList().get(spinnerCurrency.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getFamilyValues(), familyValues);
         spinnerFamilyValues.setSelection(index);
+        familyValuesId = regSpinnersData.getFamilyValues().get(spinnerFamilyValues.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getEmployedInList(), employedIn);
         spinnerEmployedIn.setSelection(index);
+        employedInId = regSpinnersData.getEmployedInList().get(spinnerEmployedIn.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getOccupationList(), occupation);
         spinnerOccupation.setSelection(index);
+        occupationId = regSpinnersData.getOccupationList().get(spinnerOccupation.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getEducationList(), education);
         spinnerEducation.setSelection(index);
+        educationId = regSpinnersData.getEducationList().get(spinnerEducation.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getCastsList(), caste);
         spinnerCaste.setSelection(index);
+        casteId = regSpinnersData.getCastsList().get(spinnerCaste.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getReligionsList(), religion);
         spinnerReligion.setSelection(index);
+        religionId = regSpinnersData.getReligionsList().get(spinnerReligion.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getPhysicalStatusList(), physicalStatus);
         spinnerPhysicalStatus.setSelection(index);
+        physicalStatusId = regSpinnersData.getPhysicalStatusList().get(spinnerPhysicalStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getProfileForList(), profileFor);
         spinnerCreatedBy.setSelection(index);
+        profileForId = regSpinnersData.getProfileForList().get(spinnerCreatedBy.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.NAME, regSpinnersData.getMotherTongueList(), motherTongue);
         spinnerMotherTongue.setSelection(index);
+        motherTongueId = regSpinnersData.getMotherTongueList().get(spinnerMotherTongue.getSelectedItemPosition()).get(regSpinnersData.ID);
+
         index = Constants.getIndexFromHashMap(regSpinnersData.VALUE, regSpinnersData.getFamilyStatus(), familyStatus);
         spinnerFamilyStatus.setSelection(index);
+        familyStatusId = regSpinnersData.getFamilyStatus().get(spinnerFamilyStatus.getSelectedItemPosition()).get(regSpinnersData.ID);
 
         if (familyType.equals("Joint")) {
             radioButtonJoint.setChecked(true);
@@ -467,49 +497,103 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         }
 
     }
-    public void updateProfile(){
+
+    public void updateProfile() {
 
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(UserRegData.USERID,userId);
-            jsonObject.put(UserRegData.PROFILEFOR,profileForId);
-            jsonObject.put(UserRegData.NAME,name);
-            jsonObject.put(UserRegData.GENDER,gender);
-            jsonObject.put(UserRegData.DOB,dateOfBirth);
-            jsonObject.put(UserRegData.RELIGION,religionId);
-            jsonObject.put(UserRegData.MOTHERTONGUE,motherTongueId);
-            jsonObject.put(UserRegData.COUNTRYCODE,countryCode);
-            jsonObject.put(UserRegData.PHONENUMBER,phoneNumber);
-            jsonObject.put(UserRegData.EMAIL,email);
-            jsonObject.put(UserRegData.MARITALSTATUS,maritalStatusId);
-            jsonObject.put(UserRegData.CASTE,casteId);
-            jsonObject.put(UserRegData.DOSHAM,dosham);
-        //    jsonObject.put(UserRegData.MARRYOTHERCASTE,maritalStatusId);
-            jsonObject.put(UserRegData.HEIGHT,height);
-            jsonObject.put(UserRegData.PHYSICALSTATUS,physicalStatus);
-            jsonObject.put(UserRegData.EDUCATION,educationId);
-            jsonObject.put(UserRegData.OCCUPATION,occupationId);
-            jsonObject.put(UserRegData.EMPLOYEDIN,employedInId);
-            jsonObject.put(UserRegData.CURRENCY,currencyId);
-            jsonObject.put(UserRegData.ANNUALINCOME,annualIncome);
-            jsonObject.put(UserRegData.FAMILYSTATUS,familyStatusId);
-            jsonObject.put(UserRegData.FAMILYTYPE,familyTypeId);
-            jsonObject.put(UserRegData.FAMILYVALUES,familyValuesId);
-            jsonObject.put(UserRegData.ABOUT,description);
-            jsonObject.put(UserRegData.LATITUDE,lat);
-            jsonObject.put(UserRegData.LONGITUDE,lng);
-            jsonObject.put(UserRegData.SUBLOCALITY,sublocality);
-            jsonObject.put(UserRegData.LOCALITY,locality);
-            jsonObject.put(UserRegData.ADMINISTRATIVEAREA,administrativeArea);
-            jsonObject.put(UserRegData.COUNTRY,country);
-            jsonObject.put(UserRegData.FORMATTEDADDRESS,address);
-            jsonObject.put(UserRegData.PINCODE,pincode);
+            jsonObject.put(UserRegData.USERID, userId);
+            jsonObject.put(UserRegData.PROFILEFOR, profileForId);
+            jsonObject.put(UserRegData.NAME, name);
+            jsonObject.put(UserRegData.GENDER, gender);
+            jsonObject.put(UserRegData.DOB, dateOfBirth);
+            jsonObject.put(UserRegData.RELIGION, religionId);
+            jsonObject.put(UserRegData.MOTHERTONGUE, motherTongueId);
+            jsonObject.put(UserRegData.COUNTRYCODE, countryCode);
+            jsonObject.put(UserRegData.PHONENUMBER, phoneNumber);
+            jsonObject.put(UserRegData.EMAIL, email);
+            jsonObject.put(UserRegData.MARITALSTATUS, maritalStatusId);
+            jsonObject.put(UserRegData.CASTE, casteId);
+            jsonObject.put(UserRegData.DOSHAM, dosham);
+            //    jsonObject.put(UserRegData.MARRYOTHERCASTE,maritalStatusId);
+            jsonObject.put(UserRegData.HEIGHT, height);
+            jsonObject.put(UserRegData.PHYSICALSTATUS, physicalStatus);
+            jsonObject.put(UserRegData.EDUCATION, educationId);
+            jsonObject.put(UserRegData.OCCUPATION, occupationId);
+            jsonObject.put(UserRegData.EMPLOYEDIN, employedInId);
+            jsonObject.put(UserRegData.CURRENCY, currencyId);
+            jsonObject.put(UserRegData.ANNUALINCOME, annualIncome);
+            jsonObject.put(UserRegData.FAMILYSTATUS, familyStatusId);
+            jsonObject.put(UserRegData.FAMILYTYPE, familyTypeId);
+            jsonObject.put(UserRegData.FAMILYVALUES, familyValuesId);
+            jsonObject.put(UserRegData.ABOUT, description);
+            jsonObject.put(UserRegData.LATITUDE, lat);
+            jsonObject.put(UserRegData.LONGITUDE, lng);
+            jsonObject.put(UserRegData.SUBLOCALITY, sublocality);
+            jsonObject.put(UserRegData.LOCALITY, locality);
+            jsonObject.put(UserRegData.ADMINISTRATIVEAREA, administrativeArea);
+            jsonObject.put(UserRegData.COUNTRY, country);
+            jsonObject.put(UserRegData.FORMATTEDADDRESS, address);
+            jsonObject.put(UserRegData.PINCODE, pincode);
 
+            profileDataManager.getUpdateProfile(profileDataManager.getUpdateProfileParams(deviceId, jsonObject));
 
-            profileDataManager.getUpdateProfile(profileDataManager.getUpdateProfileParams(deviceId,jsonObject));
-
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
+    }
+
+    public void upDateObject() {
+
+        try {
+
+            UserRegData userRegData = UserRegData.getInstance();
+            userRegData.regDataObject = new JSONObject();
+
+            userRegData.regDataObject.put(UserRegData.USERID, userId);
+            userRegData.regDataObject.put(UserRegData.EMAIL, email);
+            userRegData.regDataObject.put(UserRegData.PHONENUMBER, phoneNumber);
+            userRegData.regDataObject.put(UserRegData.PROFILEFOR, profileFor);
+            userRegData.regDataObject.put(UserRegData.GENDER, gender);
+            userRegData.regDataObject.put(UserRegData.DOB, dateOfBirth);
+            userRegData.regDataObject.put(UserRegData.PROFILEID, profileId);
+            userRegData.regDataObject.put(UserRegData.FULLNAME, name);
+
+            userRegData.regDataObject.put(userRegData.HEIGHT, height);
+            userRegData.regDataObject.put(userRegData.PHYSICALSTATUS, physicalStatus);
+            userRegData.regDataObject.put(userRegData.MARITALSTATUS, maritalStatus);
+            userRegData.regDataObject.put(userRegData.MOTHERTONGUE, motherTongue);
+            userRegData.regDataObject.put(userRegData.CURRENCY, currency);
+            userRegData.regDataObject.put(userRegData.ANNUALINCOME, annualIncome);
+            userRegData.regDataObject.put(userRegData.FAMILYSTATUS, familyStatus);
+            userRegData.regDataObject.put(userRegData.FAMILYTYPE, familyType);
+            userRegData.regDataObject.put(userRegData.FAMILYVALUES, familyValues);
+            userRegData.regDataObject.put(userRegData.ABOUT_COMMENT, description);
+
+            userRegData.regDataObject.put(userRegData.RELIGION, religion);
+            userRegData.regDataObject.put(userRegData.CASTE, caste);
+            userRegData.regDataObject.put(userRegData.DOSHAM, dosham);
+            userRegData.regDataObject.put(userRegData.MARRYOTHERCASTE, maryOtherCaste);
+
+            userRegData.regDataObject.put(userRegData.EDUCATIONNAME, education);
+            userRegData.regDataObject.put(userRegData.OCCUPATIONNAME, occupation);
+            userRegData.regDataObject.put(userRegData.EMPLOYEDINNAME, employedIn);
+
+            userRegData.regDataObject.put(userRegData.LATITUDE, lat);
+            userRegData.regDataObject.put(userRegData.LONGITUDE, lng);
+            userRegData.regDataObject.put(userRegData.LOCALITY, locality);
+            userRegData.regDataObject.put(userRegData.SUBLOCALITY, sublocality);
+            userRegData.regDataObject.put(userRegData.ADMINISTRATIVEAREA, administrativeArea);
+            userRegData.regDataObject.put(userRegData.PINCODE, pincode);
+            userRegData.regDataObject.put(userRegData.COUNTRY, country);
+            userRegData.regDataObject.put(userRegData.COUNTRYCODE, countryCode);
+            userRegData.regDataObject.put(userRegData.FORMATTEDADDRESS, address);
+
+            sharedPreference.putSharedPrefData(Constants.USERDATA, userRegData.regDataObject.toString());
+
+        } catch (Exception e) {
+
+        }
+
     }
 }
