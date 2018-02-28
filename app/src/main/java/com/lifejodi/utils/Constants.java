@@ -60,6 +60,7 @@ public class Constants {
     public static String LOGINEMAIL="login_email";
     public static String PROFILEID="profile_id";
     public static String UID="uid";
+    public static String PROFILEPICPATH="profile_pic_path";
 
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";

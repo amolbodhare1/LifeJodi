@@ -113,8 +113,11 @@ public class EventsManager implements VolleyResponse {
                     dataMap.put(EventsData.ADDRESS,Constants.getStringValueOfJsonObject(dataObject,EventsData.ADDRESS,EventsData.ADDRESS));
                     dataMap.put(EventsData.ADDBY,Constants.getStringValueOfJsonObject(dataObject,EventsData.ADDBY,EventsData.ADDBY));
                     dataMap.put(EventsData.ADDDATE,Constants.getStringValueOfJsonObject(dataObject,EventsData.ADDDATE,EventsData.ADDDATE));
+                    dataMap.put(EventsData.EVENTFEES,Constants.getStringValueOfJsonObject(dataObject,EventsData.EVENTFEES,EventsData.EVENTFEES));
+                    dataMap.put(EventsData.IMAGE,Constants.getStringValueOfJsonObject(dataObject,EventsData.IMAGE,EventsData.IMAGE));
                     dataMap.put(EventsData.DELETE,Constants.getStringValueOfJsonObject(dataObject,EventsData.DELETE,EventsData.DELETE));
                     dataMap.put(EventsData.ACTIVE,Constants.getStringValueOfJsonObject(dataObject,EventsData.ACTIVE,EventsData.ACTIVE));
+                    dataMap.put(EventsData.CURRENCYID,Constants.getStringValueOfJsonObject(dataObject,EventsData.CURRENCYID,EventsData.CURRENCYID));
 
                     dataList.add(dataMap);
 

@@ -80,6 +80,7 @@ public class UploadProfilePicManager implements VolleyResponse{
         switch (tag)
         {
             case Constants.TAG_UPLOAD_PROFILE_PIC:
+                parseUploadProfPicResponse(strResponse,tag);
                 break;
         }
     }

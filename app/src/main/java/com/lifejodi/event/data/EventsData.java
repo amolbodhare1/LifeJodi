@@ -33,6 +33,9 @@ public class EventsData {
     public static final String ADDDATE = "add_date";
     public static final String DELETE = "delete";
     public static final String ACTIVE = "active";
+    public static final String EVENTFEES = "event_fees";
+    public static final String IMAGE = "image";
+    public static final String CURRENCYID = "currency_id";
 
     ArrayList<HashMap<String,String>> eventsList = new ArrayList<>();
     public ArrayList<HashMap<String, String>> getEventsList() {
