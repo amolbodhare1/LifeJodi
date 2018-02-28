@@ -1,8 +1,14 @@
 package com.lifejodi.home.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -14,11 +20,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
@@ -27,21 +37,37 @@ import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
 import com.lifejodi.login.activity.LoginActivity;
+import com.lifejodi.login.data.UploadProfilePicData;
+import com.lifejodi.login.manager.UploadProfilePicManager;
 import com.lifejodi.navigation.activities.DailyRecommActivity;
 import com.lifejodi.navigation.activities.ShowProfileDataActivity;
+import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
+import com.lifejodi.utils.PickerBuilder;
 import com.lifejodi.utils.SharedPreference;
+import com.nguyenhoanglam.imagepicker.model.Config;
+import com.nguyenhoanglam.imagepicker.model.Image;
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Ajay on 11-11-2017.
  */
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, VolleyCallbackInterface {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -58,10 +84,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     TextView tvHeaderName, tvHeaderProfId;
+
+    TextView tvHeaderName,tvHeaderProfId;
+    ImageView ivAddProfilePic;
+    CircleImageView ivUserProfilePic;
+    RelativeLayout layoutAddProfPic;
+
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
 
     AppController appController = AppController.getInstance();
     HomeViewPagerAdapter homeViewPagerAdapter;
+    UploadProfilePicData uploadProfilePicData = UploadProfilePicData.getInstance();
+    UploadProfilePicManager uploadProfilePicManager ;
+
+    public final int  PICK_IMAGE_REQUEST= 100;
+    ArrayList<Image> images = new ArrayList<>();
+    PickerBuilder pickerBuilder;
+    String userId="",androidDeviceId="";
 
     @BindView(R.id.layout_search_bottom)
     LinearLayout layoutSearchBottom;
@@ -118,8 +157,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         View view = navView.getHeaderView(0);
         tvHeaderName = (TextView) view.findViewById(R.id.nav_header_username);
         tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
-        tvHeaderProfId = (TextView) view.findViewById(R.id.text_navigation_profid);
-        tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.UID));
+        tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
+        tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.PROFILEID));
+
+        ivAddProfilePic = (ImageView)view.findViewById(R.id.image_add_profile_photo);
+        ivUserProfilePic = (CircleImageView)view.findViewById(R.id.image_profile_pic);
+        layoutAddProfPic = (RelativeLayout)view.findViewById(R.id.layout_add_profile_photo);
 
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
@@ -146,6 +189,67 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+        pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
+        ivAddProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
+                            pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+                            @Override
+                            public void onImageReceived(Uri imageUri) {
+                                //Toast.makeText(HomeActivity.this,"Got image - " + imageUri,Toast.LENGTH_LONG).show();
+                                ivUserProfilePic.setImageURI(imageUri);
+                                InputStream iStream = null;
+                               // try {
+                                    String path = imageUri.getPath();
+                                   // iStream = getContentResolver().openInputStream(imageUri);
+                                   // byte[] inputData = getBytes(iStream);
+                                 //   Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                                      Bitmap bitmap = BitmapFactory.decodeFile(path);
+                                  //  Bitmap bitmap = ((BitmapDrawable) ivUserProfilePic.getDrawable()).getBitmap();
+                                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+                                   // byte[] byteArray = path.getBytes();
+
+                                    String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                                  //  String imageString = getResources().getString(R.string.image_string);
+
+                                    userId = sharedPreference.getSharedPrefData(Constants.UID);
+                                    androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+                                    uploadProfilePicManager = UploadProfilePicManager.getInstance();
+                                    uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
+                                    uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
+                                }/* catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }*/
+
+                            //}
+                        })
+                        .setImageName("testImage")
+                        .setImageFolderName("testFolder")
+                        .withTimeStamp(true)
+                        .setCropScreenColor(Color.CYAN)
+                        .start();
+
+            }
+        });
+
+    }
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -221,5 +325,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    public void successCallBack(String msg, String tag) {
+        switch (tag)
+        {
+            case Constants.TAG_UPLOAD_PROFILE_PIC:
+                layoutAddProfPic.setVisibility(View.GONE);
+                HashMap<String,String> dataMap = uploadProfilePicData.getUploadPicResultMap();
+                String imagePath = dataMap.get(UploadProfilePicData.IMAGEPATH);
+                break;
+        }
+    }
+
+    @Override
+    public void errorCallBack(String msg, String tag) {
+        switch (tag)
+        {
+            case Constants.TAG_UPLOAD_PROFILE_PIC:
+                Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

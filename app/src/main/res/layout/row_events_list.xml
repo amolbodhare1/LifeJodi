@@ -13,60 +13,84 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_event"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp">
-
+        android:layout_height="220dp"
+       >
+<!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical">-->
 
             <ImageView
-                android:id="@+id/image_event"
+                android:id="@+id/image_event_list"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/image_event1"
-                android:adjustViewBounds="true"/>
-            <RelativeLayout
+               />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
                 android:background="@color/blue">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:layout_marginTop="10dp"
-                    android:id="@+id/text_title"
+                    android:id="@+id/text_eventlist_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="20dp"
                     android:text="Match Night"
                     android:textColor="@color/pink"
-                    android:textSize="12dp" />
-
+                    android:textSize="14dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
+                    android:id="@+id/text_eventslist_reg_fees"
                     android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/text_title"
-                    android:layout_below="@+id/text_title"
                     android:text="Nights-free entry"
                     android:textColor="@color/white"
                     android:textSize="12dp" />
+                   <!-- <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:id="@+id/text_events_reg_fees"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/text_title"
+                        android:layout_below="@+id/text_title"
+                        android:text="$100"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/pink"
+                        android:textSize="14dp" />-->
+                </LinearLayout>
+                </LinearLayout>
 
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
-                    android:id="@+id/text_date"
+                    android:id="@+id/text_eventslist_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="10dp"
                     android:text="10th Nov"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/white"
                     android:textSize="14dp" />
-            </RelativeLayout>
-        </LinearLayout>
+            </LinearLayout>
+     <!--   </LinearLayout>-->
 
 
     </android.support.v7.widget.CardView>

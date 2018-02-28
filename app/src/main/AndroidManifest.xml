@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -38,6 +40,7 @@
         <activity android:name=".home.activity.ProfileDetailsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".navigation.activities.DailyRecommActivity" android:screenOrientation="portrait"/>
         <activity android:name=".navigation.activities.ShowProfileDataActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".event.activity.EventDetailsActivity" android:screenOrientation="portrait"/>
         <service android:name=".login.service.FetchAddressIntentService"
             android:exported="false"/>
 
@@ -60,6 +63,15 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".utils.TempActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD8yfp6PEc9021aGuVXLdLuOyiRdm25Mm8" />

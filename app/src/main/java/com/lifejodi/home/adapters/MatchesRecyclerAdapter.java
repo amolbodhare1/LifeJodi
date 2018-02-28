@@ -24,6 +24,7 @@ import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +75,8 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
              defaultImage = R.drawable.images;
         }
         try {
-            Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
+          //  Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
+            Picasso.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
         }catch (Exception e)
         {
             Log.e("IMAGELOAD",e.getLocalizedMessage());

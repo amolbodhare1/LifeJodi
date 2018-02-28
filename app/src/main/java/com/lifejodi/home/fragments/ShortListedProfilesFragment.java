@@ -66,7 +66,7 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
         recFragmentShortlisted.setLayoutManager(gridLayoutManager);
 
         if (!fragmentResume && fragmentVisible) {
-            profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
+            profId = sharedPreference.getSharedPrefData(Constants.UID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             shortListManager = ShortListManager.getInstance();
             shortListManager.initialize(this, getActivity());
@@ -84,7 +84,7 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
             fragmentResume = true;
             fragmentVisible = false;
             fragmentOnCreated = true;
-            profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
+            profId = sharedPreference.getSharedPrefData(Constants.UID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             shortListManager = ShortListManager.getInstance();
             shortListManager.initialize(this, getActivity());

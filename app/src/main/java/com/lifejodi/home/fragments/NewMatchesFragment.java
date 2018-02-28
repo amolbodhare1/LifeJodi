@@ -64,7 +64,7 @@ public class NewMatchesFragment extends Fragment implements VolleyCallbackInterf
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recFragmentNewMatches.setLayoutManager(gridLayoutManager);
         if (!fragmentResume && fragmentVisible) {
-            profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
+            profId = sharedPreference.getSharedPrefData(Constants.UID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             homeFragmentsManager = HomeFragmentsManager.getInstance();
             homeFragmentsManager.initialize(this, getActivity());
@@ -81,7 +81,7 @@ public class NewMatchesFragment extends Fragment implements VolleyCallbackInterf
             fragmentResume = true;
             fragmentVisible = false;
             fragmentOnCreated = true;
-            profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
+            profId = sharedPreference.getSharedPrefData(Constants.UID);
             String androidDeviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
             homeFragmentsManager = HomeFragmentsManager.getInstance();
             homeFragmentsManager.initialize(this, getActivity());
