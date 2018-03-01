@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.network.VolleyCallbackInterface;
@@ -93,11 +94,20 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
 
     @Override
     public void successCallBack(String msg, String tag) {
-
+        switch (tag)
+        {
+            case Constants.TAG_SEARCH_CUSTOM:
+                break;
+        }
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
-
+        switch (tag)
+        {
+            case Constants.TAG_SEARCH_CUSTOM:
+                Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

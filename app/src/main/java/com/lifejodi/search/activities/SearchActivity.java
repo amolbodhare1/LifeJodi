@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,15 +30,18 @@ import android.widget.Toast;
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
+import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.search.adapter.CommonDataAdapter;
 import com.lifejodi.search.adapter.SelectedAdapter;
 import com.lifejodi.search.data.SearchData;
+import com.lifejodi.search.manager.SearchManager;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -60,6 +64,10 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
     RegSpinnersManager regSpinnersManager = RegSpinnersManager.getInstance();
     RegSpinnersData regSpinnersData = RegSpinnersData.getInstance();
+    JSONObject userDataObject = new JSONObject();
+
+    SearchManager searchManager;
+    SearchData searchData = SearchData.getInstance();
 
     String deviceId;
     @BindView(R.id.image_search_by_id)
@@ -137,10 +145,10 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
     ArrayList<HashMap<String, String>> doshamList = new ArrayList<>();
     ArrayList<HashMap<String, String>> mothertongueList = new ArrayList<>();
 
-    String userId="", searchNow="1", religionId="", minAge="", maxAge="", minHeight="", maxHeight="", maritalStatusId="",
-            motherTongueId="", casteId="", country="", state="", city="", educationId="", occupationId="", minIncome="", maxIncome="",
-            dosham="", showWithPhoto="0", showWithHoroscope="0", showWithPremium="0",
-            dontShowContacted="0", dontShowShortlisted="0", dontShowIgnored="0", dontShowVisited="0";
+    String userId = "", searchNow = "1", religionId = "", minAge = "", maxAge = "", minHeight = "", maxHeight = "", maritalStatusId = "",
+            motherTongueId = "", casteId = "", country = "", state = "", city = "", educationId = "", occupationId = "", minIncome = "", maxIncome = "",
+            dosham = "", showWithPhoto = "0", showWithHoroscope = "0", showWithPremium = "0",
+            dontShowContacted = "0", dontShowShortlisted = "0", dontShowIgnored = "0", dontShowVisited = "0";
 
     @BindView(R.id.edit_search_by_id)
     CustomEditBeatles editSearchById;
@@ -163,6 +171,9 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
 
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,8 +199,13 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
         regSpinnersManager.initialize(this, this);
         sharedPreference.initialize(this);
+        try {
+            userDataObject = new JSONObject(sharedPreference.getSharedPrefData(Constants.USERDATA));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         String userData = sharedPreference.getSharedPrefData(Constants.USERDATA);
-        userId = Constants.getValue(userData,SearchData.USERID);
+        userId = Constants.getValue(userData, SearchData.USERID);
         deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         Log.e("DEVICEID", deviceId);
@@ -235,19 +251,19 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         checkboxShowPhoto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                showWithPhoto = "1";
-                }else {
-                showWithPhoto = "0";
+                if (isChecked) {
+                    showWithPhoto = "1";
+                } else {
+                    showWithPhoto = "0";
                 }
             }
         });
         checkboxShowHoroscope.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     showWithHoroscope = "1";
-                }else {
+                } else {
                     showWithHoroscope = "0";
                 }
             }
@@ -255,9 +271,9 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         checkboxShowPremium.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     showWithPremium = "1";
-                }else {
+                } else {
                     showWithPremium = "0";
                 }
             }
@@ -265,19 +281,19 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         checkboxDontContacted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     dontShowContacted = "1";
-                }else {
-                    dontShowContacted =  "0";
+                } else {
+                    dontShowContacted = "0";
                 }
             }
         });
         checkboxDontIgnored.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     dontShowIgnored = "1";
-                }else {
+                } else {
                     dontShowIgnored = "0";
                 }
             }
@@ -285,9 +301,9 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         checkboxDontVisited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     dontShowVisited = "1";
-                }else {
+                } else {
                     dontShowVisited = "0";
                 }
             }
@@ -295,9 +311,9 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         checkboxDontShortlisted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     dontShowShortlisted = "1";
-                }else {
+                } else {
                     dontShowShortlisted = "0";
                 }
             }
@@ -435,12 +451,12 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
                 doshamList.clear();
                 doshamList.addAll(SearchData.selectedList);
                 recyclerDosham.setAdapter(new SelectedAdapter(this, doshamList));
-                if(doshamList.size()>0){
-                recyclerDosham.setVisibility(View.VISIBLE);
-                dosham = Constants.getString(doshamList);
-                }else {
-                recyclerDosham.setVisibility(View.GONE);
-                dosham = "";
+                if (doshamList.size() > 0) {
+                    recyclerDosham.setVisibility(View.VISIBLE);
+                    dosham = Constants.getString(doshamList);
+                } else {
+                    recyclerDosham.setVisibility(View.GONE);
+                    dosham = "";
                 }
                 dialogCommon.dismiss();
 
@@ -452,7 +468,7 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
     }
 
     @OnClick({R.id.layout_marital_status, R.id.layout_religion, R.id.layout_caste, R.id.layout_country, R.id.layout_state
-            , R.id.layout_city, R.id.layout_education, R.id.layout_mother_tongue, R.id.layout_occupation, R.id.layout_dosham,R.id.button_custom_search,R.id.image_search_by_id})
+            , R.id.layout_city, R.id.layout_education, R.id.layout_mother_tongue, R.id.layout_occupation, R.id.layout_dosham, R.id.button_custom_search, R.id.image_search_by_id})
     void Click(View id) {
 
         SearchData.selectedList.clear();
@@ -566,12 +582,20 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
             case R.id.image_search_by_id:
 
-                if(!editSearchById.getText().toString().equals("")){
+                if (!editSearchById.getText().toString().equals("")) {
+                    try {
+                        progressLayout.setVisibility(View.VISIBLE);
+                        String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                        String userId = userDataObject.getString(UserRegData.USERID);
+                        searchManager = SearchManager.getInstance();
+                        searchManager.initialize(this, SearchActivity.this);
+                        searchManager.getSearchById(searchManager.getSearchByIdInput(androidDeviceId, userId, editSearchById.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    Intent intent = new Intent(this,SearchResultActivity.class);
-                    intent.putExtra("profile_id",editSearchById.getText().toString());
 
-                }else {
+                } else {
                     Toast.makeText(this, "Enter profile id", Toast.LENGTH_SHORT).show();
                 }
 
@@ -587,6 +611,19 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
         if (tag.equals(Constants.TAG_GET_MASTERS)) {
             setSearchData();
+        }else if(tag.equals(Constants.TAG_SEARCH_BY_ID))
+        {
+            progressLayout.setVisibility(View.GONE);
+            String status = searchData.getSearchByIdStatus();
+            if(status.equals("1"))
+            {
+                Intent intent = new Intent(this,SearchByIdResultActivity.class);
+                intent.putExtra("profile_id",editSearchById.getText().toString());
+                startActivity(intent);
+
+            }else {
+                Toast.makeText(this, ""+searchData.getSearchByIdMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
@@ -611,28 +648,32 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     minAge = regSpinnersData.getAgeList().get(position);
-                }else {
+                } else {
                     minAge = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         spinnerMaxAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     maxAge = regSpinnersData.getAgeList().get(position);
-                }else {
+                } else {
                     maxAge = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -640,14 +681,16 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     minHeight = regSpinnersData.getHeightList().get(position);
-                }else {
+                } else {
                     minHeight = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -655,14 +698,16 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     maxHeight = regSpinnersData.getHeightList().get(position);
-                }else {
+                } else {
                     maxHeight = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -670,14 +715,16 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     minIncome = regSpinnersData.getIncomeList().get(position);
-                }else {
+                } else {
                     minIncome = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -685,14 +732,16 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position!=0){
+                if (position != 0) {
                     maxIncome = regSpinnersData.getIncomeList().get(position);
-                }else {
+                } else {
                     maxIncome = "";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -705,40 +754,40 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
     private void CustomSearch() {
 
-        try{
+        try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(SearchData.USERID,userId);
-            jsonObject.put(SearchData.SEARCH_NOW,searchNow);
-            jsonObject.put(SearchData.MIN_AGE,minAge);
-            jsonObject.put(SearchData.MAX_AGE,maxAge);
-            jsonObject.put(SearchData.MIN_HEIGHT,minHeight);
-            jsonObject.put(SearchData.MAX_HEIGHT,maxHeight);
-            jsonObject.put(SearchData.MIN_INCOME,minIncome);
-            jsonObject.put(SearchData.MAX_INCOME,maxIncome);
-            jsonObject.put(SearchData.RELIGION,religionId);
-            jsonObject.put(SearchData.CASTE,casteId);
-            jsonObject.put(SearchData.EDUCATION,educationId);
-            jsonObject.put(SearchData.OCCUPATION,occupationId);
-            jsonObject.put(SearchData.DOSHAM,dosham);
-            jsonObject.put(SearchData.MOTHERTONGUE,motherTongueId);
-            jsonObject.put(SearchData.MARITALSTATUS,maritalStatusId);
-            jsonObject.put(SearchData.COUNTRY,country);
-            jsonObject.put(SearchData.STATE,state);
-            jsonObject.put(SearchData.CITY,city);
-            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PHOTO,showWithPhoto);
-            jsonObject.put(SearchData.SHOW_PROFILE_WITH_HOROSCOPE,showWithHoroscope);
-            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PREMIUM,showWithPremium);
-            jsonObject.put(SearchData.DONT_SHOW_CONTACTED,dontShowContacted);
-            jsonObject.put(SearchData.DONT_SHOW_SHORTLISTED,dontShowShortlisted);
-            jsonObject.put(SearchData.DONT_SHOW_VISITED,dontShowVisited);
-            jsonObject.put(SearchData.DONT_SHOW_IGNORED,dontShowIgnored);
+            jsonObject.put(SearchData.USERID, userId);
+            jsonObject.put(SearchData.SEARCH_NOW, searchNow);
+            jsonObject.put(SearchData.MIN_AGE, minAge);
+            jsonObject.put(SearchData.MAX_AGE, maxAge);
+            jsonObject.put(SearchData.MIN_HEIGHT, minHeight);
+            jsonObject.put(SearchData.MAX_HEIGHT, maxHeight);
+            jsonObject.put(SearchData.MIN_INCOME, minIncome);
+            jsonObject.put(SearchData.MAX_INCOME, maxIncome);
+            jsonObject.put(SearchData.RELIGION, religionId);
+            jsonObject.put(SearchData.CASTE, casteId);
+            jsonObject.put(SearchData.EDUCATION, educationId);
+            jsonObject.put(SearchData.OCCUPATION, occupationId);
+            jsonObject.put(SearchData.DOSHAM, dosham);
+            jsonObject.put(SearchData.MOTHERTONGUE, motherTongueId);
+            jsonObject.put(SearchData.MARITALSTATUS, maritalStatusId);
+            jsonObject.put(SearchData.COUNTRY, country);
+            jsonObject.put(SearchData.STATE, state);
+            jsonObject.put(SearchData.CITY, city);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PHOTO, showWithPhoto);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_HOROSCOPE, showWithHoroscope);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PREMIUM, showWithPremium);
+            jsonObject.put(SearchData.DONT_SHOW_CONTACTED, dontShowContacted);
+            jsonObject.put(SearchData.DONT_SHOW_SHORTLISTED, dontShowShortlisted);
+            jsonObject.put(SearchData.DONT_SHOW_VISITED, dontShowVisited);
+            jsonObject.put(SearchData.DONT_SHOW_IGNORED, dontShowIgnored);
 
-            Intent intent = new Intent(this,SearchResultActivity.class);
-            intent.putExtra("custom_search",jsonObject.toString());
+            Intent intent = new Intent(this, SearchResultActivity.class);
+            intent.putExtra("custom_search", jsonObject.toString());
             startActivity(intent);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
 
         }

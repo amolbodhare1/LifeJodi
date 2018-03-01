@@ -46,6 +46,7 @@ import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.PickerBuilder;
 import com.lifejodi.utils.SharedPreference;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -160,6 +161,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ivUserProfilePic = (CircleImageView)view.findViewById(R.id.image_profile_pic);
         layoutAddProfPic = (RelativeLayout)view.findViewById(R.id.layout_add_profile_photo);
 
+        String profPicPath = sharedPreference.getSharedPrefData(Constants.PROFILEPICPATH);
+        if(profPicPath.equals(""))
+        {
+           layoutAddProfPic.setVisibility(View.VISIBLE);
+        }else {
+            layoutAddProfPic.setVisibility(View.GONE);
+            Picasso.with(HomeActivity.this)
+                    .load(profPicPath)
+                    .placeholder(R.drawable.image_event1)
+                    .into(ivUserProfilePic);
+        }
+
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
 
@@ -172,40 +185,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
                     @Override
                     public void onImageReceived(Uri imageUri) {
-                        //Toast.makeText(HomeActivity.this,"Got image - " + imageUri,Toast.LENGTH_LONG).show();
                         ivUserProfilePic.setImageURI(imageUri);
                         InputStream iStream = null;
-                        // try {
                         String path = imageUri.getPath();
-                        // iStream = getContentResolver().openInputStream(imageUri);
-                        // byte[] inputData = getBytes(iStream);
-                        //   Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
                         Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        //  Bitmap bitmap = ((BitmapDrawable) ivUserProfilePic.getDrawable()).getBitmap();
                         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                         byte[] byteArray = byteArrayOutputStream .toByteArray();
-                        // byte[] byteArray = path.getBytes();
+
 
                         String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        //String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        //  String imageString = getResources().getString(R.string.image_string);
-
+                      
                         userId = sharedPreference.getSharedPrefData(Constants.UID);
                         androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
                         uploadProfilePicManager = UploadProfilePicManager.getInstance();
                         uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
                         uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
-                    }/* catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }*/
+                    }
 
-                    //}
-                })
-                        .setImageName("testImage")
+                }).setImageName("testImage")
                         .setImageFolderName("testFolder")
                         .withTimeStamp(true)
                         .setCropScreenColor(Color.CYAN)
@@ -337,9 +336,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (tag)
         {
             case Constants.TAG_UPLOAD_PROFILE_PIC:
-                layoutAddProfPic.setVisibility(View.GONE);
-                HashMap<String,String> dataMap = uploadProfilePicData.getUploadPicResultMap();
-                String imagePath = dataMap.get(UploadProfilePicData.IMAGEPATH);
+                String status=uploadProfilePicData.getUploadPicStatus();
+                if(status.equals("1"))
+                {
+                    layoutAddProfPic.setVisibility(View.GONE);
+                    HashMap<String,String> dataMap = uploadProfilePicData.getUploadPicResultMap();
+                    String imagePath = dataMap.get(UploadProfilePicData.IMAGEPATH);
+                    sharedPreference.putSharedPrefData(Constants.PROFILEPICPATH,imagePath);
+                }else {
+                    Toast.makeText(this, ""+uploadProfilePicData.getUploadPicMessage(), Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }

@@ -63,4 +63,102 @@ public class SearchData {
     public static String DONT_SHOW_IGNORED = "dont_show_profile_ignored";
     public static String DONT_SHOW_VISITED = "dont_show_profile_visited";
 
+    public static String AGE = "age";
+    public static String LAT = "lat";
+    public static String LNG = "lng";
+    public static String SUBLOCALITY = "sublocality";
+    public static String LOCALITY = "locality";
+    public static String ADMINISTRATIVEAREA = "administrative_area_level_1";
+    public static String PINCODE = "pincode";
+    public static String FORMATTEDADRRESS = "formatted_address";
+    public static String ID = "id";
+    public static String PROFILEID = "profile_id";
+    public static String PROFILEFOR = "profile_for";
+    public static String FULLNAME = "full_name";
+    public static String GENDER = "gender";
+    public static String DOB = "dob";
+    public static String COUNTRYCODE = "country_code";
+    public static String PHNUMBER = "ph_number";
+    public static String EMAIL = "email";
+    public static String PASSWORD = "password";
+    public static String MARRYOTHERCAST = "marry_other_caste";
+    public static String CURRENCYID = "currency_id";
+    public static String COMMENT = "comment";
+    public static String EDUCATIONLEVEL = "educationlevel";
+    public static String OCCUPATIONNAME = "occupation";
+    public static String WORKINGAS = "workingas";
+    public static String PROFILEPIC = "profile_pic";
+
+
+
+
+    public static String STATUS = "status";
+    public static String MESSAGE = "msg";
+    public static String DATA = "data";
+
+    //SEARCH BY ID
+    String searchByIdStatus = "";
+    public String getSearchByIdStatus() {
+        return searchByIdStatus;
+    }
+
+    public void setSearchByIdStatus(String searchByIdStatus) {
+        this.searchByIdStatus = searchByIdStatus;
+    }
+
+    String searchByIdMessage = "";
+    public String getSearchByIdMessage() {
+        return searchByIdMessage;
+    }
+
+    public void setSearchByIdMessage(String searchByIdMessage) {
+        this.searchByIdMessage = searchByIdMessage;
+    }
+
+
+    ArrayList<HashMap<String,String>> searchByIdsList = new ArrayList<>();
+    public ArrayList<HashMap<String, String>> getSearchByIdsList() {
+        return searchByIdsList;
+    }
+
+    public void setSearchByIdsList(ArrayList<HashMap<String, String>> searchByIdsList) {
+        this.searchByIdsList = searchByIdsList;
+    }
+
+
+    //CUSTOM SEARCH
+    String customSearchStatus="";
+    public String getCustomSearchStatus() {
+        return customSearchStatus;
+    }
+
+    public void setCustomSearchStatus(String customSearchStatus) {
+        this.customSearchStatus = customSearchStatus;
+    }
+
+
+    String customSearchMessage="";
+    public String getCustomSearchMessage() {
+        return customSearchMessage;
+    }
+
+    public void setCustomSearchMessage(String customSearchMessage) {
+        this.customSearchMessage = customSearchMessage;
+    }
+
+
+    ArrayList<HashMap<String,String>> customSearchList = new ArrayList<>();
+
+    public ArrayList<HashMap<String, String>> getCustomSearchList() {
+        return customSearchList;
+    }
+
+    public void setCustomSearchList(ArrayList<HashMap<String, String>> customSearchList) {
+        this.customSearchList = customSearchList;
+    }
+
+
+
+
+
 }

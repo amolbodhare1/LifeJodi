@@ -17,11 +17,15 @@ import com.lifejodi.R;
 import com.lifejodi.event.data.EventRegistrationData;
 import com.lifejodi.event.data.EventsData;
 import com.lifejodi.event.managers.EventRegManager;
+import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +67,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     EventRegistrationData eventRegistrationData = EventRegistrationData.getInstance();
     SharedPreference sharedPreference;
     EventsData eventsData = EventsData.getInstance();
+    UserRegData userRegData = UserRegData.getInstance();
 
 
     @Override
@@ -91,9 +96,20 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     }
 
     public void registerUser() {
-        firstName = sharedPreference.getSharedPrefData(Constants.USERNAME);
-        mobNum = sharedPreference.getSharedPrefData(Constants.SAVEDMOBILE);
-        userId = sharedPreference.getSharedPrefData(Constants.UID);
+        JSONObject dataObject = null;
+        try {
+            dataObject = new JSONObject(sharedPreference.getSharedPrefData(Constants.USERDATA));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            firstName = dataObject.getString(UserRegData.FULLNAME);
+            mobNum = dataObject.getString(UserRegData.PHONENUMBER);
+            userId = dataObject.getString(UserRegData.USERID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if (!checkboxTerms.isChecked()) {
             Toast.makeText(this, "Please accept Terms & Conditions", Toast.LENGTH_SHORT).show();
