@@ -581,27 +581,15 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
                 break;
 
             case R.id.image_search_by_id:
-
                 if (!editSearchById.getText().toString().equals("")) {
-                    try {
-                        progressLayout.setVisibility(View.VISIBLE);
-                        String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-                        String userId = userDataObject.getString(UserRegData.USERID);
-                        searchManager = SearchManager.getInstance();
-                        searchManager.initialize(this, SearchActivity.this);
-                        searchManager.getSearchById(searchManager.getSearchByIdInput(androidDeviceId, userId, editSearchById.getText().toString()));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
+                    Intent intent = new Intent(this,SearchResultActivity.class);
+                    intent.putExtra("profile_id",editSearchById.getText().toString());
+                    startActivity(intent);
                 } else {
                     Toast.makeText(this, "Enter profile id", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
-
-
         }
 
     }
@@ -611,19 +599,6 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
         if (tag.equals(Constants.TAG_GET_MASTERS)) {
             setSearchData();
-        }else if(tag.equals(Constants.TAG_SEARCH_BY_ID))
-        {
-            progressLayout.setVisibility(View.GONE);
-            String status = searchData.getSearchByIdStatus();
-            if(status.equals("1"))
-            {
-                Intent intent = new Intent(this,SearchByIdResultActivity.class);
-                intent.putExtra("profile_id",editSearchById.getText().toString());
-                startActivity(intent);
-
-            }else {
-                Toast.makeText(this, ""+searchData.getSearchByIdMessage(), Toast.LENGTH_SHORT).show();
-            }
         }
 
     }
@@ -757,7 +732,7 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put(SearchData.USERID, userId);
+            jsonObject.put(SearchData.USERID, "5");
             jsonObject.put(SearchData.SEARCH_NOW, searchNow);
             jsonObject.put(SearchData.MIN_AGE, minAge);
             jsonObject.put(SearchData.MAX_AGE, maxAge);

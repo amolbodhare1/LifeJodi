@@ -89,6 +89,8 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
     CustomTextBeatles textSearchidResultFamilystatus;
     @BindView(R.id.text_searchid_result_addr)
     CustomTextBeatles textSearchidResultAddr;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
 
     SearchData searchData = SearchData.getInstance();
     ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
@@ -96,8 +98,11 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
     SharedPreference sharedPreference;
     ShortListManager shortListManager;
     ShortlistData shortlistData = ShortlistData.getInstance();
-    @BindView(R.id.progressLayout)
-    RelativeLayout progressLayout;
+    @BindView(R.id.layout_searchbyid_results)
+    LinearLayout layoutSearchbyidResults;
+    @BindView(R.id.text_no_searchbyid_results)
+    CustomTextBeatles textNoSearchbyidResults;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,39 +117,49 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
         sharedPreference.initialize(this);
 
         dataList = searchData.getSearchByIdsList();
-        HashMap<String, String> dataMap = dataList.get(0);
+        if(dataList.size()>0)
+        {
+            HashMap<String, String> dataMap = dataList.get(0);
 
-        String imageUrl = dataMap.get(SearchData.PROFILEPIC);
-        imageUrl = imageUrl.replace("https", "http");
-        Picasso.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.image_event1)
-                .into(imageSearchidResultProfile);
+            String imageUrl = dataMap.get(SearchData.PROFILEPIC);
+            imageUrl = imageUrl.replace("https", "http");
+            Picasso.with(this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.image_event1)
+                    .into(imageSearchidResultProfile);
 
-        textSearchidResultName.setText(dataMap.get(searchData.FULLNAME));
-        textSearchidResultDob.setText(dataMap.get(searchData.DOB));
-        textSearchidResultAge.setText(dataMap.get(searchData.AGE));
-        textSearchidResultHeight.setText(dataMap.get(searchData.HEIGHT));
-        textSearchidResultGender.setText(dataMap.get(searchData.GENDER));
-        textSearchidResultReligion.setText(dataMap.get(searchData.RELIGION));
-        textSearchidResultMothertongue.setText(dataMap.get(searchData.MOTHERTONGUE));
-        textSearchidResultPhnumber.setText(dataMap.get(searchData.PHNUMBER));
-        textSearchidResultEmail.setText(dataMap.get(searchData.EMAIL));
-        textSearchidResultMaritalstatus.setText(dataMap.get(searchData.MARITALSTATUS));
-        textSearchidResultCaste.setText(dataMap.get(searchData.CASTE));
-        textSearchidResultDosham.setText(dataMap.get(searchData.DOSHAM));
-        textSearchidResultMarryothercaste.setText(dataMap.get(searchData.MARRYOTHERCAST));
-        textSearchidResultPhysicalstatus.setText(dataMap.get(searchData.PHYSICALSTATUS));
+            textSearchidResultName.setText(dataMap.get(searchData.FULLNAME));
+            textSearchidResultDob.setText(dataMap.get(searchData.DOB));
+            textSearchidResultAge.setText(dataMap.get(searchData.AGE));
+            textSearchidResultHeight.setText(dataMap.get(searchData.HEIGHT));
+            textSearchidResultGender.setText(dataMap.get(searchData.GENDER));
+            textSearchidResultReligion.setText(dataMap.get(searchData.RELIGION));
+            textSearchidResultMothertongue.setText(dataMap.get(searchData.MOTHERTONGUE));
+            textSearchidResultPhnumber.setText(dataMap.get(searchData.PHNUMBER));
+            textSearchidResultEmail.setText(dataMap.get(searchData.EMAIL));
+            textSearchidResultMaritalstatus.setText(dataMap.get(searchData.MARITALSTATUS));
+            textSearchidResultCaste.setText(dataMap.get(searchData.CASTE));
+            textSearchidResultDosham.setText(dataMap.get(searchData.DOSHAM));
+            textSearchidResultMarryothercaste.setText(dataMap.get(searchData.MARRYOTHERCAST));
+            textSearchidResultPhysicalstatus.setText(dataMap.get(searchData.PHYSICALSTATUS));
 
-        textSearchidResultEducation.setText(dataMap.get(searchData.EDUCATIONLEVEL));
-        textSearchidResultOccupation.setText(dataMap.get(searchData.OCCUPATIONNAME));
-        textSearchidResultWorkingas.setText(dataMap.get(searchData.WORKINGAS));
-        textSearchidResultIncome.setText(dataMap.get(searchData.ANNUALINCOME));
+            textSearchidResultEducation.setText(dataMap.get(searchData.EDUCATIONLEVEL));
+            textSearchidResultOccupation.setText(dataMap.get(searchData.OCCUPATIONNAME));
+            textSearchidResultWorkingas.setText(dataMap.get(searchData.WORKINGAS));
+            textSearchidResultIncome.setText(dataMap.get(searchData.ANNUALINCOME));
 
-        textSearchidResultFamilystatus.setText(dataMap.get(searchData.FAMILYSTATUS));
-        textSearchidResultFamilytype.setText(dataMap.get(searchData.FAMILYTYPE));
-        textSearchidResultFamilyvalues.setText(dataMap.get(searchData.FAMILYVALUES));
-        textSearchidResultAddr.setText(dataMap.get(searchData.FORMATTEDADRRESS));
+            textSearchidResultFamilystatus.setText(dataMap.get(searchData.FAMILYSTATUS));
+            textSearchidResultFamilytype.setText(dataMap.get(searchData.FAMILYTYPE));
+            textSearchidResultFamilyvalues.setText(dataMap.get(searchData.FAMILYVALUES));
+            textSearchidResultAddr.setText(dataMap.get(searchData.FORMATTEDADRRESS));
+
+            textNoSearchbyidResults.setVisibility(View.GONE);
+            layoutSearchbyidResults.setVisibility(View.VISIBLE);
+        }else {
+            textNoSearchbyidResults.setVisibility(View.VISIBLE);
+            layoutSearchbyidResults.setVisibility(View.GONE);
+        }
+
     }
 
     @OnClick({R.id.layout_searchid_result_shortlist, R.id.layout_searchid_result_call, R.id.layout_searchid_result_chat})
@@ -153,7 +168,7 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
             case R.id.layout_searchid_result_shortlist:
                 dataList = searchData.getSearchByIdsList();
                 HashMap<String, String> dataMap = dataList.get(0);
-                profId = dataMap.get(searchData.PROFILEID);
+                profId = dataMap.get(searchData.ID);
                 userId = sharedPreference.getSharedPrefData(Constants.UID);
                 String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                 shortListManager = ShortListManager.getInstance();

@@ -204,8 +204,12 @@ public class LoginManager implements VolleyResponse {
                     userRegData.regDataObject.put(userRegData.COUNTRY, Constants.getStringValueOfJsonObject(dataObject,UserRegData.COUNTRY,UserRegData.COUNTRY));
                     userRegData.regDataObject.put(userRegData.COUNTRYCODE, Constants.getStringValueOfJsonObject(dataObject,UserRegData.COUNTRYCODE,UserRegData.COUNTRYCODE));
                     userRegData.regDataObject.put(userRegData.FORMATTEDADDRESS, Constants.getStringValueOfJsonObject(dataObject,UserRegData.FORMATTEDADDRESS,UserRegData.FORMATTEDADDRESS));
+                    userRegData.regDataObject.put(userRegData.PROFILEPIC, Constants.getStringValueOfJsonObject(dataObject,UserRegData.PROFILEPIC,UserRegData.PROFILEPIC));
 
-                    sharedPreference.putSharedPrefData(Constants.USERDATA,userRegData.regDataObject.toString());
+                    sharedPreference.putSharedPrefData(Constants.PROFILEPICPATH,Constants.getStringValueOfJsonObject(dataObject,UserRegData.PROFILEPIC,UserRegData.PROFILEPIC));
+
+
+                sharedPreference.putSharedPrefData(Constants.USERDATA,userRegData.regDataObject.toString());
 
 
 

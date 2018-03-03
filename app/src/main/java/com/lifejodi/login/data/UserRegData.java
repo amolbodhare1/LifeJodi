@@ -75,6 +75,7 @@ public class UserRegData {
     public static String PINCODE = "pincode";
     public static String FORMATTEDADDRESS = "formatted_address";
     public static String USERID = "user_id";
+    public static String PROFILEPIC = "profile_pic";
 
 
 

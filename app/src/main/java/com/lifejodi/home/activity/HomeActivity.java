@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.lifejodi.InboxActivity;
 import com.lifejodi.NotificationActivity;
 import com.lifejodi.R;
+import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
@@ -42,11 +43,15 @@ import com.lifejodi.login.manager.UploadProfilePicManager;
 import com.lifejodi.navigation.activities.DailyRecommActivity;
 import com.lifejodi.navigation.activities.ShowProfileDataActivity;
 import com.lifejodi.network.VolleyCallbackInterface;
+import com.lifejodi.settings.SettingsActivity;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.PickerBuilder;
 import com.lifejodi.utils.SharedPreference;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -83,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ViewPager viewPager;
 
     TextView tvHeaderName,tvHeaderProfId;
-    ImageView ivAddProfilePic;
+    ImageView ivAddProfilePic,ivEditProfpic;
     CircleImageView ivUserProfilePic;
     RelativeLayout layoutAddProfPic;
 
@@ -103,10 +108,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     LinearLayout layoutSearchBottom;
     @BindView(R.id.layout_mailbox_bottom)
     LinearLayout layoutMailboxBottom;
-    @BindView(R.id.layout_notifications_bottom)
-    LinearLayout layoutNotificationsBottom;
-    @BindView(R.id.layout_events_bottom)
-    LinearLayout layoutEventsBottom;
+    @BindView(R.id.layout_chat_bottom)
+    LinearLayout layoutChatBottom;
+    @BindView(R.id.layout_radar_bottom)
+    LinearLayout layoutRadarBottom;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,7 +139,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.setTabTextColors(Color.parseColor("#FFDCDADA"), Color.parseColor("#ffffff"));
         tabs.addTab(tabs.newTab().setText("MATCHES"));
-        tabs.addTab(tabs.newTab().setText("NEW MATCHES"));
+      //  tabs.addTab(tabs.newTab().setText("NEW MATCHES"));
         tabs.addTab(tabs.newTab().setText("SHORTLISTED"));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -156,6 +161,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
         tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
         tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.PROFILEID));
+        ivEditProfpic = (ImageView)view.findViewById(R.id.image_edit_profilepic);
 
         ivAddProfilePic = (ImageView)view.findViewById(R.id.image_add_profile_photo);
         ivUserProfilePic = (CircleImageView)view.findViewById(R.id.image_profile_pic);
@@ -164,7 +170,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String profPicPath = sharedPreference.getSharedPrefData(Constants.PROFILEPICPATH);
         if(profPicPath.equals(""))
         {
-           layoutAddProfPic.setVisibility(View.VISIBLE);
+            layoutAddProfPic.setVisibility(View.VISIBLE);
+           /* try {
+                JSONObject jsonObject = new JSONObject(sharedPreference.getSharedPrefData(Constants.USERDATA));
+                profPicPath = jsonObject.getString(UserRegData.PROFILEPIC);
+                if(jsonObject.getString(UserRegData.PROFILEPIC).equals("") || profPicPath.equalsIgnoreCase(UserRegData.PROFILEPIC))
+                {
+                    layoutAddProfPic.setVisibility(View.VISIBLE);
+                }else {
+                    layoutAddProfPic.setVisibility(View.GONE);
+                    Picasso.with(HomeActivity.this)
+                            .load(profPicPath)
+                            .placeholder(R.drawable.image_event1)
+                            .into(ivUserProfilePic);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+
         }else {
             layoutAddProfPic.setVisibility(View.GONE);
             Picasso.with(HomeActivity.this)
@@ -181,34 +204,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ivAddProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
-                pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
-                    @Override
-                    public void onImageReceived(Uri imageUri) {
-                        ivUserProfilePic.setImageURI(imageUri);
-                        InputStream iStream = null;
-                        String path = imageUri.getPath();
-                        Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                        byte[] byteArray = byteArrayOutputStream .toByteArray();
+               openImagePicker();
+            }
+        });
 
-
-                        String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
-                      
-                        userId = sharedPreference.getSharedPrefData(Constants.UID);
-                        androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
-                        uploadProfilePicManager = UploadProfilePicManager.getInstance();
-                        uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
-                        uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
-                    }
-
-                }).setImageName("testImage")
-                        .setImageFolderName("testFolder")
-                        .withTimeStamp(true)
-                        .setCropScreenColor(Color.CYAN)
-                        .start();
+        ivEditProfpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               openImagePicker();
 
             }
         });
@@ -216,7 +219,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @OnClick({R.id.layout_search_bottom,R.id.layout_mailbox_bottom,R.id.layout_notifications_bottom,R.id.layout_events_bottom})
+    @OnClick({R.id.layout_search_bottom,R.id.layout_mailbox_bottom,R.id.layout_chat_bottom,R.id.layout_radar_bottom})
     void Click(View v){
 
         switch (v.getId()){
@@ -227,15 +230,47 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.layout_mailbox_bottom:
                 startActivity(new Intent(getApplicationContext(),InboxActivity.class));
                 break;
-            case R.id.layout_notifications_bottom:
-                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
+            case R.id.layout_chat_bottom:
+               // startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
                 break;
-            case R.id.layout_events_bottom:
-                startActivity(new Intent(getApplicationContext(),EventsActivity.class));
+            case R.id.layout_radar_bottom:
+              //  startActivity(new Intent(getApplicationContext(),EventsActivity.class));
                 break;
         }
     }
 
+    public void openImagePicker()
+    {
+        pickerBuilder = new  PickerBuilder(HomeActivity.this, PickerBuilder.SELECT_FROM_GALLERY);
+        pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+            @Override
+            public void onImageReceived(Uri imageUri) {
+                ivUserProfilePic.setImageURI(imageUri);
+                InputStream iStream = null;
+                String path = imageUri.getPath();
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+
+                String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                userId = sharedPreference.getSharedPrefData(Constants.UID);
+                androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+                uploadProfilePicManager = UploadProfilePicManager.getInstance();
+                uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
+                uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
+            }
+
+        }).setImageName("testImage")
+                .setImageFolderName("testFolder")
+                .withTimeStamp(true)
+                .setCropScreenColor(Color.CYAN)
+                .start();
+
+    }
     public byte[] getBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -255,13 +290,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_upgrade_account) {
 
-        } else if (id == R.id.nav_chat) {
-
-        } else if (id == R.id.nav_edit_profile) {
+        }
+        else if (id == R.id.nav_edit_profile) {
             Intent editIntent = new Intent(HomeActivity.this, ShowProfileDataActivity.class);
             startActivity(editIntent);
 
         } else if (id == R.id.nav_setting) {
+            Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
 
         } else if (id == R.id.nav_logout) {
 
@@ -272,6 +308,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_daily_recomm) {
             Intent dailyRecommintent = new Intent(HomeActivity.this, DailyRecommActivity.class);
+            startActivity(dailyRecommintent);
+        }
+        else if (id == R.id.nav_events) {
+            Intent dailyRecommintent = new Intent(HomeActivity.this, EventsActivity.class);
             startActivity(dailyRecommintent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

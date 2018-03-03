@@ -53,10 +53,10 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
         imageUrl = imageUrl.replace("https","http");
         if(dataMap.get(ShortlistData.GENDER).equalsIgnoreCase("Male"))
         {
-            defaultImage = R.drawable.picture;
+            defaultImage = R.drawable.image_default_man;
         }else if(dataMap.get(ShortlistData.GENDER).equalsIgnoreCase("Female"))
         {
-            defaultImage = R.drawable.images;
+            defaultImage = R.drawable.image_default_women;
         }
         try {
            // Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);

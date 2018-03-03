@@ -20,6 +20,7 @@ import com.lifejodi.home.managers.HomeFragmentsManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
     Unbinder unbinder;
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
+    @BindView(R.id.text_no_data_matches)
+    CustomTextBeatles textNoDataMatches;
 
     private boolean fragmentResume = false;
     private boolean fragmentVisible = false;
@@ -71,7 +74,7 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
             homeFragmentsManager = HomeFragmentsManager.getInstance();
             homeFragmentsManager.initialize(this, getActivity());
             progressLayout.setVisibility(View.VISIBLE);
-            homeFragmentsManager.getMatchesList(homeFragmentsManager.getMatchesInputParams(androidDeviceId,profId));
+            homeFragmentsManager.getMatchesList(homeFragmentsManager.getMatchesInputParams(androidDeviceId, profId));
 
         }
         return view;
@@ -89,7 +92,7 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
             homeFragmentsManager = HomeFragmentsManager.getInstance();
             homeFragmentsManager.initialize(this, getActivity());
             progressLayout.setVisibility(View.VISIBLE);
-            homeFragmentsManager.getMatchesList(homeFragmentsManager.getMatchesInputParams(androidDeviceId,profId));
+            homeFragmentsManager.getMatchesList(homeFragmentsManager.getMatchesInputParams(androidDeviceId, profId));
 
 
         } else if (isVisibleToUser) {        // only at fragment onCreated
@@ -112,20 +115,26 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
 
     @Override
     public void successCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_HOME_MATCHES:
                 progressLayout.setVisibility(View.GONE);
                 String status = homeFragmentsData.getMatchesStatus();
                 String message = homeFragmentsData.getMatchesMessage();
-                if(status.equals("1"))
-                {
-                    ArrayList<HashMap<String,String>> dataList = homeFragmentsData.getMatchesList();
-                    matchesRecyclerAdapter = new MatchesRecyclerAdapter(getActivity(),dataList);
-                    recFragmentMatches.setAdapter(matchesRecyclerAdapter);
-                }else if(status.equals("0"))
-                {
-                    Toast.makeText(getActivity(), ""+message, Toast.LENGTH_SHORT).show();
+                if (status.equals("1")) {
+                    ArrayList<HashMap<String, String>> dataList = homeFragmentsData.getMatchesList();
+                    if(dataList.size()>0)
+                    {
+                        matchesRecyclerAdapter = new MatchesRecyclerAdapter(getActivity(), dataList);
+                        recFragmentMatches.setAdapter(matchesRecyclerAdapter);
+                        textNoDataMatches.setVisibility(View.GONE);
+                        recFragmentMatches.setVisibility(View.VISIBLE);
+                    }else {
+                        textNoDataMatches.setVisibility(View.VISIBLE);
+                        recFragmentMatches.setVisibility(View.GONE);
+                    }
+
+                } else if (status.equals("0")) {
+                    Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -134,11 +143,10 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
 
     @Override
     public void errorCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_HOME_MATCHES:
                 progressLayout.setVisibility(View.GONE);
-                Toast.makeText(getActivity(), ""+msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

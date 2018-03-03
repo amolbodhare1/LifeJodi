@@ -16,7 +16,7 @@
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/picture"/>
+        android:src="@drawable/image_default_man"/>
 
     <LinearLayout
         android:id="@+id/layout"
@@ -57,5 +57,5 @@
         android:layout_height="150dp"
         app:layout_anchor="@id/layout"
         app:layout_anchorGravity="left"
-        android:src="@drawable/pic"/>
+        android:src="@drawable/image_default_man"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -42,6 +42,7 @@
         <activity android:name=".navigation.activities.ShowProfileDataActivity" android:screenOrientation="portrait"/>
         <activity android:name=".event.activity.EventDetailsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".search.activities.SearchByIdResultActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".settings.SettingsActivity" android:screenOrientation="portrait"/>
         <service android:name=".login.service.FetchAddressIntentService"
             android:exported="false"/>
 

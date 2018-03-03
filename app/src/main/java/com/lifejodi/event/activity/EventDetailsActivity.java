@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.CheckBox;
@@ -44,12 +48,11 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     CustomButtonBeatles buttonEventRegister;
     @BindView(R.id.checkbox_terms)
     CheckBox checkboxTerms;
-    @BindView(R.id.progressLayout)
-    RelativeLayout progressLayout;
-    @BindView(R.id.image_eventdetails_back)
-    ImageView imageEventdetailsBack;
-    @BindView(R.id.text_eventdetails_name)
-    CustomTextBeatles textEventdetailsName;
+
+    /* @BindView(R.id.image_eventdetails_back)
+     ImageView imageEventdetailsBack;
+     @BindView(R.id.text_eventdetails_name)
+     CustomTextBeatles textEventdetailsName;*/
     @BindView(R.id.text_eventdetails_date)
     CustomTextBeatles textEventdetailsDate;
     @BindView(R.id.text_eventdetails_fees)
@@ -68,12 +71,24 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     SharedPreference sharedPreference;
     EventsData eventsData = EventsData.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
+    @BindView(R.id.image_services_details)
+    ImageView imageEventDetails;
+    @BindView(R.id.toolbar_services_details)
+    Toolbar toolbarEventDetails;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
+    @BindView(R.id.main_content)
+    CoordinatorLayout mainContent;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_details);
+        setContentView(R.layout.activity_eventsinformation);
         ButterKnife.bind(this);
         initialization();
     }
@@ -87,11 +102,24 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
         }
         dataList = eventsData.getEventsList();
         HashMap<String, String> dataMap = dataList.get(position);
-        textEventdetailsName.setText(dataMap.get(EventsData.EVENTNAME));
+        //textEventdetailsName.setText(dataMap.get(EventsData.EVENTNAME));
         textEventdetailsDate.setText(dataMap.get(EventsData.EVENTDATE));
-        textEventdetailsFees.setText(dataMap.get(EventsData.EVENTFEES));
+        textEventdetailsFees.setText(dataMap.get(EventsData.EVENTFEES) + " " + dataMap.get(EventsData.CURRENCYID));
         textEventdetailsInfo.setText(Html.fromHtml(dataMap.get(EventsData.EVENTINFORMATION)));
         textEventdetailsAddress.setText(dataMap.get(EventsData.ADDRESS));
+        collapsingToolbar.setTitle(dataMap.get(EventsData.EVENTNAME));
+
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.colorPrimary));
+        toolbarEventDetails.setNavigationIcon(R.drawable.ic_back);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        toolbarEventDetails.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -114,7 +142,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
         if (!checkboxTerms.isChecked()) {
             Toast.makeText(this, "Please accept Terms & Conditions", Toast.LENGTH_SHORT).show();
         } else {
-            progressLayout.setVisibility(View.VISIBLE);
+              progressLayout.setVisibility(View.VISIBLE);
             eventRegManager = EventRegManager.getInstance();
             eventRegManager.initialize(this, EventDetailsActivity.this);
             eventRegManager.regUserForEvent(eventRegManager.getRegEventParams(androidDeviceId, userId, "1", firstName, lastName, mobNum));
@@ -126,7 +154,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     public void successCallBack(String msg, String tag) {
         switch (tag) {
             case Constants.TAG_REGISTER_EVENT:
-                progressLayout.setVisibility(View.GONE);
+                 progressLayout.setVisibility(View.GONE);
                 String message = eventRegistrationData.getEventRegMessage();
                 Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
                 Intent eventRegIntent = new Intent(EventDetailsActivity.this, PaymentActivity.class);
@@ -140,18 +168,15 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     public void errorCallBack(String msg, String tag) {
         switch (tag) {
             case Constants.TAG_REGISTER_EVENT:
-                progressLayout.setVisibility(View.GONE);
+                 progressLayout.setVisibility(View.GONE);
                 Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-    @OnClick({R.id.image_eventdetails_back, R.id.button_event_register})
+    @OnClick({ R.id.button_event_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.image_eventdetails_back:
-                finish();
-                break;
             case R.id.button_event_register:
                 registerUser();
                 break;

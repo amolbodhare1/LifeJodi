@@ -83,20 +83,20 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:id="@+id/layout_notifications_bottom"
+        android:id="@+id/layout_chat_bottom"
         >
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_notifications"
+            app:srcCompat="@drawable/speech_bubbles"
             android:layout_marginTop="5dp"/>
 
         <com.lifejodi.utils.customfonts.CustomTextBeatles
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notifications"
+            android:text="Chat"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="5dp"
@@ -111,19 +111,19 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:id="@+id/layout_events_bottom">
+        android:id="@+id/layout_radar_bottom">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_calender_icon"
+            app:srcCompat="@drawable/radar"
             android:layout_marginTop="5dp"/>
 
         <com.lifejodi.utils.customfonts.CustomTextBeatles
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Events"
+            android:text="Radar"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="5dp"

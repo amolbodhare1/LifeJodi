@@ -15,6 +15,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="colorPrimaryLite">#50333379</color>
+    <color name="off_white_color">#F5F5F5</color>
 
 
 </resources>

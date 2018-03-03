@@ -27,6 +27,7 @@
             app:srcCompat="@drawable/ic_person" />
 
         <ImageView
+            android:id="@+id/image_edit_profilepic"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="right"

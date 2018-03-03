@@ -69,10 +69,10 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         imageUrl = imageUrl.replace("https","http");
         if(dataMap.get(HomeFragmentsData.GENDER).equalsIgnoreCase("Male"))
         {
-             defaultImage = R.drawable.picture;
+             defaultImage = R.drawable.image_default_man;
         }else if(dataMap.get(HomeFragmentsData.GENDER).equalsIgnoreCase("Female"))
         {
-             defaultImage = R.drawable.images;
+             defaultImage = R.drawable.image_default_women;
         }
         try {
           //  Glide.with(context).load(imageUrl).placeholder(defaultImage).into(holder.ivProfPic);
@@ -94,8 +94,8 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
             @Override
             public void onClick(View view) {
                 String androidDeviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-                String  profId = sharedPreference.getSharedPrefData(Constants.PROFILEID);
-                String userId = dataMap.get(HomeFragmentsData.ID);
+                String  userId = sharedPreference.getSharedPrefData(Constants.UID);
+                String profId = dataMap.get(HomeFragmentsData.ID);
                 shortListManager = ShortListManager.getInstance();
                 shortListManager.initialize(MatchesRecyclerAdapter.this,context);
                 holder.progressLayout.setVisibility(View.VISIBLE);

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/layout_customsearch_results"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,9 +14,38 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"></android.support.v7.widget.Toolbar>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_search_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
+        <com.lifejodi.utils.customfonts.CustomTextBeatles
+            android:id="@+id/text_no_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No search results"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:visibility="gone"
+           android:layout_gravity="center"/>
+    </FrameLayout>
 </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+
+</RelativeLayout>

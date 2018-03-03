@@ -29,15 +29,16 @@ public class HomeViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new MatchesFragment();
             case 1:
-                return new NewMatchesFragment();
-            case 2:
+               /* return new NewMatchesFragment();*/
                 return new ShortListedProfilesFragment();
+           /* case 2:
+                return new ShortListedProfilesFragment();*/
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }
