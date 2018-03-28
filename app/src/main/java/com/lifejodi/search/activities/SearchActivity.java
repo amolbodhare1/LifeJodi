@@ -14,14 +14,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,8 +37,10 @@ import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.search.adapter.CommonDataAdapter;
+import com.lifejodi.search.adapter.SavedSearchesAdapter;
 import com.lifejodi.search.adapter.SelectedAdapter;
 import com.lifejodi.search.data.SearchData;
+import com.lifejodi.search.interfaces.SavedSearchInterface;
 import com.lifejodi.search.manager.SearchManager;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
@@ -55,7 +60,7 @@ import butterknife.OnClick;
  * Created by Ajay on 18-11-2017.
  */
 
-public class SearchActivity extends AppCompatActivity implements VolleyCallbackInterface {
+public class SearchActivity extends AppCompatActivity implements VolleyCallbackInterface,SavedSearchInterface {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -124,6 +129,27 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
     LinearLayout layoutCity;
     @BindView(R.id.recycler_city)
     RecyclerView recyclerCity;
+    @BindView(R.id.edit_search_by_id)
+    CustomEditBeatles editSearchById;
+    @BindView(R.id.checkbox_show_photo)
+    CheckBox checkboxShowPhoto;
+    @BindView(R.id.checkbox_show_horoscope)
+    CheckBox checkboxShowHoroscope;
+    @BindView(R.id.checkbox_show_premium)
+    CheckBox checkboxShowPremium;
+    @BindView(R.id.checkbox_dont_contacted)
+    CheckBox checkboxDontContacted;
+    @BindView(R.id.checkbox_dont_shortlisted)
+    CheckBox checkboxDontShortlisted;
+    @BindView(R.id.checkbox_dont_ignored)
+    CheckBox checkboxDontIgnored;
+    @BindView(R.id.checkbox_dont_visited)
+    CheckBox checkboxDontVisited;
+    @BindView(R.id.button_custom_search)
+    Button buttonCustomSearch;
+    @BindView(R.id.progressLayout)
+    RelativeLayout progressLayout;
+
 
     Dialog dialogCommon;
     RecyclerView recyclerViewCommon;
@@ -150,29 +176,8 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             dosham = "", showWithPhoto = "0", showWithHoroscope = "0", showWithPremium = "0",
             dontShowContacted = "0", dontShowShortlisted = "0", dontShowIgnored = "0", dontShowVisited = "0";
 
-    @BindView(R.id.edit_search_by_id)
-    CustomEditBeatles editSearchById;
-    @BindView(R.id.checkbox_show_photo)
-    CheckBox checkboxShowPhoto;
-    @BindView(R.id.checkbox_show_horoscope)
-    CheckBox checkboxShowHoroscope;
-    @BindView(R.id.checkbox_show_premium)
-    CheckBox checkboxShowPremium;
-    @BindView(R.id.checkbox_dont_contacted)
-    CheckBox checkboxDontContacted;
-    @BindView(R.id.checkbox_dont_shortlisted)
-    CheckBox checkboxDontShortlisted;
-    @BindView(R.id.checkbox_dont_ignored)
-    CheckBox checkboxDontIgnored;
-    @BindView(R.id.checkbox_dont_visited)
-    CheckBox checkboxDontVisited;
-    @BindView(R.id.button_custom_search)
-    Button buttonCustomSearch;
-
-
     SharedPreference sharedPreference = SharedPreference.getSharedInstance();
-    @BindView(R.id.progressLayout)
-    RelativeLayout progressLayout;
+    Dialog dialogSaveSearch,dialogSavedSearches;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -575,9 +580,7 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
                 break;
 
             case R.id.button_custom_search:
-
-                CustomSearch();
-
+                showPopUp();
                 break;
 
             case R.id.image_search_by_id:
@@ -599,6 +602,25 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
 
         if (tag.equals(Constants.TAG_GET_MASTERS)) {
             setSearchData();
+        }else if(tag.equals(Constants.TAG_SAVE_SEARCH))
+        {
+            progressLayout.setVisibility(View.GONE);
+            String status = searchData.getSaveSearchStatus();
+
+            Toast.makeText(this, ""+searchData.getSaveSearchMessage(), Toast.LENGTH_SHORT).show();
+        }else if(tag.equals(Constants.TAG_GET_SAVED_SEARCH))
+        {
+            progressLayout.setVisibility(View.GONE);
+            String status = searchData.getGetSavedSearchStatus();
+            if(status.equals("1"))
+            {
+                ArrayList<HashMap<String,Object>> dataList = searchData.getSavedSearchesList();
+                dataList = searchData.getSavedSearchesList();
+                showSavedSearchesList(dataList);
+            }else {
+                Toast.makeText(this, ""+searchData.getGetSavedSearchMessage(), Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }
@@ -741,11 +763,14 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             jsonObject.put(SearchData.MIN_INCOME, minIncome);
             jsonObject.put(SearchData.MAX_INCOME, maxIncome);
             jsonObject.put(SearchData.RELIGION, religionId);
+            jsonObject.put(SearchData.RELIGIONID, religionId);
             jsonObject.put(SearchData.CASTE, casteId);
+            jsonObject.put(SearchData.CASTEID, casteId);
             jsonObject.put(SearchData.EDUCATION, educationId);
             jsonObject.put(SearchData.OCCUPATION, occupationId);
             jsonObject.put(SearchData.DOSHAM, dosham);
             jsonObject.put(SearchData.MOTHERTONGUE, motherTongueId);
+            jsonObject.put(SearchData.MOTHERTONGUEID, motherTongueId);
             jsonObject.put(SearchData.MARITALSTATUS, maritalStatusId);
             jsonObject.put(SearchData.COUNTRY, country);
             jsonObject.put(SearchData.STATE, state);
@@ -774,5 +799,137 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
     protected void onDestroy() {
         super.onDestroy();
         SearchData.selectedList.clear();
+    }
+
+    public void showPopUp()
+    {
+        PopupMenu popup = new PopupMenu(SearchActivity.this, buttonCustomSearch);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.menu_search_now:
+                        CustomSearch();
+                        break;
+                    case R.id.menu_save_search:
+                        showSaveSearchDialog();
+                        break;
+                    case R.id.menu_saved_search:
+                        String userId = sharedPreference.getSharedPrefData(Constants.UID);
+                        String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                        try {
+                            JSONObject dataObject = new JSONObject();
+                            dataObject.put(SearchData.USERID,"6");
+                            dataObject.put(SearchData.GETSAVEDSEARCHES,"1");
+
+                            searchManager = SearchManager.getInstance();
+                            searchManager.initialize(SearchActivity.this,SearchActivity.this);
+                            progressLayout.setVisibility(View.VISIBLE);
+                            searchManager.getSavedSearches(searchManager.getSavedSearchListInput(androidDeviceId,dataObject));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+        popup.show();//showing popup menu
+    }
+
+    public void getSaveSearchObject(String searchName)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SearchData.USERID, "5");
+            jsonObject.put(SearchData.SAVESEARCH, "1");
+            jsonObject.put(SearchData.SEARCHNAME, searchName);
+            jsonObject.put(SearchData.MIN_AGE, minAge);
+            jsonObject.put(SearchData.MAX_AGE, maxAge);
+            jsonObject.put(SearchData.MIN_HEIGHT, minHeight);
+            jsonObject.put(SearchData.MAX_HEIGHT, maxHeight);
+            jsonObject.put(SearchData.MIN_INCOME, minIncome);
+            jsonObject.put(SearchData.MAX_INCOME, maxIncome);
+            jsonObject.put(SearchData.RELIGION, religionId);
+            jsonObject.put(SearchData.RELIGIONID, religionId);
+            jsonObject.put(SearchData.CASTE, casteId);
+            jsonObject.put(SearchData.CASTEID, casteId);
+            jsonObject.put(SearchData.EDUCATION, educationId);
+            jsonObject.put(SearchData.OCCUPATION, occupationId);
+            jsonObject.put(SearchData.DOSHAM, dosham);
+            jsonObject.put(SearchData.MOTHERTONGUE, motherTongueId);
+            jsonObject.put(SearchData.MOTHERTONGUEID, motherTongueId);
+            jsonObject.put(SearchData.MARITALSTATUS, maritalStatusId);
+            jsonObject.put(SearchData.COUNTRY, country);
+            jsonObject.put(SearchData.STATE, state);
+            jsonObject.put(SearchData.CITY, city);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PHOTO, showWithPhoto);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_HOROSCOPE, showWithHoroscope);
+            jsonObject.put(SearchData.SHOW_PROFILE_WITH_PREMIUM, showWithPremium);
+            jsonObject.put(SearchData.DONT_SHOW_CONTACTED, dontShowContacted);
+            jsonObject.put(SearchData.DONT_SHOW_SHORTLISTED, dontShowShortlisted);
+            jsonObject.put(SearchData.DONT_SHOW_VISITED, dontShowVisited);
+            jsonObject.put(SearchData.DONT_SHOW_IGNORED, dontShowIgnored);
+
+            String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            searchManager = SearchManager.getInstance();
+            searchManager.initialize(SearchActivity.this,SearchActivity.this);
+            progressLayout.setVisibility(View.VISIBLE);
+            searchManager.saveSearch(searchManager.getSaveSearchInput(androidDeviceId,jsonObject));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showSaveSearchDialog()
+    {
+        dialogSaveSearch = new Dialog(this);
+        dialogSaveSearch.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSaveSearch.setContentView(R.layout.dialog_save_search);
+        dialogSaveSearch.show();
+
+        final EditText editTextSearchName = (EditText)dialogSaveSearch.findViewById(R.id.edit_save_search_name);
+        Button buttonSubmit = (Button)dialogSaveSearch.findViewById(R.id.button_savesearch_dialog_submit);
+
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editTextSearchName.getText().toString().equals(""))
+                {
+                    Toast.makeText(SearchActivity.this, "Please enter name ", Toast.LENGTH_SHORT).show();
+                }else {
+                    dialogSaveSearch.dismiss();
+                    getSaveSearchObject(editTextSearchName.getText().toString());
+                }
+            }
+        });
+
+    }
+
+    public void showSavedSearchesList(ArrayList<HashMap<String,Object>> list)
+    {
+        dialogSavedSearches = new Dialog(this);
+        dialogSavedSearches.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogSavedSearches.setContentView(R.layout.dialog_saved_searches);
+        dialogSavedSearches.show();
+
+        RecyclerView recyclerView = (RecyclerView)dialogSavedSearches.findViewById(R.id.recycler_saved_searches);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        SavedSearchesAdapter savedSearchesAdapter = new SavedSearchesAdapter(SearchActivity.this,list);
+        recyclerView.setAdapter(savedSearchesAdapter);
+    }
+
+    @Override
+    public void getSavedSearchFromList(JSONObject jsonObject) {
+        dialogSavedSearches.dismiss();
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra("custom_search", jsonObject.toString());
+        startActivity(intent);
+
     }
 }

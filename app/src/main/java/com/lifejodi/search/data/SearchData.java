@@ -1,5 +1,7 @@
 package com.lifejodi.search.data;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,9 +32,12 @@ public class SearchData {
     public static ArrayList<HashMap<String,String>> selectedList = new ArrayList<>();
 
     public static String RELIGION = "religion";
+    public static String RELIGIONID = "religion_id";
     public static String MOTHERTONGUE = "mother_tongue";
+    public static String MOTHERTONGUEID = "mother_tongue_id";
     public static String MARITALSTATUS = "marital_status";
     public static String CASTE = "caste";
+    public static String CASTEID = "caste_id";
     public static String DOSHAM = "dosham";
     public static String HEIGHT = "height";
     public static String PHYSICALSTATUS = "physical_status";
@@ -50,7 +55,7 @@ public class SearchData {
     public static String MIN_AGE = "min_age";
     public static String MAX_AGE = "max_age";
     public static String MIN_HEIGHT = "min_height";
-    public static String MAX_HEIGHT = "min_height";
+    public static String MAX_HEIGHT = "max_height";
     public static String MIN_INCOME = "min_annual_income";
     public static String MAX_INCOME = "max_annual_income";
     public static String CITY = "city";
@@ -90,6 +95,11 @@ public class SearchData {
     public static String PROFILEPIC = "profile_pic";
 
 
+    public static String GETSAVEDSEARCHES = "get_saved_searches";
+    public static String SAVESEARCH = "save_search";
+    public static String SEARCHNAME = "search_name";
+    public static String ADDDATE = "add_date";
+    public static String SAVEDSEARCHOBJECT = "saved_search_object";
 
 
     public static String STATUS = "status";
@@ -159,6 +169,58 @@ public class SearchData {
 
 
 
+    //SAVE SEARCH
+    String saveSearchStatus="";
+
+    public String getSaveSearchStatus() {
+        return saveSearchStatus;
+    }
+
+    public void setSaveSearchStatus(String saveSearchStatus) {
+        this.saveSearchStatus = saveSearchStatus;
+    }
+
+    String saveSearchMessage="";
+    public String getSaveSearchMessage() {
+        return saveSearchMessage;
+    }
+
+    public void setSaveSearchMessage(String saveSearchMessage) {
+        this.saveSearchMessage = saveSearchMessage;
+    }
+
+
+    //GET SAVED SEARCH
+    String getSavedSearchStatus = "";
+
+    public String getGetSavedSearchStatus() {
+        return getSavedSearchStatus;
+    }
+
+    public void setGetSavedSearchStatus(String getSavedSearchStatus) {
+        this.getSavedSearchStatus = getSavedSearchStatus;
+    }
+
+
+
+    String getSavedSearchMessage="";
+    public String getGetSavedSearchMessage() {
+        return getSavedSearchMessage;
+    }
+
+    public void setGetSavedSearchMessage(String getSavedSearchMessage) {
+        this.getSavedSearchMessage = getSavedSearchMessage;
+    }
+
+    ArrayList<HashMap<String,Object>> savedSearchesList = new ArrayList<>();
+
+    public ArrayList<HashMap<String,Object>> getSavedSearchesList() {
+        return savedSearchesList;
+    }
+
+    public void setSavedSearchesList(ArrayList<HashMap<String,Object>> savedSearchesList) {
+        this.savedSearchesList = savedSearchesList;
+    }
 
 
 }

@@ -75,6 +75,13 @@ public class Constants {
     public static String URL_LOGIN = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_LOGIN= "login";
 
+    //OTP LOGIN
+    public static String URL_OTP = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_OTP= "otp";
+
+    public static String URL_LOGIN_WITH_OTP = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_LOGIN_WITH_OTP= "login_with_otp";
+
     //FORGOT PASSWORD
     public static String URL_FORGOTPASSWORD = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_FORGOTPASSWORD= "forgot_password";
@@ -123,6 +130,11 @@ public class Constants {
     //GET EVENTS LIST
     public static String URL_GET_EVENTS_LIST = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_GET_EVENTS_LIST= "get_events_list";
+
+    //SAVE SEARCH
+    public static String URL_SAVE_SEARCH = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_SAVE_SEARCH= "save_search";
+    public static final String TAG_GET_SAVED_SEARCH= "get_saved_search";
 
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();

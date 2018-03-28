@@ -44,6 +44,7 @@ public class SearchManager implements VolleyResponse {
 
     }
 
+    //GET SEARCH BY ID
     public JSONObject getSearchByIdInput(String deviceId,String userId,String profileId){
 
         JSONObject jsonObject = new JSONObject();
@@ -65,7 +66,41 @@ public class SearchManager implements VolleyResponse {
         return jsonObject;
     }
 
+   // CUSTOM SEARCH
     public JSONObject getCustomSearchInput(String deviceId,JSONObject data){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put(LoginData.API,"search");
+            jsonObject.put(LoginData.DEVICE,deviceId);
+            jsonObject.put(LoginData.VERSION,"1.0");
+
+            jsonObject.put(LoginData.DATA,data);
+        }catch (Exception e){
+
+        }
+
+        return jsonObject;
+    }
+
+
+    //SAVE SEARCH
+    public JSONObject getSaveSearchInput(String deviceId,JSONObject data){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put(LoginData.API,"search");
+            jsonObject.put(LoginData.DEVICE,deviceId);
+            jsonObject.put(LoginData.VERSION,"1.0");
+
+            jsonObject.put(LoginData.DATA,data);
+        }catch (Exception e){
+
+        }
+
+        return jsonObject;
+    }
+
+    //SAVED SEARCH
+    public JSONObject getSavedSearchListInput(String deviceId,JSONObject data){
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put(LoginData.API,"search");
@@ -92,6 +127,18 @@ public class SearchManager implements VolleyResponse {
 
     }
 
+    public void saveSearch(JSONObject jsonObject){
+
+        mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_SAVE_SEARCH,Constants.TAG_SAVE_SEARCH,jsonObject);
+
+    }
+
+    public void getSavedSearches(JSONObject jsonObject){
+
+        mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_SAVE_SEARCH,Constants.TAG_GET_SAVED_SEARCH,jsonObject);
+
+    }
+
     @Override
     public void getResponse(JSONObject jsonObject, String tag) throws JSONException {
 
@@ -107,6 +154,12 @@ public class SearchManager implements VolleyResponse {
                 break;
             case Constants.TAG_SEARCH_CUSTOM:
                 parseCustomSearchResponse(strResponse,tag);
+                break;
+            case Constants.TAG_SAVE_SEARCH:
+                parseSaveSearchResponse(strResponse,tag);
+                break;
+            case Constants.TAG_GET_SAVED_SEARCH:
+                parseGetSavedSearch(strResponse,tag);
                 break;
         }
 
@@ -242,6 +295,76 @@ public class SearchManager implements VolleyResponse {
         }catch (Exception e)
         {
                 mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
+        }
+    }
+
+
+    //SAVE SEARCH
+    public void parseSaveSearchResponse(String strResponse, String tag)
+    {
+        String status="",message="";
+
+        try
+        {
+            JSONObject jsonObject = new JSONObject(strResponse);
+            if(jsonObject.has(SearchData.STATUS))
+            {
+                status = Constants.getStringValueOfJsonObject(jsonObject,SearchData.STATUS,SearchData.STATUS);
+            }
+            if(jsonObject.has(SearchData.MESSAGE))
+            {
+                message = Constants.getStringValueOfJsonObject(jsonObject,SearchData.MESSAGE,SearchData.MESSAGE);
+            }
+
+            SearchData.getInstance().setSaveSearchStatus(status);
+            SearchData.getInstance().setSaveSearchMessage(message);
+
+            mVolleyCallbackInterface.successCallBack("success",tag);
+        }catch (Exception e)
+        {
+            mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
+        }
+    }
+
+    //GET SAVED SEARCHES
+    public void parseGetSavedSearch(String strResponse, String tag)
+    {
+        String status = "",message = "";
+        ArrayList<HashMap<String,Object>> dataList = new ArrayList<>();
+
+        try
+        {
+            JSONObject jsonObject = new JSONObject(strResponse);
+            if(jsonObject.has(SearchData.STATUS))
+            {
+                status = Constants.getStringValueOfJsonObject(jsonObject,SearchData.STATUS,SearchData.STATUS);
+            }
+            if(jsonObject.has(SearchData.MESSAGE))
+            {
+                message = Constants.getStringValueOfJsonObject(jsonObject,SearchData.MESSAGE,SearchData.MESSAGE);
+            }
+            if(jsonObject.has(SearchData.DATA))
+            {
+                JSONArray jsonArray = jsonObject.getJSONArray(SearchData.DATA);
+                for(int i=0;i<jsonArray.length();i++)
+                {
+                    JSONObject dataObject = jsonArray.getJSONObject(i);
+                    HashMap<String,Object> dataMap = new HashMap<>();
+
+                    dataMap.put(SearchData.SEARCHNAME,Constants.getStringValueOfJsonObject(dataObject,SearchData.SEARCHNAME,SearchData.SEARCHNAME));
+                    dataMap.put(SearchData.SAVEDSEARCHOBJECT,dataObject);
+
+                    dataList.add(dataMap);
+                }
+            }
+
+            SearchData.getInstance().setGetSavedSearchStatus(status);
+            SearchData.getInstance().setGetSavedSearchMessage(message);
+            SearchData.getInstance().setSavedSearchesList(dataList);
+            mVolleyCallbackInterface.successCallBack("success",tag);
+        }catch (Exception e)
+        {
+            mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
         }
     }
 }
