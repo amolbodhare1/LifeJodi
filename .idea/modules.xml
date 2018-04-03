@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/LifeJodi.iml" filepath="$PROJECT_DIR$/LifeJodi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/radar/radar.iml" filepath="$PROJECT_DIR$/radar/radar.iml" />
+      <module fileurl="file://D:\ClientProjects\LifeJodi\radar\radar.iml" filepath="D:\ClientProjects\LifeJodi\radar\radar.iml" />
     </modules>
   </component>
 </project>
