@@ -109,4 +109,14 @@ public class OTPLoginData {
         this.otpLoginMessage = otpLoginMessage;
     }
 
+    String otpLoginSuccess  ="";
+    public String getOtpLoginSuccess() {
+        return otpLoginSuccess;
+    }
+
+    public void setOtpLoginSuccess(String otpLoginSuccess) {
+        this.otpLoginSuccess = otpLoginSuccess;
+    }
+
+
 }

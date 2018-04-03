@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class Constants {
 
-    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE};
+    public static String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.READ_SMS};
 
     //sharedPref KEYS
     public static String LATITUDE="latitude";
@@ -79,7 +79,7 @@ public class Constants {
     public static String URL_OTP = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_OTP= "otp";
 
-    public static String URL_LOGIN_WITH_OTP = "www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String URL_LOGIN_WITH_OTP = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_LOGIN_WITH_OTP= "login_with_otp";
 
     //FORGOT PASSWORD
@@ -135,6 +135,10 @@ public class Constants {
     public static String URL_SAVE_SEARCH = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_SAVE_SEARCH= "save_search";
     public static final String TAG_GET_SAVED_SEARCH= "get_saved_search";
+
+    //RADAR SEARCH
+    public static String URL_RADAR_SEARCH = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_RADAR_SEARCH= "radar_search";
 
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();

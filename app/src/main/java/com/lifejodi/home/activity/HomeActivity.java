@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,9 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.InboxActivity;
-import com.lifejodi.NotificationActivity;
 import com.lifejodi.R;
-import com.lifejodi.login.data.UserRegData;
+import com.lifejodi.radarsearch.activities.RadarSearchActivity;
 import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
@@ -50,15 +47,9 @@ import com.lifejodi.utils.PickerBuilder;
 import com.lifejodi.utils.SharedPreference;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -234,7 +225,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                // startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
                 break;
             case R.id.layout_radar_bottom:
-              //  startActivity(new Intent(getApplicationContext(),EventsActivity.class));
+                startActivity(new Intent(HomeActivity.this,RadarSearchActivity.class));
                 break;
         }
     }
