@@ -86,32 +86,9 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
                 for(int i=0;i<dataList.size();i++)
                 {
                     HashMap<String,String> dataMap = dataList.get(i);
-                    RadarPoint r1 = new RadarPoint("identifier1", Float.parseFloat(dataMap.get(RadarSearchData.LAT)),12.247117f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-
+                    RadarPoint r1 = new RadarPoint("identifier1", Float.parseFloat(dataMap.get(RadarSearchData.LAT)),Float.parseFloat(dataMap.get(RadarSearchData.LNG)), dataMap.get(RadarSearchData.PROFILEPIC));
+                    points.add(r1);
                 }
-
-
-                RadarPoint r1 = new RadarPoint("identifier1", 44.139175f,12.247117f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r2 = new RadarPoint("identifier2", 44.138205f,12.248533f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r3 = new RadarPoint("identifier3", 44.137265f,12.250056f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r4 = new RadarPoint("identifier4", 44.134374f,12.251215f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r5 = new RadarPoint("identifier5", 44.132491f,12.248833f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r6 = new RadarPoint("identifier6", 44.130676f,12.248908f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r7 = new RadarPoint("identifier7", 44.128889f,12.248286f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r8 = new RadarPoint("identifier8", 44.124769f,12.242053f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r9 = new RadarPoint("identifier9", 44.118592f,12.242053f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-                RadarPoint r10 = new RadarPoint("identifier10", 44.116289f,12.240840f, "http://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg");
-
-                points.add(r1);
-                points.add(r2);
-                points.add(r3);
-                points.add(r4);
-                points.add(r5);
-                points.add(r6);
-                points.add(r7);
-                points.add(r8);
-                points.add(r9);
-                points.add(r10);
                 radarView.setPoints(points);
                 break;
         }
@@ -139,12 +116,10 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
                 latitude = Constants.getValue(userData, UserRegData.LATITUDE);
                 longitude = Constants.getValue(userData, UserRegData.LONGITUDE);
 
+                radarView.setMaxDistance(5000);
                 radarSearchManager = RadarSearchManager.getInstance();
                 radarSearchManager.initialize(RadarSearchActivity.this, RadarSearchActivity.this);
                 radarSearchManager.getRadarSearchList(radarSearchManager.getRadarSearchInputs(deviceId, userId, latitude, longitude, "10"));
-
-
-
 
             }
         }, 10000);

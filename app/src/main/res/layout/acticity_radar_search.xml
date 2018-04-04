@@ -28,10 +28,11 @@
             app:center_pin_color="#00FFFFFF"
             app:background_color="#00FFFFFF"
             app:arrow_color="#4CAF50"
-            app:pins_radius="100"
             android:id="@+id/radar_view"
-            app:radar_background="@drawable/radar_background"
+            app:radar_background="@drawable/radar_back_new"
             android:layout_width="match_parent"
+            android:layout_gravity="center"
+            app:pins_radius="150"
             android:layout_height="wrap_content"/>
 
 
