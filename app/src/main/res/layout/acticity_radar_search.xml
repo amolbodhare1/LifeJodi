@@ -24,5 +24,18 @@
             custom:ripple_stroke_width="15dp" />-->
 
 
+        <it.smasini.radar.RadarView
+            app:load_async_image="true"
+            app:center_pin_color="#b30ba7"
+            app:background_color="#004973ba"
+            app:arrow_color="#3356cc"
+            app:pins_radius="100"
+            android:padding="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/radar_view"
+            app:radar_background="@drawable/image_radar_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </FrameLayout>
 </LinearLayout>
