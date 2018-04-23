@@ -12,24 +12,24 @@
         android:background="@color/blue"/>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.lifejodi.utils.customfonts.CustomTextBeatles
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/dp_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:text="Select payment methods"
-            android:textSize="14dp"
+            android:textSize="@dimen/dp_14"
             android:textColor="@color/dark_grey"/>
         <LinearLayout
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -37,30 +37,30 @@
             <ImageView
                 android:id="@+id/image_visa"
                 android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
                 android:layout_weight="1"
                 android:src="@drawable/visa" />
             <ImageView
                 android:id="@+id/image_mastercard"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
                 android:src="@drawable/mastercard"/>
             <ImageView
                 android:id="@+id/image_paypal"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
                 android:src="@drawable/paypal"/>
             <ImageView
                 android:id="@+id/image_cc"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
                 android:src="@drawable/ccavenue"/>
         </LinearLayout>
         <LinearLayout
@@ -78,15 +78,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical">
                     <com.lifejodi.utils.customfonts.CustomEditBeatles
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="@dimen/dp_10"
                         android:id="@+id/edit_card_number"
                         android:layout_gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/dp_30"
                         android:hint="Card number"
                         android:textColorHint="@color/colorPrimary"
                         android:textColor="@color/dark_grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
 
                         android:background="@null"
                         android:inputType="number" />
@@ -94,13 +94,13 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp_1"
                 android:background="@color/line_color"></LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,14 +117,14 @@
                     android:layout_gravity="center_vertical">
                     <com.lifejodi.utils.customfonts.CustomEditBeatles
                         android:id="@+id/edit_exp_date"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/dp_30"
                         android:hint="Exp date"
                         android:textColorHint="@color/colorPrimary"
                         android:textColor="@color/dark_grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
 
                         android:background="@null"
                         android:inputType="textEmailAddress" />
@@ -132,7 +132,7 @@
 
                 <LinearLayout
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -143,14 +143,14 @@
                         android:layout_gravity="center_vertical">
                         <com.lifejodi.utils.customfonts.CustomEditBeatles
                             android:id="@+id/edit_exp_year"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_gravity="center_vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
+                            android:layout_height="@dimen/dp_30"
                             android:hint="Exp year"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:background="@null"
 
                             android:inputType="textEmailAddress"/>
@@ -164,19 +164,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/dp_15"
                     android:layout_weight="1"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="@color/line_color"></LinearLayout>
 
                 <LinearLayout
                     android:layout_weight="1"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="@color/line_color"></LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -196,14 +196,14 @@
                     android:layout_gravity="center_vertical">
                     <com.lifejodi.utils.customfonts.CustomEditBeatles
                         android:id="@+id/edit_cvv"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_gravity="center_vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/dp_30"
                         android:hint="CVV"
                         android:textColorHint="@color/colorPrimary"
                         android:textColor="@color/dark_grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
                         android:background="@null"
 
                         android:inputType="number" />
@@ -211,28 +211,28 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp_1"
                 android:background="@color/line_color"></LinearLayout>
         </LinearLayout>
 
         <com.lifejodi.utils.customfonts.CustomButtonBeatles
             android:layout_gravity="center"
             android:id="@+id/button_paynow"
-            android:layout_marginTop="40dp"
-            android:layout_width="240dp"
-            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_width="@dimen/dp_240"
+            android:layout_height="@dimen/dp_40"
             android:text="Pay now"
 
             android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="@dimen/dp_14"
             android:background="@drawable/button_background"/>
 
         <LinearLayout
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_width="280dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="@dimen/dp_280"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -240,31 +240,31 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp_1"
                 android:background="@color/line_color"/>
             <com.lifejodi.utils.customfonts.CustomTextBeatles
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_18"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:text="OR"
                 android:textColor="@color/dark_grey"
-                android:textSize="14dp" />
+                android:textSize="@dimen/dp_14" />
             <LinearLayout
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp_1"
                 android:background="@color/line_color"/>
         </LinearLayout>
 
         <RadioGroup
             android:id="@+id/radiogroup"
-            android:layout_marginTop="15dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:layout_marginTop="@dimen/dp_15"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -276,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:text="Net Banking"
                 android:textColor="@color/pink"
-                android:textSize="14dp"
+                android:textSize="@dimen/dp_14"
                 android:buttonTint="@color/pink"/>
             <RadioButton
                 android:id="@+id/radio_door_step_payment"
@@ -285,14 +285,14 @@
                 android:layout_height="wrap_content"
                 android:text="Door step payment"
                 android:textColor="@color/pink"
-                android:textSize="14dp"
+                android:textSize="@dimen/dp_14"
                 android:buttonTint="@color/pink"/>
         </RadioGroup>
 
         <LinearLayout
-            android:layout_marginTop="15dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:layout_marginTop="@dimen/dp_15"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -302,10 +302,10 @@
                 android:layout_height="wrap_content"
                 android:text="Need help to pay?"
                 android:textColor="@color/dark_grey"
-                android:textSize="14dp"/>
+                android:textSize="@dimen/dp_14"/>
 
             <LinearLayout
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/dp_15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -322,12 +322,12 @@
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_call"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
-                        android:paddingLeft="15dp"
+                        android:paddingLeft="@dimen/dp_15"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="18008900867"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
                         android:textColor="@color/dark_grey"/>
                 </LinearLayout>
                 <LinearLayout
@@ -338,16 +338,16 @@
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_gravity="center"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/dp_25"
+                        android:layout_height="@dimen/dp_25"
                         android:src="@mipmap/icon_chat"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
-                        android:paddingLeft="15dp"
+                        android:paddingLeft="@dimen/dp_15"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chat now"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
                         android:textColor="@color/dark_grey"/>
                 </LinearLayout>
             </LinearLayout>

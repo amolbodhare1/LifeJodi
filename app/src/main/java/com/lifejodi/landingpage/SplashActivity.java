@@ -42,7 +42,7 @@ public class SplashActivity extends AppCompatActivity implements VolleyCallbackI
         ButterKnife.bind(this);
         sharedPreference.initialize(this);
 
-        imageSplash.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this,R.anim.translate));
+        //imageSplash.startAnimation(AnimationUtils.loadAnimation(SplashActivity.this,R.anim.translate));
         if (sharedPreference.getSharedPrefData(Constants.REGSTATUS).equals("1")) {
             new Handler().postDelayed(new Runnable() {
                 @Override
