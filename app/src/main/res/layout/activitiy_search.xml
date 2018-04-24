@@ -44,12 +44,12 @@
                 android:layout_height="wrap_content"
                 android:elevation="5dp">
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="@dimen/dp_10">
                     <com.lifejodi.utils.customfonts.CustomEditBeatles
                         android:id="@+id/edit_search_by_id"
                         android:gravity="center"
@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Search by id"
                         android:textColor="@color/dark_grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
                         android:background="@null"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"/>
@@ -65,10 +65,10 @@
                     <ImageView
                         android:id="@+id/image_search_by_id"
                         app:srcCompat="@drawable/ic_search"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
                         android:tint="@color/colorAccent"
-                        android:padding="5dp"/>
+                        android:padding="@dimen/dp_5"/>
 
                 </LinearLayout>
 
@@ -76,7 +76,7 @@
 
             <LinearLayout
                 android:layout_gravity="center"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="@dimen/dp_14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -86,42 +86,42 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="@color/pink"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginRight="18dp"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_18"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="OR"
                     android:textColor="@color/pink"
-                    android:textSize="14dp" />
+                    android:textSize="@dimen/dp_14" />
                 <LinearLayout
                     android:visibility="invisible"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/dp_1"
                     android:background="@color/pink"/>
             </LinearLayout>
 
             <android.support.v7.widget.CardView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
                 android:elevation="5dp"
-                android:layout_marginBottom="50dp">
+                android:layout_marginBottom="@dimen/dp_50">
                 <LinearLayout
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -136,11 +136,11 @@
                     <Spinner
                         android:layout_gravity="center"
                         android:id="@+id/spinner_min_age"
-                        android:layout_width="80dp"
-                        android:layout_height="35dp"
+                        android:layout_width="@dimen/dp_80"
+                        android:layout_height="@dimen/dp_35"
                         android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
                         android:textColor="@color/dark_grey"
                         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
@@ -153,18 +153,18 @@
                     <Spinner
                         android:layout_gravity="center"
                         android:id="@+id/spinner_max_age"
-                        android:layout_width="80dp"
-                        android:layout_height="35dp"
+                        android:layout_width="@dimen/dp_80"
+                        android:layout_height="@dimen/dp_35"
                         android:gravity="center"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
                         android:textColor="@color/dark_grey"
                         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
                 </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -179,11 +179,11 @@
                         <Spinner
                             android:layout_gravity="center"
                             android:id="@+id/spinner_min_height"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_35"
                             android:gravity="center"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_8"
                             android:textColor="@color/dark_grey"
                             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
@@ -197,11 +197,11 @@
                         <Spinner
                             android:layout_gravity="center"
                             android:id="@+id/spinner_max_height"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_35"
                             android:gravity="center"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_8"
                             android:textColor="@color/dark_grey"
                             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
@@ -209,7 +209,7 @@
 
 
                     <LinearLayout
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -224,11 +224,11 @@
                         <Spinner
                             android:layout_gravity="center"
                             android:id="@+id/spinner_min_income"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_35"
                             android:gravity="center"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_8"
                             android:textColor="@color/dark_grey"
                             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
@@ -242,11 +242,11 @@
                         <Spinner
                             android:layout_gravity="center"
                             android:id="@+id/spinner_max_income"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
+                            android:layout_width="@dimen/dp_80"
+                            android:layout_height="@dimen/dp_35"
                             android:gravity="center"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp"
+                            android:paddingBottom="@dimen/dp_8"
+                            android:paddingTop="@dimen/dp_8"
                             android:textColor="@color/dark_grey"
                             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
@@ -257,23 +257,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Marital Status"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -281,7 +281,7 @@
                         android:id="@+id/recycler_marital_status"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -289,10 +289,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
@@ -304,15 +304,15 @@
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_religion"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -320,23 +320,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mother tongue"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -344,7 +344,7 @@
                         android:id="@+id/recycler_mother_tongue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -352,23 +352,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Caste"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -376,7 +376,7 @@
                         android:id="@+id/recycler_caste"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -384,23 +384,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Dosham"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -408,7 +408,7 @@
                         android:id="@+id/recycler_dosham"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -416,30 +416,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Country"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_country"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
 
@@ -448,30 +448,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="State"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_state"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
 
@@ -480,23 +480,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Occupation"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -504,7 +504,7 @@
                         android:id="@+id/recycler_occupation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -512,23 +512,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Education"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -536,7 +536,7 @@
                         android:id="@+id/recycler_education"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
@@ -544,23 +544,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp">
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_5">
 
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="City"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             />
 
                         <ImageView
                             app:srcCompat="@drawable/ic_expand"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"/>
+                            android:layout_width="@dimen/dp_20"
+                            android:layout_height="@dimen/dp_20"/>
 
                     </LinearLayout>
 
@@ -568,18 +568,18 @@
                         android:id="@+id/recycler_city"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="@dimen/dp_5"
                         android:visibility="gone"></android.support.v7.widget.RecyclerView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_margin="5dp">
+                        android:layout_margin="@dimen/dp_5">
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15dp"
+                            android:textSize="@dimen/dp_15"
                             android:textColor="@color/colorPrimary"
                             android:text="Only Show Profiles"/>
                         <LinearLayout
@@ -608,11 +608,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_margin="5dp">
+                        android:layout_margin="@dimen/dp_5">
                         <com.lifejodi.utils.customfonts.CustomTextBeatles
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15dp"
+                            android:textSize="@dimen/dp_15"
                             android:textColor="@color/colorPrimary"
                             android:text="Don't Show Profiles"/>
 
@@ -662,14 +662,14 @@
         <Button
             android:id="@+id/button_custom_search"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/dp_15"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/dp_50"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
             android:text="Search Here"
             android:textAllCaps="false"
-            android:textSize="18dp"/>
+            android:textSize="@dimen/dp_18"/>
 
     </RelativeLayout>
 

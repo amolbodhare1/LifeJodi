@@ -127,6 +127,11 @@ public class RadarSearchManager implements VolleyResponse {
                     dataMap.put(RadarSearchData.PHOTONAME,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.PHOTONAME,RadarSearchData.PHOTONAME));
                     dataMap.put(RadarSearchData.DISTANCE,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.DISTANCE,RadarSearchData.DISTANCE));
                     dataMap.put(RadarSearchData.PROFILEPIC,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.PROFILEPIC,RadarSearchData.PROFILEPIC));
+                    dataMap.put(RadarSearchData.DISTANCE,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.DISTANCE,RadarSearchData.DISTANCE));
+                    dataMap.put(RadarSearchData.PROFILEPIC,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.PROFILEPIC,RadarSearchData.PROFILEPIC));
+                    dataMap.put(RadarSearchData.LAT,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.LAT,RadarSearchData.LAT));
+                    dataMap.put(RadarSearchData.LNG,Constants.getStringValueOfJsonObject(dataObject,RadarSearchData.LNG,RadarSearchData.LNG));
+
 
                     dataList.add(dataMap);
 

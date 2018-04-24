@@ -17,18 +17,32 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-      <!--  <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
-            android:id="@+id/ripple"
+        <com.skyfishjy.library.RippleBackground
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:ripple_stroke_width="15dp" />-->
-
-
+            android:id="@+id/content"
+            app:rb_color="#5C6BC0"
+            app:rb_radius="25dp"
+            app:rb_rippleAmount="5"
+            app:rb_duration="4000"
+            app:rb_scale="7">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:id="@+id/centerImage"
+                android:padding="20dp"
+                android:visibility="visible"
+                android:src="@drawable/radarback2"/>
+        </com.skyfishjy.library.RippleBackground>
         <it.smasini.radar.RadarView
             app:load_async_image="true"
-            app:center_pin_color="#b30ba7"
-            app:background_color="#004973ba"
-            app:arrow_color="#3356cc"
+            app:center_pin_color="#4550c4"
+            app:background_color="#00ba497e"
+            app:arrow_color="#00113322"
+            app:max_distance="500"
             app:pins_radius="100"
             android:padding="20dp"
             android:layout_gravity="center"
@@ -37,5 +51,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/seekbar_radius"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="bottom"/>
+        <TextView
+            android:id="@+id/text_selected_radius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="100 km"
+            android:textSize="18dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/colorPrimary"/>
     </FrameLayout>
 </LinearLayout>

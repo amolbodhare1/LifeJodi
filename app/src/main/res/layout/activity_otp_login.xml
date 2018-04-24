@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:text="Verify your mobile number"
             android:textColor="@color/pink"
-            android:textSize="14dp"/>
+            android:textSize="@dimen/dp_14"/>
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="280dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="@dimen/dp_280"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="@dimen/dp_5"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,11 +47,11 @@
                         android:layout_gravity="center_vertical"
                         android:id="@+id/edit_otplogin_mobilenum"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="@dimen/dp_30"
                         android:hint="Enter mobile number"
                         android:textColorHint="@color/colorPrimary"
                         android:textColor="@color/dark_grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/dp_14"
                         android:background="@null"
                         android:maxLength="10"
                         android:inputType="number" />
@@ -59,21 +59,21 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/dp_2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp_1"
                 android:background="@color/line_color"/>
 
         </LinearLayout>
 
         <com.lifejodi.utils.customfonts.CustomButtonBeatles
             android:id="@+id/button_otplogin_submit"
-            android:layout_marginTop="20dp"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="@dimen/dp_280"
+            android:layout_height="@dimen/dp_40"
             android:text="Submit"
             android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="@dimen/dp_14"
             android:background="@drawable/button_background"/>
     </LinearLayout>
     <LinearLayout
@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         android:orientation="vertical">
         <LinearLayout
                 android:layout_width="match_parent"
@@ -94,19 +94,19 @@
                     android:layout_height="wrap_content"
                     android:text="OTP has been sent on your mobile number"
                     android:textColor="@color/pink"
-                    android:textSize="14dp"/>
+                    android:textSize="@dimen/dp_14"/>
             <com.lifejodi.utils.customfonts.CustomTextBeatles
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter OTP"
                 android:textColor="@color/blue"
-                android:layout_marginTop="15dp"
-                android:textSize="14dp"/>
+                android:layout_marginTop="@dimen/dp_15"
+                android:textSize="@dimen/dp_14"/>
 
                     <LinearLayout
-                        android:layout_width="180dp"
+                        android:layout_width="@dimen/dp_180"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="@dimen/dp_10"
                         android:orientation="horizontal">
 
                             <com.lifejodi.utils.customfonts.CustomEditBeatles
@@ -117,7 +117,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColorHint="@color/colorPrimary"
                                 android:textColor="@color/dark_grey"
-                                android:textSize="14dp"
+                                android:textSize="@dimen/dp_14"
                                 android:layout_weight="1"
                                 android:theme="@style/MyEditTextTheme"
                                 android:inputType="number"
@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             android:theme="@style/MyEditTextTheme"
                             android:inputType="number"
@@ -145,7 +145,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             android:theme="@style/MyEditTextTheme"
                             android:inputType="number"
@@ -159,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             android:theme="@style/MyEditTextTheme"
                             android:inputType="number"
@@ -173,7 +173,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             android:theme="@style/MyEditTextTheme"
                             android:inputType="number"
@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/colorPrimary"
                             android:textColor="@color/dark_grey"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/dp_14"
                             android:layout_weight="1"
                             android:theme="@style/MyEditTextTheme"
                             android:inputType="number"
@@ -196,12 +196,12 @@
 
                 <com.lifejodi.utils.customfonts.CustomButtonBeatles
                     android:id="@+id/button_otplogin_verify"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="280dp"
-                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_280"
+                    android:layout_height="@dimen/dp_40"
                     android:text="Verify"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="@dimen/dp_14"
                     android:background="@drawable/button_background"/>
             <com.lifejodi.utils.customfonts.CustomTextBeatles
                 android:id="@+id/text_resend_otp"
@@ -209,8 +209,8 @@
                 android:layout_height="wrap_content"
                 android:text="Resend OTP"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginTop="15dp"
-                android:textSize="15dp"/>
+                android:layout_marginTop="@dimen/dp_15"
+                android:textSize="@dimen/dp_15"/>
             </LinearLayout>
     </LinearLayout>
 </LinearLayout>
