@@ -10,8 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-
-
+import com.lifejodi.R;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.radarsearch.data.RadarSearchData;
@@ -54,7 +53,7 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radar_search);
-       ButterKnife.bind(this);
+        ButterKnife.bind(this);
         initialization();
     }
 

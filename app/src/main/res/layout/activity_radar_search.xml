@@ -8,8 +8,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_radarsearch"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         />
 
     <FrameLayout
@@ -18,8 +18,6 @@
         android:gravity="center">
 
         <com.skyfishjy.library.RippleBackground
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/content"
@@ -38,16 +36,16 @@
                 android:src="@drawable/radarback2"/>
         </com.skyfishjy.library.RippleBackground>
         <it.smasini.radar.RadarView
-            app:load_async_image="true"
-            app:center_pin_color="#4550c4"
-            app:background_color="#00ba497e"
-            app:arrow_color="#00113322"
-            app:max_distance="500"
-            app:pins_radius="100"
+            custom:load_async_image="true"
+            custom:center_pin_color="#4550c4"
+            custom:background_color="#00ba497e"
+            custom:arrow_color="#00113322"
+            custom:max_distance="500"
+            custom:pins_radius="100"
             android:padding="20dp"
             android:layout_gravity="center"
             android:id="@+id/radar_view"
-            app:radar_background="@drawable/image_radar_back"
+            custom:radar_background="@drawable/image_radar_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
