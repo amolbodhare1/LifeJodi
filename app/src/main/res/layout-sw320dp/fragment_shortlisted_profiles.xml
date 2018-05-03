@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/off_white_color">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_fragment_shortlisted"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:background="#aaffffff"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressBar13" />
+    </RelativeLayout>
+    <com.lifejodi.utils.customfonts.CustomTextBeatles
+        android:id="@+id/text_no_shortlisted_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Shortlisted Profiles"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textColor="@color/dark_grey"/>
+</FrameLayout>

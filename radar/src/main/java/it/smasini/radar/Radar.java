@@ -142,7 +142,7 @@ public class Radar extends View {
         if (metterDistance > maxDistance) metterDistance = maxDistance;
 
         if(showRadarAnimation) {
-            drawLine();
+         //   drawLine();
         }else{
             drawPins(u0, locations, pxCanvas, metterDistance);
         }

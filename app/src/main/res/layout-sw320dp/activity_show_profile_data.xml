@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tools_edit"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+       />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="none">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="18dp"
+                android:textColor="@color/pink"
+                android:text="Basic Details" />
+
+            <ImageView
+                android:id="@+id/image_edit_basicdetails"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Name" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Gender" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Age" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Height" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            >
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Marital Status" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_marital_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Mother tongue" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_mothertongue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Physical status" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_physical_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Profile created by" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_profilefor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+<!--RELIGIOUS INFO-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="18dp"
+                android:textColor="@color/pink"
+                android:text="Religious Information" />
+
+            <ImageView
+                android:id="@+id/image_edit_religiousinfo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Religion" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_religion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Caste" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_caste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Dosham" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_dosham"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <!--PROFESSIONAL INFORMATION-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="18dp"
+                android:textColor="@color/pink"
+                android:text="Professional Information" />
+
+            <ImageView
+                android:id="@+id/image_edit_professionalinfo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Education" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Occupation" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_occupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Employed In" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_employedin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Annual Income" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Currency" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+       <!-- FAMILY DETAILS-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="18dp"
+                android:textColor="@color/pink"
+                android:text="Family Details" />
+
+            <ImageView
+                android:id="@+id/image_edit_familydetails"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Family Values" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_family_values"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Family Type" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_family_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Family Status" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_family_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="45dp">
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="30dp"
+                android:textSize="16dp"
+                android:textColor="@color/light_gray"
+                android:text="Country" />
+            <com.lifejodi.utils.customfonts.CustomTextBeatles
+                android:id="@+id/text_editprof_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/dark_grey"
+                android:text="TextView" />
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/layout_preogress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp"
+        android:background="#90ffffff">
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="190dp" />
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/button_update_profile"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</LinearLayout>

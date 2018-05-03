@@ -6,8 +6,12 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.R;
@@ -18,6 +22,7 @@ import com.lifejodi.radarsearch.managers.RadarSearchManager;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.SharedPreference;
+import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,17 +42,29 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
 
     @BindView(R.id.toolbar_radarsearch)
     Toolbar toolbarRadarsearch;
+    @BindView(R.id.radar_view)
+    RadarView radarView;
+    @BindView(R.id.centerImage)
+    ImageView centerImage;
+
+    @BindView(R.id.seekbar_radius)
+    AppCompatSeekBar seekbarRadius;
+    @BindView(R.id.text_selected_radius)
+    TextView textSelectedRadius;
+    @BindView(R.id.ripple_background)
+    RippleBackground rippleBackground;
 
     RadarSearchData radarSearchData = RadarSearchData.getInstance();
     RadarSearchManager radarSearchManager;
 
     SharedPreference sharedPreference;
-    @BindView(R.id.radar_view)
-    RadarView radarView;
 
-    String latitude="",longitude="";
+    String latitude = "", longitude = "";
     ArrayList<RadarPoint> points = new ArrayList<RadarPoint>();
-    ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+    String radarRadius = "";
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +85,31 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
             }
         });
 
+        seekbarRadius.setMax(300);
+        centerImage.setVisibility(View.VISIBLE);
+
+        seekbarRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                radarRadius = String.valueOf(progress);
+                textSelectedRadius.setText(progress + " KM");
+                radarView.setMaxDistance(progress);
+                points = new ArrayList<RadarPoint>();
+                radarView.resetPoints();
+                startAll();
+                radarView.setReferencePoint(new RadarPoint("center", 44.139644f, 12.246429f));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         sharedPreference = SharedPreference.getSharedInstance();
         sharedPreference.initialize(this);
@@ -77,11 +119,12 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
         String latitude = Constants.getValue(userData, UserRegData.LATITUDE);
         String longitude = Constants.getValue(userData, UserRegData.LONGITUDE);
 
-        radarSearchManager = RadarSearchManager.getInstance();
+    /*    radarSearchManager = RadarSearchManager.getInstance();
         radarSearchManager.initialize(this, this);
         radarSearchManager.getRadarSearchList(radarSearchManager.getRadarSearchInputs(deviceId, userId, latitude, longitude, "10"));
+*/
 
-        startAll();
+
     }
 
 
@@ -90,12 +133,11 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
         switch (tag) {
             case Constants.TAG_RADAR_SEARCH:
 
-                radarView.setReferencePoint(new RadarPoint("center", Float.parseFloat(latitude),Float.parseFloat(longitude)));
+                radarView.setReferencePoint(new RadarPoint("center", Float.parseFloat(latitude), Float.parseFloat(longitude)));
                 dataList = radarSearchData.getRadarSearchList();
-                for(int i=0;i<dataList.size();i++)
-                {
-                    HashMap<String,String> dataMap = dataList.get(i);
-                    RadarPoint r1 = new RadarPoint("identifier1", Float.parseFloat(dataMap.get(RadarSearchData.LAT)),Float.parseFloat(dataMap.get(RadarSearchData.LNG)), dataMap.get(RadarSearchData.PROFILEPIC));
+                for (int i = 0; i < dataList.size(); i++) {
+                    HashMap<String, String> dataMap = dataList.get(i);
+                    RadarPoint r1 = new RadarPoint("identifier1", Float.parseFloat(dataMap.get(RadarSearchData.LAT)), Float.parseFloat(dataMap.get(RadarSearchData.LNG)), dataMap.get(RadarSearchData.PROFILEPIC));
                     points.add(r1);
                 }
                 radarView.setPoints(points);
@@ -113,10 +155,11 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
     }
 
 
-
-    private void startAll(){
+    private void startAll() {
+        points = new ArrayList<RadarPoint>();
         radarView.resetPoints();
-        radarView.startAnimation();
+         rippleBackground.startRippleAnimation();
+         centerImage.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -127,10 +170,9 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
                 latitude = Constants.getValue(userData, UserRegData.LATITUDE);
                 longitude = Constants.getValue(userData, UserRegData.LONGITUDE);
 
-                radarView.setMaxDistance(5000);
                 radarSearchManager = RadarSearchManager.getInstance();
                 radarSearchManager.initialize(RadarSearchActivity.this, RadarSearchActivity.this);
-                radarSearchManager.getRadarSearchList(radarSearchManager.getRadarSearchInputs(deviceId, userId, latitude, longitude, "10"));
+                radarSearchManager.getRadarSearchList(radarSearchManager.getRadarSearchInputs(deviceId, userId, latitude, longitude, radarRadius));
 
             }
         }, 10000);
