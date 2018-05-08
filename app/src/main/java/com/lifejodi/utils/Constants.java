@@ -140,6 +140,10 @@ public class Constants {
     public static String URL_RADAR_SEARCH = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_RADAR_SEARCH= "radar_search";
 
+    public static String URL_PAYMENT = "http://www.efee.in/lifejodi/web_services/Lifejodiapi";
+    public static final String TAG_REQUEST_PAYMENT_TOKEN = "requestToken";
+    public static final String TAG_MAKE_PAYMENT = "makePayment";
+
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();
         String credentials = "admin:1234";

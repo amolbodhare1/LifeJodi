@@ -42,5 +42,6 @@ public class VideoCallActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }

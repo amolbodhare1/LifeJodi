@@ -1,5 +1,6 @@
 package com.lifejodi.login.activity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -41,6 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements VolleyC
     LoginData loginData = LoginData.getInstance();
     String email = "";
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements VolleyC
         initialize();
     }
 
+    @SuppressLint("NewApi")
     private void initialize() {
 
         toolbar.setTitle("Forgot Password");
@@ -69,36 +72,31 @@ public class ForgotPasswordActivity extends AppCompatActivity implements VolleyC
         sendEmail();
     }
 
-    public void sendEmail()
-    {
+    public void sendEmail() {
         email = editEmail.getText().toString();
-        if(email.equals("") || !Constants.isEmailValid(email))
-        {
+        if (email.equals("") || !Constants.isEmailValid(email)) {
             Toast.makeText(this, "Please enter valid email id", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             loginManager = LoginManager.getInstance();
-            loginManager.initialize(this,ForgotPasswordActivity.this);
+            loginManager.initialize(this, ForgotPasswordActivity.this);
             String androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             progressLayout.setVisibility(View.VISIBLE);
-            loginManager.getForgotPassword(loginManager.getForgotPassParams(androidDeviceId,email));
+            loginManager.getForgotPassword(loginManager.getForgotPassParams(androidDeviceId, email));
         }
     }
 
     @Override
     public void successCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_FORGOTPASSWORD:
                 progressLayout.setVisibility(View.GONE);
                 String message = loginData.getForgotPassMessage();
                 String status = loginData.getForgotPassStatus();
-                if(status.equals("1"))
-                {
-                    Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                if (status.equals("1")) {
+                    Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
                     finish();
-                }else if(status.equals("0"))
-                {
-                    Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+                } else if (status.equals("0")) {
+                    Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
                     editEmail.setText("");
                 }
 
@@ -108,11 +106,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements VolleyC
 
     @Override
     public void errorCallBack(String msg, String tag) {
-        switch (tag)
-        {
+        switch (tag) {
             case Constants.TAG_FORGOTPASSWORD:
                 progressLayout.setVisibility(View.GONE);
-                Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

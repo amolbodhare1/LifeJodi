@@ -1,5 +1,6 @@
 package com.lifejodi.event.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -10,17 +11,22 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.lifejodi.PaymentActivity;
+import com.braintreepayments.api.dropin.DropInActivity;
+import com.braintreepayments.api.dropin.DropInRequest;
+import com.braintreepayments.api.dropin.DropInResult;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.lifejodi.R;
 import com.lifejodi.event.data.EventRegistrationData;
 import com.lifejodi.event.data.EventsData;
 import com.lifejodi.event.managers.EventRegManager;
+import com.lifejodi.event.managers.PaymentManager;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
@@ -84,7 +90,13 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
 
+    boolean hasFees = false;
+    int fees=0;
 
+    String token;
+    final int REQUEST_CODE = 1;
+
+    PaymentManager paymentManager = PaymentManager.getInstance();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +109,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
 
         sharedPreference = SharedPreference.getSharedInstance();
         sharedPreference.initialize(this);
+        paymentManager.initialize(this,this);
         if (getIntent().hasExtra("POSITION")) {
             position = getIntent().getExtras().getInt("POSITION");
         }
@@ -121,15 +134,28 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
             }
         });
 
+        try{
+            fees = Integer.parseInt(dataMap.get(EventsData.EVENTFEES));
+            hasFees = true;
+        }catch (Exception e){
+            hasFees = false;
+        }
+        getDetails();
+        if(hasFees){
+            paymentManager.getPaymentToken(paymentManager.paymentTokenInput(androidDeviceId,userId));
+        }
+
     }
 
-    public void registerUser() {
+    public void getDetails(){
         JSONObject dataObject = null;
+
         try {
             dataObject = new JSONObject(sharedPreference.getSharedPrefData(Constants.USERDATA));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         try {
             firstName = dataObject.getString(UserRegData.FULLNAME);
             mobNum = dataObject.getString(UserRegData.PHONENUMBER);
@@ -139,6 +165,10 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
         }
 
         androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public void registerUser() {
+
         if (!checkboxTerms.isChecked()) {
             Toast.makeText(this, "Please accept Terms & Conditions", Toast.LENGTH_SHORT).show();
         } else {
@@ -157,10 +187,21 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
                  progressLayout.setVisibility(View.GONE);
                 String message = eventRegistrationData.getEventRegMessage();
                 Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
-                Intent eventRegIntent = new Intent(EventDetailsActivity.this, PaymentActivity.class);
+                /*Intent eventRegIntent = new Intent(EventDetailsActivity.this, PaymentActivity.class);
                 startActivity(eventRegIntent);
-                finish();
+                finish();*/
                 break;
+            case Constants.TAG_MAKE_PAYMENT:
+
+                registerUser();
+
+                break;
+            case Constants.TAG_REQUEST_PAYMENT_TOKEN:
+
+                token = msg;
+
+                break;
+
         }
     }
 
@@ -178,8 +219,45 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button_event_register:
-                registerUser();
+                if(hasFees) {
+                    if (!checkboxTerms.isChecked()) {
+                        Toast.makeText(this, "Please accept Terms & Conditions", Toast.LENGTH_SHORT).show();
+                    }else {
+                        onBraintreeSubmit();
+                    }
+                }else {
+                    registerUser();
+                }
                 break;
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
+                PaymentMethodNonce nonce = result.getPaymentMethodNonce();
+                String stringNonce = nonce.getNonce();
+                Log.e("mylog", "Result: " + stringNonce);
+                // Send payment price with the nonce
+                // use the result to update your UI and send the payment method nonce to your server
+                paymentManager.makePayment(paymentManager.makePaymentInput(androidDeviceId,userId,fees+"",stringNonce));
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // the user canceled
+                Log.d("mylog", "user canceled");
+            } else {
+                // handle errors here, an exception may be available in
+                Exception error = (Exception) data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
+                Log.d("mylog", "Error : " + error.toString());
+            }
+        }
+    }
+
+    public void onBraintreeSubmit() {
+        DropInRequest dropInRequest = new DropInRequest()
+                .clientToken(token);
+        startActivityForResult(dropInRequest.getIntent(this), REQUEST_CODE);
     }
 }
