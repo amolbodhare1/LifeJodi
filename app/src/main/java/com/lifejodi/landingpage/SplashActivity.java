@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.lifejodi.R;
@@ -35,6 +34,7 @@ public class SplashActivity extends AppCompatActivity implements VolleyCallbackI
     @BindView(R.id.image_splash)
     ImageView imageSplash;
 
+    String deviceId="";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +74,18 @@ public class SplashActivity extends AppCompatActivity implements VolleyCallbackI
 
     public void initialization() {
         regSpinnersManager.initialize(this, this);
-        String androidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+        deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        Log.e("DEVICEID", androidDeviceId);
-        if (androidDeviceId != null || androidDeviceId != "") {
-            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(androidDeviceId));
+        Log.e("DEVICEID", deviceId);
+        if (deviceId != null || deviceId != "") {
+            regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
         } else {
             TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            String deviceId = telephonyManager.getDeviceId();
+            deviceId = telephonyManager.getDeviceId();
             regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
         }
+
+        sharedPreference.putSharedPrefData(Constants.DEVICE_ID,deviceId);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lifejodi.home.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,6 +24,7 @@ public class ProfilesData {
     public static String DATA = "data";
 
     public static String STATUS = "status";
+    public static String MODE = "mode";
     public static String MESSAGE = "msg";
     public static String USERDATA = "user_data";
     public static String ID = "id";
@@ -45,6 +47,34 @@ public class ProfilesData {
 
     public void setShortListedDetailsStatus(String shortListedDetailsStatus) {
         ShortListedDetailsStatus = shortListedDetailsStatus;
+    }
+
+    public ArrayList<HashMap<String,String>> pendingList = new ArrayList<>();
+    public ArrayList<HashMap<String,String>> acceptedList = new ArrayList<>();
+    public ArrayList<HashMap<String,String>> rejectedList = new ArrayList<>();
+
+    public ArrayList<HashMap<String, String>> getPendingList() {
+        return pendingList;
+    }
+
+    public void setPendingList(ArrayList<HashMap<String, String>> pendingList) {
+        this.pendingList = pendingList;
+    }
+
+    public ArrayList<HashMap<String, String>> getAcceptedList() {
+        return acceptedList;
+    }
+
+    public void setAcceptedList(ArrayList<HashMap<String, String>> acceptedList) {
+        this.acceptedList = acceptedList;
+    }
+
+    public ArrayList<HashMap<String, String>> getRejectedList() {
+        return rejectedList;
+    }
+
+    public void setRejectedList(ArrayList<HashMap<String, String>> rejectedList) {
+        this.rejectedList = rejectedList;
     }
 
     public HashMap<String,String> shortListedDetailsMap = new HashMap<>();

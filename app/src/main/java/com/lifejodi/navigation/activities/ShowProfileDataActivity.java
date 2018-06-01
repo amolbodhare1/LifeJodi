@@ -199,6 +199,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
         regSpinnersManager.initialize(this, this);
         profileDataManager.initialize(this, this);
+
         deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         Log.e("DEVICEID", deviceId);

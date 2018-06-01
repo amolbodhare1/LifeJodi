@@ -24,6 +24,7 @@ public class HomeFragmentsData {
     public static String PROFILEID = "profile_id";
 
 
+    public static String MODE = "mode";
     public static String STATUS = "status";
     public static String MESSAGE = "msg";
     public static String ID = "id";

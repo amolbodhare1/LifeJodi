@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.lifejodi.R;
 import com.lifejodi.home.activity.ProfileDetailsActivity;
 import com.lifejodi.home.data.HomeFragmentsData;
@@ -103,6 +102,12 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
             }
         });
         holder.progressLayout.setVisibility(View.GONE);
+
+        if(dataMap.get(HomeFragmentsData.STATUS).equals("1")){
+            holder.fabChat.setVisibility(View.VISIBLE);
+        }else {
+            holder.fabChat.setVisibility(View.GONE);
+        }
 
     }
 

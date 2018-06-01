@@ -55,6 +55,7 @@ public class Constants {
     public static String FBEMAIL="fb_email";
     public static String FBGENDER="fb_gender";
     public static String USERNAME="username";
+    public static String DEVICE_ID="deviceId";
 
 
     public static String LOGINNAME="login_name";
@@ -62,6 +63,11 @@ public class Constants {
     public static String PROFILEID="profile_id";
     public static String UID="uid";
     public static String PROFILEPICPATH="profile_pic_path";
+
+    public static String BASE_URL = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
+    public static String COMET_CHAT_URL = "https://www.digiinterface.com/demos/lifejodi/cometchat/admin/";
+    public static String COMET_CHAT_LICENCE_KEY = "FX4SF-0LFYD-4LMZC-6KMUY-EWX3W";
+    public static String COMET_CHAT_API_KEY = "3367961be4fd5685e97d5374f75d6c88";
 
     //GET MASTERS DATA
     public static String URL_GET_MASTERSDATA = "http://www.digiinterface.com/demos/lifejodi/web_services/Lifejodiapi";
@@ -143,6 +149,13 @@ public class Constants {
     public static String URL_PAYMENT = "http://www.efee.in/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_REQUEST_PAYMENT_TOKEN = "requestToken";
     public static final String TAG_MAKE_PAYMENT = "makePayment";
+
+    public static final String TAG_MY_PACKAGE = "mypackage";
+    public static final String TAG_ALL_PACKAGES = "all_packages";
+    public static final String TAG_SEND_REQUEST = "send_request";
+    public static final String TAG_ACCEPT_REQUEST = "accept_request";
+    public static final String TAG_REJECT_REQUEST = "reject_request";
+    public static final String TAG_REQUEST_STATUS = "request_status";
 
     public static Map<String, String> getHeader() throws AuthFailureError {
         Map<String,String> headers = new HashMap<>();

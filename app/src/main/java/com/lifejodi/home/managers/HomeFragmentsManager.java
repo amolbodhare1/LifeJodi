@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.lifejodi.home.data.HomeFragmentsData;
-import com.lifejodi.login.data.LoginData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
@@ -212,6 +211,9 @@ public class HomeFragmentsManager implements VolleyResponse {
                         dataMap.put(HomeFragmentsData.RELIGION, Constants.getStringValueOfJsonObject(dataObject, HomeFragmentsData.RELIGION, HomeFragmentsData.RELIGION));
                         dataMap.put(HomeFragmentsData.PHOTONAME, Constants.getStringValueOfJsonObject(dataObject, HomeFragmentsData.PHOTONAME, HomeFragmentsData.PHOTONAME));
                         dataMap.put(HomeFragmentsData.PROFILEPIC, Constants.getStringValueOfJsonObject(dataObject, HomeFragmentsData.PROFILEPIC, HomeFragmentsData.PROFILEPIC));
+                        dataMap.put(HomeFragmentsData.PROFILEPIC, Constants.getStringValueOfJsonObject(dataObject, HomeFragmentsData.PROFILEPIC, HomeFragmentsData.PROFILEPIC));
+                        dataMap.put(HomeFragmentsData.STATUS, Constants.getStringValueOfJsonObject(dataObject,HomeFragmentsData.STATUS,HomeFragmentsData.STATUS));
+                        dataMap.put(HomeFragmentsData.MODE, Constants.getStringValueOfJsonObject(dataObject,HomeFragmentsData.MODE,HomeFragmentsData.MODE));
 
                         dataList.add(dataMap);
 

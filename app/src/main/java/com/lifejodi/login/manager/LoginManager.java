@@ -72,6 +72,7 @@ public class LoginManager implements VolleyResponse {
         }
         return jsonObject;
     }
+
     public void loginUser(JSONObject jsonObject)
     {
         mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_LOGIN,Constants.TAG_LOGIN,jsonObject);

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.lifejodi.InboxActivity;
 import com.lifejodi.R;
+import com.lifejodi.navigation.activities.PackagesActivity;
 import com.lifejodi.radarsearch.activities.RadarSearchActivity;
 import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
@@ -276,11 +277,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         if (id == R.id.nav_my_matches) {
             // Handle the camera action
             viewPager.setCurrentItem(0);
         } else if (id == R.id.nav_upgrade_account) {
-
+            Intent packageIntent = new Intent(this, PackagesActivity.class);
+            startActivity(packageIntent);
         }
         else if (id == R.id.nav_edit_profile) {
             Intent editIntent = new Intent(HomeActivity.this, ShowProfileDataActivity.class);
@@ -305,8 +309,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent dailyRecommintent = new Intent(HomeActivity.this, EventsActivity.class);
             startActivity(dailyRecommintent);
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

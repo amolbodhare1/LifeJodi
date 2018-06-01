@@ -3,7 +3,6 @@ package com.lifejodi.home.managers;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
@@ -187,6 +186,8 @@ public class ShortListManager implements VolleyResponse {
                         dataMap.put(ShortlistData.RELIGION,Constants.getStringValueOfJsonObject(dataObject,ShortlistData.RELIGION,ShortlistData.RELIGION));
                         dataMap.put(ShortlistData.PHOTONAME,Constants.getStringValueOfJsonObject(dataObject,ShortlistData.PHOTONAME,ShortlistData.PHOTONAME));
                         dataMap.put(ShortlistData.PROFILEPIC,Constants.getStringValueOfJsonObject(dataObject,ShortlistData.PROFILEPIC,ShortlistData.PROFILEPIC));
+                        dataMap.put(ShortlistData.STATUS, Constants.getStringValueOfJsonObject(dataObject,ShortlistData.STATUS,ShortlistData.STATUS));
+                        dataMap.put(ShortlistData.MODE, Constants.getStringValueOfJsonObject(dataObject,ShortlistData.MODE,ShortlistData.MODE));
 
                         dataList.add(dataMap);
                     }

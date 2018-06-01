@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.lifejodi.R;
 import com.lifejodi.home.activity.ProfileDetailsActivity;
 import com.lifejodi.home.data.ShortlistData;
@@ -73,6 +72,12 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
                 context.startActivity(intent);
             }
         });
+
+        if(dataMap.get(ShortlistData.STATUS).equals("1")){
+            holder.fabChat.setVisibility(View.VISIBLE);
+        }else {
+            holder.fabChat.setVisibility(View.GONE);
+        }
 
     }
 

@@ -24,24 +24,38 @@
                     android:scaleType="fitXY"
                     android:orientation="horizontal"
                      />
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/button_matches_chat"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     app:layout_anchor="@+id/image_matches_profpic"
                     app:layout_anchorGravity="bottom|end"
-                    android:layout_marginRight="5dp"
-                    android:src="@mipmap/ic_chat_white"
-                    app:fabSize="mini"/>
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/button_matches_shortlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_anchor="@+id/image_matches_profpic"
-                    app:layout_anchorGravity="bottom|right"
-                    android:layout_marginRight="55dp"
-                    android:src="@mipmap/ic_shortlist_white"
-                    app:fabSize="mini"/>
+                    >
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/button_matches_shortlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_shortlist_white"
+                        app:fabSize="mini"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/button_matches_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:src="@mipmap/ic_chat_white"
+                        app:fabSize="mini"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="10dp"/>
+
+                </LinearLayout>
+
                 </android.support.design.widget.CoordinatorLayout>
 
             <LinearLayout

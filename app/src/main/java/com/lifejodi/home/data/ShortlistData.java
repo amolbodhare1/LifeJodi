@@ -25,6 +25,7 @@ public class ShortlistData {
 
     public static String STATUS = "status";
     public static String MESSAGE = "msg";
+    public static String MODE = "mode";
 
     public static String ID = "id";
     public static String FULLNAME = "full_name";
