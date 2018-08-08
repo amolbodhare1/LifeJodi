@@ -17,14 +17,12 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.home.activity.ProfileDetailsActivity;
-import com.lifejodi.home.adapters.MatchesRecyclerAdapter;
-import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class CustomSearchListAdapter extends RecyclerView.Adapter<CustomSearchLi
     Context context;
     ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
 
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     ShortListManager shortListManager;
     ShortlistData shortlistData = ShortlistData.getInstance();
 

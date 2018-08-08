@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,7 +22,7 @@ import com.lifejodi.search.adapter.CustomSearchListAdapter;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.search.manager.SearchManager;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONObject;
 
@@ -46,10 +45,9 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
 
-
     SearchManager searchManager = SearchManager.getInstance();
     SearchData searchData = SearchData.getInstance();
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     CustomSearchListAdapter customSearchListAdapter;
     @BindView(R.id.layout_customsearch_results)
     LinearLayout layoutCustomsearchResults;
@@ -89,17 +87,12 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
 
         Log.e("DEVICEID", deviceId);
 
-        if (deviceId != null || deviceId != "") {
-        } else {
-            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            deviceId = telephonyManager.getDeviceId();
-        }
+        deviceId = sharedPreference.getSharedPrefData(Constants.DEVICE_ID);
 
         if (getIntent().hasExtra("profile_id")) {
             progressLayout.setVisibility(View.VISIBLE);
             String profileId = getIntent().getExtras().getString("profile_id");
             searchManager.getSearchById(searchManager.getSearchByIdInput(deviceId, userId, profileId));
-
         } else {
 
             try {
@@ -119,6 +112,7 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
     public void successCallBack(String msg, String tag) {
         switch (tag) {
             case Constants.TAG_SEARCH_CUSTOM:
+
                 progressLayout.setVisibility(View.GONE);
                 ArrayList<HashMap<String, String>> dataList = searchData.getCustomSearchList();
                 if(dataList.size()>0)
@@ -133,7 +127,9 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
                 }
 
                 break;
+
             case Constants.TAG_SEARCH_BY_ID:
+
                 progressLayout.setVisibility(View.GONE);
                 String status = searchData.getSearchByIdStatus();
                 if (status.equals("1")) {
@@ -144,20 +140,26 @@ public class SearchResultActivity extends AppCompatActivity implements VolleyCal
                 } else {
                     Toast.makeText(this, "" + searchData.getSearchByIdMessage(), Toast.LENGTH_SHORT).show();
                 }
+
                 break;
         }
     }
 
     @Override
     public void errorCallBack(String msg, String tag) {
+
         switch (tag) {
             case Constants.TAG_SEARCH_CUSTOM:
+
                 progressLayout.setVisibility(View.GONE);
                 Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
+
                 break;
             case Constants.TAG_SEARCH_BY_ID:
+
                 progressLayout.setVisibility(View.GONE);
                 Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }

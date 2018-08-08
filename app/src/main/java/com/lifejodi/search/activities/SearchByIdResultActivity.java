@@ -17,7 +17,7 @@ import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
 import com.squareup.picasso.Picasso;
 
@@ -95,14 +95,13 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
     SearchData searchData = SearchData.getInstance();
     ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
     String profId = "", userId = "";
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     ShortListManager shortListManager;
     ShortlistData shortlistData = ShortlistData.getInstance();
     @BindView(R.id.layout_searchbyid_results)
     LinearLayout layoutSearchbyidResults;
     @BindView(R.id.text_no_searchbyid_results)
     CustomTextBeatles textNoSearchbyidResults;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +112,7 @@ public class SearchByIdResultActivity extends AppCompatActivity implements Volle
     }
 
     public void initialization() {
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(this);
 
         dataList = searchData.getSearchByIdsList();

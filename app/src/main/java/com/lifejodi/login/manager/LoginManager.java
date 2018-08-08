@@ -9,7 +9,7 @@ import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +29,7 @@ public class LoginManager implements VolleyResponse {
     private static LoginManager ourInstance = new LoginManager();
     public static LoginManager getInstance(){return ourInstance;};
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     UserRegData userRegData = UserRegData.getInstance();
 
     private LoginManager(){

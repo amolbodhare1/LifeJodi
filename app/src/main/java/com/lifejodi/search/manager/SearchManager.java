@@ -10,7 +10,7 @@ import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class SearchManager implements VolleyResponse {
     private static SearchManager ourInstance = new SearchManager();
     public static SearchManager getInstance(){return ourInstance;};
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     UserRegData userRegData = UserRegData.getInstance();
 
     private SearchManager(){

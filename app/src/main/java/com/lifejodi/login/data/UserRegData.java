@@ -76,6 +76,8 @@ public class UserRegData {
     public static String FORMATTEDADDRESS = "formatted_address";
     public static String USERID = "user_id";
     public static String PROFILEPIC = "profile_pic";
+    public static String REGISTER_IMAGE = "image";
+
 
 
 

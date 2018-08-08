@@ -9,8 +9,9 @@ import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
+import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +28,7 @@ public class ProfileDataManager implements VolleyResponse {
 
     private VolleyRequest mVolleyRequest;
     private VolleyCallbackInterface mVolleyCallbackInterface;
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     private static ProfileDataManager profileDataManager = new ProfileDataManager();
 
@@ -327,6 +328,40 @@ public class ProfileDataManager implements VolleyResponse {
                     dataMap.put(ProfilesData.PROFILEPIC,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PROFILEPIC,ProfilesData.PROFILEPIC));
                     dataMap.put(ProfilesData.STATUS, Constants.getStringValueOfJsonObject(userObject,ProfilesData.STATUS,ProfilesData.STATUS));
                     dataMap.put(ProfilesData.MODE, Constants.getStringValueOfJsonObject(userObject,ProfilesData.MODE,ProfilesData.MODE));
+
+                    dataMap.put(ProfilesData.HEIGHT,Constants.getStringValueOfJsonObject(userObject,ProfilesData.HEIGHT,ProfilesData.HEIGHT));
+                    dataMap.put(ProfilesData.LAT,Constants.getStringValueOfJsonObject(userObject,ProfilesData.LAT,ProfilesData.LAT));
+                    dataMap.put(ProfilesData.LNG,Constants.getStringValueOfJsonObject(userObject,ProfilesData.LNG,ProfilesData.LNG));
+                    dataMap.put(ProfilesData.SUBLOCALITY,Constants.getStringValueOfJsonObject(userObject,ProfilesData.SUBLOCALITY,ProfilesData.SUBLOCALITY));
+                    dataMap.put(ProfilesData.LOCALITY,Constants.getStringValueOfJsonObject(userObject,ProfilesData.LOCALITY,ProfilesData.LOCALITY));
+                    dataMap.put(ProfilesData.ADMINISTRATIVEAREA,Constants.getStringValueOfJsonObject(userObject,ProfilesData.ADMINISTRATIVEAREA,ProfilesData.ADMINISTRATIVEAREA));
+                    dataMap.put(ProfilesData.COUNTRY,Constants.getStringValueOfJsonObject(userObject,ProfilesData.COUNTRY,ProfilesData.COUNTRY));
+                    dataMap.put(ProfilesData.PINCODE,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PINCODE,ProfilesData.PINCODE));
+                    dataMap.put(ProfilesData.FORMATTEDADRRESS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.FORMATTEDADRRESS,ProfilesData.FORMATTEDADRRESS));
+                    dataMap.put(ProfilesData.USERID,Constants.getStringValueOfJsonObject(userObject,ProfilesData.USERID,ProfilesData.USERID));
+                    dataMap.put(ProfilesData.PROFILEFOR,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PROFILEFOR,ProfilesData.PROFILEFOR));
+
+                    dataMap.put(ProfilesData.COUNTRYCODE,Constants.getStringValueOfJsonObject(userObject,ProfilesData.COUNTRYCODE,ProfilesData.COUNTRYCODE));
+                    dataMap.put(ProfilesData.PHNUMBER,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PHNUMBER,ProfilesData.PHNUMBER));
+                    dataMap.put(ProfilesData.EMAIL,Constants.getStringValueOfJsonObject(userObject,ProfilesData.EMAIL,ProfilesData.EMAIL));
+                    dataMap.put(ProfilesData.PASSWORD,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PASSWORD,ProfilesData.PASSWORD));
+                    dataMap.put(ProfilesData.MARITALSTATUS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.MARITALSTATUS,ProfilesData.MARITALSTATUS));
+
+                    dataMap.put(ProfilesData.CASTE,Constants.getStringValueOfJsonObject(userObject,ProfilesData.CASTE,ProfilesData.CASTE));
+                    dataMap.put(ProfilesData.DOSHAM,Constants.getStringValueOfJsonObject(userObject,ProfilesData.DOSHAM,ProfilesData.DOSHAM));
+                    dataMap.put(ProfilesData.MARRYOTHERCAST,Constants.getStringValueOfJsonObject(userObject,ProfilesData.MARRYOTHERCAST,ProfilesData.MARRYOTHERCAST));
+                    dataMap.put(ProfilesData.PHYSICALSTATUS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.PHYSICALSTATUS,ProfilesData.PHYSICALSTATUS));
+                    dataMap.put(ProfilesData.ANNUALINCOME,Constants.getStringValueOfJsonObject(userObject,ProfilesData.ANNUALINCOME,ProfilesData.ANNUALINCOME));
+                    dataMap.put(ProfilesData.FAMILYSTATUS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.FAMILYSTATUS,ProfilesData.FAMILYSTATUS));
+                    dataMap.put(ProfilesData.FAMILYTYPE,Constants.getStringValueOfJsonObject(userObject,ProfilesData.FAMILYTYPE,ProfilesData.FAMILYTYPE));
+                    dataMap.put(ProfilesData.CURRENCYID,Constants.getStringValueOfJsonObject(userObject,ProfilesData.CURRENCYID,ProfilesData.CURRENCYID));
+                    dataMap.put(ProfilesData.FAMILYVALUES,Constants.getStringValueOfJsonObject(userObject,ProfilesData.FAMILYVALUES,ProfilesData.FAMILYVALUES));
+                    dataMap.put(ProfilesData.COMMENT,Constants.getStringValueOfJsonObject(userObject,ProfilesData.COMMENT,ProfilesData.COMMENT));
+                    dataMap.put(ProfilesData.EDUCATIONLEVEL,Constants.getStringValueOfJsonObject(userObject,ProfilesData.EDUCATIONLEVEL,ProfilesData.EDUCATIONLEVEL));
+
+                    dataMap.put(ProfilesData.OCCUPATION,Constants.getStringValueOfJsonObject(userObject,ProfilesData.OCCUPATION,ProfilesData.OCCUPATION));
+                    dataMap.put(ProfilesData.WORKINGAS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.WORKINGAS,ProfilesData.WORKINGAS));
+                    dataMap.put(ProfilesData.SHORTLISTED_STATUS,Constants.getStringValueOfJsonObject(userObject,ProfilesData.SHORTLISTED_STATUS,ProfilesData.SHORTLISTED_STATUS));
 
                     ProfilesData.getInstance().setShortListedDetailsMap(dataMap);
                 }

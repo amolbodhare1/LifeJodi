@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.lifejodi.R;
 import com.lifejodi.home.activity.ProfileDetailsActivity;
+import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.utils.Constants;
 import com.squareup.picasso.Picasso;
@@ -69,14 +70,25 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProfileDetailsActivity.class);
                 intent.putExtra(Constants.USERID,dataMap.get(ShortlistData.ID));
+                intent.putExtra(Constants.PROFILEPICPATH,dataMap.get(HomeFragmentsData.PROFILEPIC));
+                intent.putExtra(Constants.FULL_NAME,dataMap.get(HomeFragmentsData.FULLNAME));
                 context.startActivity(intent);
             }
         });
 
-        if(dataMap.get(ShortlistData.STATUS).equals("1")){
+       /* if(dataMap.get(ShortlistData.STATUS).equals("1")){
             holder.fabChat.setVisibility(View.VISIBLE);
         }else {
             holder.fabChat.setVisibility(View.GONE);
+        }*/
+
+    //    holder.fabShortlist.setVisibility(View.GONE);
+        holder.fabChat.setVisibility(View.GONE);
+
+        if(dataMap.get(ShortlistData.FEATURED_PROFILE).equals("1")){
+            holder.imageFeatured.setVisibility(View.VISIBLE);
+        }else {
+            holder.imageFeatured.setVisibility(View.GONE);
         }
 
     }
@@ -90,7 +102,7 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
     {
 
         FrameLayout layout;
-        ImageView ivProfPic;
+        ImageView ivProfPic,imageFeatured;
         FloatingActionButton fabChat;
         TextView tvName,tvAge;
         public ShortListedHolder(View itemView) {
@@ -100,6 +112,7 @@ public class ShortListedRecyclerAdapter extends RecyclerView.Adapter<ShortListed
             fabChat = (FloatingActionButton) itemView.findViewById(R.id.button_shortlisted_chat);
             tvName = (TextView) itemView.findViewById(R.id.text_shortlisted_name);
             tvAge = (TextView) itemView.findViewById(R.id.text_shortlisted_age);
+            imageFeatured = (ImageView) itemView.findViewById(R.id.image_featured);
 
         }
     }

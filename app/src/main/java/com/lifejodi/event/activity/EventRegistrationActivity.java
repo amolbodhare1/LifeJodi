@@ -18,7 +18,7 @@ import com.lifejodi.event.data.EventRegistrationData;
 import com.lifejodi.event.managers.EventRegManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +47,7 @@ public class EventRegistrationActivity extends AppCompatActivity implements Voll
 
     String firstName = "", lastName = "", mobNum = "", userId = "", eventId = "", androidDeviceId = "";
 
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     EventRegManager eventRegManager;
     EventRegistrationData eventRegistrationData = EventRegistrationData.getInstance();
 
@@ -74,7 +74,7 @@ public class EventRegistrationActivity extends AppCompatActivity implements Voll
             }
         });
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(this);
 
         userId = sharedPreference.getSharedPrefData(Constants.UID);

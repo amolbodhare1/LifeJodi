@@ -17,13 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.R;
+import com.lifejodi.cometchat.manager.CometChatManager;
 import com.lifejodi.home.activity.HomeActivity;
+import com.lifejodi.interfaces.CometCallBack;
 import com.lifejodi.login.data.LoginData;
 import com.lifejodi.login.manager.LoginManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONObject;
 
@@ -34,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements VolleyCallbackInterface {
+public class LoginActivity extends AppCompatActivity implements VolleyCallbackInterface, CometCallBack {
 
     @BindView(R.id.edit_email)
     EditText editEmail;
@@ -53,18 +55,20 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
     @BindView(R.id.progressLayout)
     RelativeLayout progressLayout;
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     String enteredEmail="",enteredPassword="";
     AppController appController;
     LoginManager loginManager;
     LoginData loginData  = LoginData.getInstance();
 
+    CometChatManager cometChatManager = CometChatManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        cometChatManager.initialize(this,this);
         initialization();
         generateKeyHash();
     }
@@ -98,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
             case R.id.text_sign_up:
                 Intent intent1 = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent1);
-                finish();
+            //    finish();
                 break;
         }
     }
@@ -143,18 +147,15 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
         switch (tag)
         {
             case Constants.TAG_LOGIN:
-                progressLayout.setVisibility(View.GONE);
+
                 String message = loginData.getLoginmessage();
                 String status = loginData.getLoginStatus();
                 if(status.equals("1"))
                 {
-                    sharedPreference.putSharedPrefData(Constants.LOGINSTATUS,"1");
-                    Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
-                    Intent homeIntent = new Intent(LoginActivity.this,HomeActivity.class);
-                    startActivity(homeIntent);
-                    finish();
+                    cometChatManager.cometLogin(enteredEmail,enteredPassword);
                 }else if(status.equals("0"))
                 {
+                    progressLayout.setVisibility(View.GONE);
                     Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
                     editEmail.setText("");
                     editPassword.setText("");
@@ -173,5 +174,43 @@ public class LoginActivity extends AppCompatActivity implements VolleyCallbackIn
                 Toast.makeText(this, ""+msg, Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    public void onInitializeSuccess() {
+
+    }
+
+    @Override
+    public void onInitializeFailed() {
+
+    }
+
+    @Override
+    public void onLoginSuccess() {
+        progressLayout.setVisibility(View.GONE);
+        String message = loginData.getLoginmessage();
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+
+        sharedPreference.putBoolean(Constants.LOGINSTATUS,true);
+        Intent homeIntent = new Intent(LoginActivity.this,HomeActivity.class);
+        startActivity(homeIntent);
+        finish();
+    }
+
+    @Override
+    public void onLoginFailed() {
+        progressLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onLauchSuccess() {
+
+
+    }
+
+    @Override
+    public void onLauchFailed() {
+
     }
 }

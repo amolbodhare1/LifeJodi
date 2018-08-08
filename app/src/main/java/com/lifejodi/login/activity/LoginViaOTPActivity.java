@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -23,12 +22,10 @@ import com.lifejodi.login.manager.OTPLoginManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.receiver.CustomSMSReceiver;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +70,7 @@ public class LoginViaOTPActivity extends AppCompatActivity implements VolleyCall
     String mobileNum = "";
     OTPLoginData otpLoginData = OTPLoginData.getInstance();
     OTPLoginManager otpLoginManager;
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,7 +81,7 @@ public class LoginViaOTPActivity extends AppCompatActivity implements VolleyCall
     }
 
     public void initialization() {
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(this);
 
         toolbarOtplogin.setTitle("Login via OTP");

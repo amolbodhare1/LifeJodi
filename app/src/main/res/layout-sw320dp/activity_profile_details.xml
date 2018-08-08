@@ -15,7 +15,6 @@
         android:fitsSystemWindows="false">
 
         <android.support.design.widget.CollapsingToolbarLayout
-
             android:id="@+id/collapsing_toolbar_profiledetails"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,7 +23,8 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="20dp"
             app:collapsedTitleGravity="center_vertical"
-            app:expandedTitleMarginEnd="10dp">
+            app:expandedTitleMarginEnd="10dp"
+            app:titleEnabled="true">
 
 
             <ImageView
@@ -36,10 +36,16 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/profile_pic_gradient"></FrameLayout>
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_profiledetails"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:minHeight="?android:attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin">
 
@@ -48,6 +54,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,13 +85,14 @@
                         android:layout_height="25dp"
                         android:src="@mipmap/ic_shortlist"/>
                     <com.lifejodi.utils.customfonts.CustomTextBeatles
+                        android:id="@+id/text_shortlisted_status"
                         android:layout_margin="2dp"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Shortlist"
 
-                        android:textColor="@color/dark_grey"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="14dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -106,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:text="Call now"
 
-                        android:textColor="@color/dark_grey"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="14dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -128,19 +136,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chat now"
-                        android:textColor="@color/dark_grey"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="14dp"/>
                 </LinearLayout>
 
             </LinearLayout>
 
             <com.lifejodi.utils.customfonts.CustomTextBeatles
-                android:padding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Personal Information"
-                android:textSize="16dp"
-                android:textColor="@color/blue"/>
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"/>
 
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -148,19 +158,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date of Birth : "
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_grey"
                     android:textSize="14dp"/>
+
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_dob"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="11 Nov 1987"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
+
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -171,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Age : "
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_grey"
                     android:textSize="14dp"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_age"
@@ -179,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:text="Catholic"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -190,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Height : "
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_grey"
                     android:textSize="14dp"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_height"
@@ -198,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -209,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gender : "
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_grey"
                     android:textSize="14dp"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_gender"
@@ -217,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
 
             <LinearLayout
@@ -230,14 +243,14 @@
                     android:layout_height="wrap_content"
                     android:text="Religion : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_religion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -249,16 +262,16 @@
                     android:layout_height="wrap_content"
                     android:text="Mother tongue : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_mothertongue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
-          <!--  <LinearLayout
+            <LinearLayout
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,14 +281,15 @@
                     android:layout_height="wrap_content"
                     android:text="Phone number : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"
+                    />
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_phnumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -287,14 +301,14 @@
                     android:layout_height="wrap_content"
                     android:text="Email : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -306,14 +320,14 @@
                     android:layout_height="wrap_content"
                     android:text="Marital status : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_maritalstatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -325,14 +339,14 @@
                     android:layout_height="wrap_content"
                     android:text="Caste : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_caste"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -344,14 +358,14 @@
                     android:layout_height="wrap_content"
                     android:text="Dosham : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_dosham"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -363,14 +377,14 @@
                     android:layout_height="wrap_content"
                     android:text="Physical status : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_physicalstatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -382,23 +396,26 @@
                     android:layout_height="wrap_content"
                     android:text="Willing to marry other caste : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_marryothercaste"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
 
             <com.lifejodi.utils.customfonts.CustomTextBeatles
-                android:padding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Professional Information"
-                android:textSize="16dp"
-                android:textColor="@color/blue"/>
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                />
             <LinearLayout
                 android:padding="5dp"
                 android:layout_width="match_parent"
@@ -409,14 +426,14 @@
                     android:layout_height="wrap_content"
                     android:text="Education : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_education"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -428,14 +445,14 @@
                     android:layout_height="wrap_content"
                     android:text="Occupation : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_occupation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -447,14 +464,14 @@
                     android:layout_height="wrap_content"
                     android:text="Working as : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_workingas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -466,23 +483,25 @@
                     android:layout_height="wrap_content"
                     android:text="Annual income : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
 
             <com.lifejodi.utils.customfonts.CustomTextBeatles
-                android:padding="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="About Family"
-                android:textSize="16dp"
-                android:textColor="@color/blue"/>
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"/>
 
             <LinearLayout
                 android:padding="5dp"
@@ -494,14 +513,14 @@
                     android:layout_height="wrap_content"
                     android:text="Family type : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_familytype"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -513,14 +532,14 @@
                     android:layout_height="wrap_content"
                     android:text="Family values : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_familyvalues"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -532,14 +551,14 @@
                     android:layout_height="wrap_content"
                     android:text="Family status : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_familystatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
+                    android:textColor="@color/text_color_dark"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="5dp"
@@ -549,25 +568,26 @@
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location : "
+                    android:text="Country : "
                     android:textSize="14dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_color_grey"/>
                 <com.lifejodi.utils.customfonts.CustomTextBeatles
                     android:id="@+id/text_profiledetails_addr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:textSize="14dp"
-                    android:textColor="@color/dark_grey"/>
-            </LinearLayout>-->
+                    android:textColor="@color/text_color_dark"/>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:layout_marginTop="240dp"
         android:visibility="gone"
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
-        android:background="#aaffffff"
+        android:background="#ffffff"
         android:layout_height="match_parent">
         <ProgressBar
             android:layout_width="wrap_content"
@@ -576,4 +596,5 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/progressBar13" />
     </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>

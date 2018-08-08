@@ -8,7 +8,7 @@ import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +25,7 @@ public class HomeFragmentsManager implements VolleyResponse {
 
     private VolleyRequest mVolleyRequest;
     private VolleyCallbackInterface mVolleyCallbackInterface;
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     private static HomeFragmentsManager homeFragmentsManager = new HomeFragmentsManager();
 
@@ -214,6 +214,7 @@ public class HomeFragmentsManager implements VolleyResponse {
                         dataMap.put(HomeFragmentsData.PROFILEPIC, Constants.getStringValueOfJsonObject(dataObject, HomeFragmentsData.PROFILEPIC, HomeFragmentsData.PROFILEPIC));
                         dataMap.put(HomeFragmentsData.STATUS, Constants.getStringValueOfJsonObject(dataObject,HomeFragmentsData.STATUS,HomeFragmentsData.STATUS));
                         dataMap.put(HomeFragmentsData.MODE, Constants.getStringValueOfJsonObject(dataObject,HomeFragmentsData.MODE,HomeFragmentsData.MODE));
+                        dataMap.put(HomeFragmentsData.FEATURED_PROFILE, Constants.getStringValueOfJsonObject(dataObject,HomeFragmentsData.FEATURED_PROFILE,HomeFragmentsData.FEATURED_PROFILE));
 
                         dataList.add(dataMap);
 

@@ -1,5 +1,6 @@
 package com.lifejodi.radarsearch.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,13 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.R;
+import com.lifejodi.home.activity.ProfileDetailsActivity;
+import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.radarsearch.data.RadarSearchData;
 import com.lifejodi.radarsearch.managers.RadarSearchManager;
 import com.lifejodi.search.data.SearchData;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
     RadarSearchData radarSearchData = RadarSearchData.getInstance();
     RadarSearchManager radarSearchManager;
 
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
 
     String latitude = "", longitude = "";
     ArrayList<RadarPoint> points = new ArrayList<RadarPoint>();
@@ -75,6 +78,7 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
     }
 
     public void initialization() {
+
         toolbarRadarsearch.setTitle("Radar Search");
         toolbarRadarsearch.setTitleTextColor(Color.WHITE);
         toolbarRadarsearch.setNavigationIcon(R.drawable.ic_back);
@@ -111,7 +115,7 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
             }
         });
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(this);
         String userData = sharedPreference.getSharedPrefData(Constants.USERDATA);
         String userId = Constants.getValue(userData, SearchData.USERID);
@@ -119,11 +123,24 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
         String latitude = Constants.getValue(userData, UserRegData.LATITUDE);
         String longitude = Constants.getValue(userData, UserRegData.LONGITUDE);
 
-    /*    radarSearchManager = RadarSearchManager.getInstance();
+        /*radarSearchManager = RadarSearchManager.getInstance();
         radarSearchManager.initialize(this, this);
         radarSearchManager.getRadarSearchList(radarSearchManager.getRadarSearchInputs(deviceId, userId, latitude, longitude, "10"));
 */
+        radarView.setOnRadarPinClickListener(new RadarView.OnRadarPinClickListener() {
+            @Override
+            public void onPinClicked(String identifier) {
 
+                Intent intent = new Intent(RadarSearchActivity.this, ProfileDetailsActivity.class);
+                intent.putExtra(Constants.USERID,identifier);
+                intent.putExtra(Constants.PROFILEPICPATH,Constants.getParam(dataList,RadarSearchData.PROFILEPIC,identifier));
+                intent.putExtra(Constants.FULL_NAME,Constants.getParam(dataList,RadarSearchData.FULLNAME,identifier));
+                //    intent.putExtra(Constants.)
+
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -137,10 +154,11 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
                 dataList = radarSearchData.getRadarSearchList();
                 for (int i = 0; i < dataList.size(); i++) {
                     HashMap<String, String> dataMap = dataList.get(i);
-                    RadarPoint r1 = new RadarPoint("identifier1", Float.parseFloat(dataMap.get(RadarSearchData.LAT)), Float.parseFloat(dataMap.get(RadarSearchData.LNG)), dataMap.get(RadarSearchData.PROFILEPIC));
+                    RadarPoint r1 = new RadarPoint(dataMap.get(RadarSearchData.ID), Float.parseFloat(dataMap.get(RadarSearchData.LAT)), Float.parseFloat(dataMap.get(RadarSearchData.LNG)), dataMap.get(RadarSearchData.PROFILEPIC));
                     points.add(r1);
                 }
                 radarView.setPoints(points);
+
                 break;
         }
     }
@@ -156,9 +174,10 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
 
 
     private void startAll() {
+
         points = new ArrayList<RadarPoint>();
         radarView.resetPoints();
-         rippleBackground.startRippleAnimation();
+        rippleBackground.startRippleAnimation();
          centerImage.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -177,4 +196,5 @@ public class RadarSearchActivity extends AppCompatActivity implements VolleyCall
             }
         }, 10000);
     }
+
 }

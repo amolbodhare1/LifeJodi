@@ -14,7 +14,7 @@ import com.lifejodi.navigation.data.PackageData;
 import com.lifejodi.navigation.manager.PackageManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONObject;
 
@@ -29,7 +29,7 @@ public class PackagesActivity extends AppCompatActivity implements VolleyCallbac
     @BindView(R.id.recycler_packages)
     RecyclerView recyclerPackages;
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     String deviceId,userId;
     PackageManager packageManager = PackageManager.getInstance();
@@ -43,9 +43,6 @@ public class PackagesActivity extends AppCompatActivity implements VolleyCallbac
         ButterKnife.bind(this);
         packageManager.initialize(this,this);
         sharedPreference.initialize(this);
-        cometChat = CometChat.getInstance(this);
-        cometChat.initializeCometChat(Constants.COMET_CHAT_URL,Constants.COMET_CHAT_LICENCE_KEY,Constants.COMET_CHAT_API_KEY,false,this);
-
 
         initialize();
 
@@ -63,6 +60,8 @@ public class PackagesActivity extends AppCompatActivity implements VolleyCallbac
         userId = sharedPreference.getSharedPrefData(Constants.USERID);
 
         getLifeJodiPackages();
+
+
 
     }
 

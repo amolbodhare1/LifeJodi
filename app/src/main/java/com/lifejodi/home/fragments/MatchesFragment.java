@@ -19,7 +19,7 @@ import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.managers.HomeFragmentsManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
     private boolean fragmentOnCreated = false;
 
     GridLayoutManager gridLayoutManager;
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     MatchesRecyclerAdapter matchesRecyclerAdapter;
 
     HomeFragmentsManager homeFragmentsManager;
@@ -62,7 +62,7 @@ public class MatchesFragment extends Fragment implements VolleyCallbackInterface
         View view = inflater.inflate(R.layout.fragment_matches, null);
         unbinder = ButterKnife.bind(this, view);
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(getActivity());
 
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);

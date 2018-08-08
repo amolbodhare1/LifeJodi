@@ -19,7 +19,7 @@ import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.managers.HomeFragmentsManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class DailyRecommActivity extends AppCompatActivity implements VolleyCall
     HomeFragmentsManager homeFragmentsManager;
 
     String profId;
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     MatchesRecyclerAdapter matchesRecyclerAdapter;
     GridLayoutManager gridLayoutManager;
     @BindView(R.id.text_no_recommendations)

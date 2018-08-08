@@ -94,7 +94,6 @@ public class SearchData {
     public static String WORKINGAS = "workingas";
     public static String PROFILEPIC = "profile_pic";
 
-
     public static String GETSAVEDSEARCHES = "get_saved_searches";
     public static String SAVESEARCH = "save_search";
     public static String SEARCHNAME = "search_name";

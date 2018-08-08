@@ -33,7 +33,6 @@ import android.widget.Toast;
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
-import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.manager.RegSpinnersManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.search.adapter.CommonDataAdapter;
@@ -43,7 +42,7 @@ import com.lifejodi.search.data.SearchData;
 import com.lifejodi.search.interfaces.SavedSearchInterface;
 import com.lifejodi.search.manager.SearchManager;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
 
 import org.json.JSONException;
@@ -176,7 +175,7 @@ public class SearchActivity extends AppCompatActivity implements VolleyCallbackI
             dosham = "", showWithPhoto = "0", showWithHoroscope = "0", showWithPremium = "0",
             dontShowContacted = "0", dontShowShortlisted = "0", dontShowIgnored = "0", dontShowVisited = "0";
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     Dialog dialogSaveSearch,dialogSavedSearches;
 
     @Override

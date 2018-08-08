@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_get_location"
@@ -9,22 +11,90 @@
         android:background="@color/blue"/>
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent">
+
         <com.google.android.gms.maps.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.google.android.gms.maps.MapView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/searchCard"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/dp_10"
+            android:layout_margin="@dimen/dp_10">
+
+
+                <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:id="@+id/add_lead_search"
+                        app:srcCompat="@drawable/ic_search"
+                        android:tint="@color/text_color_grey"
+                        android:padding="@dimen/dp_10"/>
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_weight="1"
+                        android:hint="Search"
+                        android:textSize="@dimen/dp_14"
+                        android:cursorVisible="true"
+                        android:focusable="true"
+                        android:textColor="@color/text_color_dark"
+                        android:textColorHint="#9e9e9e"
+                        android:singleLine="true"
+                        android:background="#00000000"
+                        android:paddingLeft="@dimen/dp_40"
+                        android:paddingRight="@dimen/dp_40"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <ImageView
+                        android:id="@+id/image_close"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_close"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                    <ProgressBar
+                        android:visibility="gone"
+                        android:id="@+id/progress_location"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:padding="10dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
         <com.lifejodi.utils.customfonts.CustomButtonBeatles
             android:layout_gravity="bottom|center"
             android:id="@+id/button_set_current_location"
             android:layout_width="@dimen/dp_280"
             android:layout_height="@dimen/dp_40"
-            android:text="Set location"
+            android:text="Use Selected Location"
             android:textColor="@color/white"
             android:textSize="@dimen/dp_14"
             android:layout_marginBottom="@dimen/dp_30"
             android:background="@drawable/button_background"/>
+
     </FrameLayout>
 
 </LinearLayout>

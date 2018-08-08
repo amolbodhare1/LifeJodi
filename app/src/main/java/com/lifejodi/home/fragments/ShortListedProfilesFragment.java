@@ -19,7 +19,7 @@ import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import butterknife.BindView;
@@ -45,7 +45,7 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
     private boolean fragmentOnCreated = false;
 
     GridLayoutManager gridLayoutManager;
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
 
     String profId = "";
 
@@ -59,7 +59,7 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
         View view = inflater.inflate(R.layout.fragment_shortlisted_profiles, null);
         unbinder = ButterKnife.bind(this, view);
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(getActivity());
 
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -112,6 +112,7 @@ public class ShortListedProfilesFragment extends Fragment implements VolleyCallb
 
     @Override
     public void successCallBack(String msg, String tag) {
+
         switch (tag) {
             case Constants.TAG_SHORTLISTED_USERSLIST:
                 progressLayout.setVisibility(View.GONE);

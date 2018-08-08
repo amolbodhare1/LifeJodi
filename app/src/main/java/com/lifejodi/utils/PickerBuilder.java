@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 
 public class PickerBuilder {
+
     public static final int SELECT_FROM_GALLERY = 0;
     public static final int SELECT_FROM_CAMERA = 1;
     private Activity activity;

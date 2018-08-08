@@ -3,12 +3,13 @@ package com.lifejodi.home.managers;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.lifejodi.home.data.HomeFragmentsData;
 import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ public class ShortListManager implements VolleyResponse {
 
     private VolleyRequest mVolleyRequest;
     private VolleyCallbackInterface mVolleyCallbackInterface;
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     private static ShortListManager shortListManager = new ShortListManager();
 
@@ -188,6 +189,7 @@ public class ShortListManager implements VolleyResponse {
                         dataMap.put(ShortlistData.PROFILEPIC,Constants.getStringValueOfJsonObject(dataObject,ShortlistData.PROFILEPIC,ShortlistData.PROFILEPIC));
                         dataMap.put(ShortlistData.STATUS, Constants.getStringValueOfJsonObject(dataObject,ShortlistData.STATUS,ShortlistData.STATUS));
                         dataMap.put(ShortlistData.MODE, Constants.getStringValueOfJsonObject(dataObject,ShortlistData.MODE,ShortlistData.MODE));
+                        dataMap.put(ShortlistData.FEATURED_PROFILE, Constants.getStringValueOfJsonObject(dataObject,ShortlistData.FEATURED_PROFILE,ShortlistData.FEATURED_PROFILE));
 
                         dataList.add(dataMap);
                     }

@@ -1,12 +1,12 @@
 package com.lifejodi.home.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -16,36 +16,39 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.InboxActivity;
 import com.lifejodi.R;
-import com.lifejodi.navigation.activities.PackagesActivity;
-import com.lifejodi.radarsearch.activities.RadarSearchActivity;
-import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.event.activity.EventsActivity;
 import com.lifejodi.home.adapters.HomeViewPagerAdapter;
 import com.lifejodi.login.activity.LoginActivity;
 import com.lifejodi.login.data.UploadProfilePicData;
 import com.lifejodi.login.manager.UploadProfilePicManager;
 import com.lifejodi.navigation.activities.DailyRecommActivity;
+import com.lifejodi.navigation.activities.PackagesActivity;
 import com.lifejodi.navigation.activities.ShowProfileDataActivity;
+import com.lifejodi.navigation.data.PackageData;
+import com.lifejodi.navigation.manager.PackageManager;
 import com.lifejodi.network.VolleyCallbackInterface;
+import com.lifejodi.radarsearch.activities.RadarSearchActivity;
+import com.lifejodi.search.activities.SearchActivity;
 import com.lifejodi.settings.SettingsActivity;
 import com.lifejodi.utils.AppController;
 import com.lifejodi.utils.Constants;
 import com.lifejodi.utils.PickerBuilder;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -79,12 +82,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    TextView tvHeaderName,tvHeaderProfId;
-    ImageView ivAddProfilePic,ivEditProfpic;
+    TextView tvHeaderName,tvHeaderProfId,textMyPackage;
+    ImageView ivAddProfilePic;
     CircleImageView ivUserProfilePic;
     RelativeLayout layoutAddProfPic;
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     AppController appController = AppController.getInstance();
     HomeViewPagerAdapter homeViewPagerAdapter;
@@ -105,11 +108,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.layout_radar_bottom)
     LinearLayout layoutRadarBottom;
 
+    PackageManager packageManager = PackageManager.getInstance();
+    PackageData packageData = PackageData.getInstance();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        packageManager.initialize(this,this);
 
         initialization();
     }
@@ -152,41 +158,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         tvHeaderName = (TextView) view.findViewById(R.id.nav_header_username);
         tvHeaderName.setText(sharedPreference.getSharedPrefData(Constants.LOGINNAME));
         tvHeaderProfId = (TextView)view.findViewById(R.id.text_navigation_profid);
+        textMyPackage = (TextView)view.findViewById(R.id.text_my_package);
         tvHeaderProfId.setText(sharedPreference.getSharedPrefData(Constants.PROFILEID));
-        ivEditProfpic = (ImageView)view.findViewById(R.id.image_edit_profilepic);
 
         ivAddProfilePic = (ImageView)view.findViewById(R.id.image_add_profile_photo);
         ivUserProfilePic = (CircleImageView)view.findViewById(R.id.image_profile_pic);
         layoutAddProfPic = (RelativeLayout)view.findViewById(R.id.layout_add_profile_photo);
-
-        String profPicPath = sharedPreference.getSharedPrefData(Constants.PROFILEPICPATH);
-        if(profPicPath.equals(""))
-        {
-            layoutAddProfPic.setVisibility(View.VISIBLE);
-           /* try {
-                JSONObject jsonObject = new JSONObject(sharedPreference.getSharedPrefData(Constants.USERDATA));
-                profPicPath = jsonObject.getString(UserRegData.PROFILEPIC);
-                if(jsonObject.getString(UserRegData.PROFILEPIC).equals("") || profPicPath.equalsIgnoreCase(UserRegData.PROFILEPIC))
-                {
-                    layoutAddProfPic.setVisibility(View.VISIBLE);
-                }else {
-                    layoutAddProfPic.setVisibility(View.GONE);
-                    Picasso.with(HomeActivity.this)
-                            .load(profPicPath)
-                            .placeholder(R.drawable.image_event1)
-                            .into(ivUserProfilePic);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-        }else {
-            layoutAddProfPic.setVisibility(View.GONE);
-            Picasso.with(HomeActivity.this)
-                    .load(profPicPath)
-                    .placeholder(R.drawable.image_event1)
-                    .into(ivUserProfilePic);
-        }
 
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(homeViewPagerAdapter);
@@ -200,15 +177,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        ivEditProfpic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               openImagePicker();
+        userId = sharedPreference.getSharedPrefData(Constants.UID);
+        androidDeviceId = sharedPreference.getSharedPrefData(Constants.DEVICE_ID);
 
-            }
-        });
-
-
+        packageManager.getMyPackage(packageManager.getMyPackagesInput(androidDeviceId,userId));
     }
 
     @OnClick({R.id.layout_search_bottom,R.id.layout_mailbox_bottom,R.id.layout_chat_bottom,R.id.layout_radar_bottom})
@@ -247,13 +219,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
                 String imageString = "data:image/jpeg;base64,"+Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-                userId = sharedPreference.getSharedPrefData(Constants.UID);
-                androidDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
                 uploadProfilePicManager = UploadProfilePicManager.getInstance();
                 uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
-                uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));
+                uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams("1",imageString));
             }
 
         }).setImageName("testImage")
@@ -296,10 +264,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_logout) {
 
-            sharedPreference.putSharedPrefData(Constants.LOGINSTATUS, "1");
-            Intent homeIntent = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(homeIntent);
-            finish();
+            showLogoutDialog();
 
         } else if (id == R.id.nav_daily_recomm) {
             Intent dailyRecommintent = new Intent(HomeActivity.this, DailyRecommActivity.class);
@@ -311,6 +276,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    private void showLogoutDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Are you sure you want to logout ?");
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sharedPreference.putBoolean(Constants.LOGINSTATUS, false);
+                Intent homeIntent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(homeIntent);
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialog.show();
+
     }
 
 
@@ -343,6 +332,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+
+        String profPicPath = sharedPreference.getSharedPrefData(Constants.PROFILEPICPATH);
+        if(profPicPath.equals(""))
+        {
+            layoutAddProfPic.setVisibility(View.VISIBLE);
+
+        }else {
+            layoutAddProfPic.setVisibility(View.GONE);
+            Picasso.with(HomeActivity.this)
+                    .load(profPicPath)
+                    .placeholder(R.drawable.image_event1)
+                    .into(ivUserProfilePic);
+        }
         //    bottomNavigation.setSelectedItemId(R.id.navigation_home);
     }
 
@@ -380,6 +382,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }else {
                     Toast.makeText(this, ""+uploadProfilePicData.getUploadPicMessage(), Toast.LENGTH_SHORT).show();
                 }
+
+                break;
+            case Constants.TAG_MY_PACKAGE:
+
+                textMyPackage.setText("Package ("+Constants.getDateString(packageData.getMyPackage().get(PackageData.PACKAGE_ADD_DATE))+" - "
+                +Constants.getDateString(packageData.getMyPackage().get(PackageData.PACKAGE_EXPIRY_DATE))+")");
 
                 break;
         }

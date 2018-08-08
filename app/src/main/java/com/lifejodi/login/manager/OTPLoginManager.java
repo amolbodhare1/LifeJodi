@@ -1,17 +1,15 @@
 package com.lifejodi.login.manager;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.lifejodi.login.data.LoginData;
 import com.lifejodi.login.data.OTPLoginData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +24,7 @@ public class OTPLoginManager implements VolleyResponse {
     private VolleyRequest mVolleyRequest;
     private VolleyCallbackInterface mVolleyCallbackInterface;
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     UserRegData userRegData = UserRegData.getInstance();
 
     private static OTPLoginManager otpLoginManager = new OTPLoginManager();

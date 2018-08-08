@@ -10,7 +10,7 @@ import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.network.VolleyRequest;
 import com.lifejodi.network.VolleyResponse;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +27,7 @@ public class PackageManager implements VolleyResponse{
     private static PackageManager ourInstance = new PackageManager();
     public static PackageManager getInstance(){return ourInstance;};
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     UserRegData userRegData = UserRegData.getInstance();
 
     PackageData packageData = PackageData.getInstance();
@@ -116,6 +116,24 @@ public class PackageManager implements VolleyResponse{
 
     private void parseMyPackageResponse(String strResponse, String tag) {
 
+        HashMap<String,String> myPackage = new HashMap<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(strResponse);
+
+            if (jsonObject.getString(PackageData.STATUS).equals("0")) {
+
+                JSONObject data = jsonObject.getJSONObject("data");
+                myPackage.put(PackageData.PACKAGE_ADD_DATE,data.getString(PackageData.PACKAGE_ADD_DATE));
+                myPackage.put(PackageData.PACKAGE_EXPIRY_DATE,data.getString(PackageData.PACKAGE_EXPIRY_DATE));
+
+                PackageData.getInstance().setMyPackage(myPackage);
+                mVolleyCallbackInterface.successCallBack("success",tag);
+
+            }
+        }catch (Exception e){
+            mVolleyCallbackInterface.errorCallBack(e.getLocalizedMessage(),tag);
+        }
     }
 
     private void parseAllPackagesResponse(String strResponse, String tag) {

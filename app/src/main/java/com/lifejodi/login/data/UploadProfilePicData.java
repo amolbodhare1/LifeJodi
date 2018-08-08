@@ -27,7 +27,19 @@ public class UploadProfilePicData {
     public static String STATUS = "status";
     public static String MESSAGE = "msg";
     public static String IMAGEPATH = "image_path";
+    public static String FILE_NAME = "file_name";
+
     public static String USERPHOTOSID = "user_photos_id";
+
+    String registerPicImage = "";
+
+    public String getRegisterPicImage() {
+        return registerPicImage;
+    }
+
+    public void setRegisterPicImage(String registerPicImage) {
+        this.registerPicImage = registerPicImage;
+    }
 
     String uploadPicStatus = "";
     public String getUploadPicStatus() {

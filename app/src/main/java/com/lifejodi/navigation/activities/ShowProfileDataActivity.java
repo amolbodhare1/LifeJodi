@@ -2,13 +2,18 @@ package com.lifejodi.navigation.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,32 +28,42 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lifejodi.R;
+import com.lifejodi.home.activity.HomeActivity;
 import com.lifejodi.home.managers.ProfileDataManager;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
 import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
 import com.lifejodi.login.data.RegSpinnersStaticData;
+import com.lifejodi.login.data.UploadProfilePicData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.manager.RegSpinnersManager;
+import com.lifejodi.login.manager.UploadProfilePicManager;
 import com.lifejodi.network.VolleyCallbackInterface;
+import com.lifejodi.utils.CallbackLocation;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.LocationManager;
+import com.lifejodi.utils.PickerBuilder;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Administrator on 2/10/2018.
  */
 
-public class ShowProfileDataActivity extends AppCompatActivity implements VolleyCallbackInterface {
+public class ShowProfileDataActivity extends AppCompatActivity implements VolleyCallbackInterface , CallbackLocation {
 
     @BindView(R.id.tools_edit)
     Toolbar toolsEdit;
@@ -104,8 +119,13 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
     Button buttonUpdateProfile;
     @BindView(R.id.layout_preogress)
     RelativeLayout layoutPreogress;
+    @BindView(R.id.image_upload)
+    CircleImageView imageUpload;
+    @BindView(R.id.image_capture)
+    ImageView imageCapture;
 
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     JSONObject userDataObject = new JSONObject();
 
     Dialog dialogEditProfile;
@@ -129,6 +149,14 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             familyStatusId, familyType, familyTypeId, familyValues, familyValuesId, description, lat, lng, sublocality, locality,
             administrativeArea, country, pincode, address, dateOfBirth, maryOtherCaste, maryOtherCasteId, profileId;
 
+    String imageUploadString = "";
+    PickerBuilder pickerBuilder;
+
+    UploadProfilePicManager uploadPicManager = UploadProfilePicManager.getInstance();
+    UploadProfilePicData uploadData = UploadProfilePicData.getInstance();
+
+    LocationManager locationManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +168,9 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
     @SuppressLint("MissingPermission")
     public void initialization() {
 
+        locationManager = new LocationManager(this,this);
+
+        uploadPicManager.initialize(this,this);
         setSupportActionBar(toolsEdit);
         toolsEdit.setNavigationIcon(R.drawable.ic_back);
         toolsEdit.setTitleTextColor(Color.WHITE);
@@ -211,6 +242,16 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             regSpinnersManager.getAllSpinnersData(regSpinnersManager.getAllSpinnersDataInputs(deviceId));
         }
 
+
+        String profPicPath = sharedPreference.getSharedPrefData(Constants.PROFILEPICPATH);
+        if(profPicPath.equals(""))
+        { }else {
+            Picasso.with(ShowProfileDataActivity.this)
+                    .load(profPicPath)
+                    .placeholder(R.drawable.ic_profile_men)
+                    .into(imageUpload);
+        }
+
         dialogSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,7 +306,20 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     }
 
-    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails, R.id.button_update_profile})
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManager.onStop();
+    }
+
+    @OnClick({R.id.image_edit_basicdetails, R.id.image_edit_religiousinfo, R.id.image_edit_professionalinfo, R.id.image_edit_familydetails, R.id.button_update_profile
+    ,R.id.image_capture})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_edit_basicdetails:
@@ -316,7 +370,17 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             case R.id.button_update_profile:
 
                 layoutPreogress.setVisibility(View.VISIBLE);
-                updateProfile();
+                if(imageUploadString.equals("")) {
+                    updateProfile();
+                }else {
+                    uploadPicManager.uploadProfilePic(uploadPicManager.getUploadProfPicParams("1",imageUploadString));
+                }
+
+                break;
+
+            case R.id.image_capture:
+
+                openImagePicker();
 
                 break;
         }
@@ -359,6 +423,8 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             countryCode = jsonObject.getString(UserRegData.COUNTRYCODE);
             pincode = jsonObject.getString(UserRegData.PINCODE);
             description = jsonObject.getString(UserRegData.ABOUT_COMMENT);
+
+
         } catch (Exception e) {
 
         }
@@ -395,14 +461,28 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     @Override
     public void successCallBack(String msg, String tag) {
-        if (tag.equals(Constants.TAG_GET_MASTERS)) {
-            setEditProfileData();
-        } else if (tag.equals(Constants.TAG_UPDATE_PROFILE)) {
-            layoutPreogress.setVisibility(View.GONE);
-            Toast.makeText(this, "Profile update successfully !!", Toast.LENGTH_SHORT).show();
-            upDateObject();
-            finish();
+
+        switch (tag){
+
+            case Constants.TAG_GET_MASTERS:
+                setEditProfileData();
+            break;
+
+            case Constants.TAG_UPDATE_PROFILE:
+                layoutPreogress.setVisibility(View.GONE);
+                Toast.makeText(this, "Profile update successfully !!", Toast.LENGTH_SHORT).show();
+                upDateObject();
+                finish();
+                break;
+
+            case Constants.TAG_UPLOAD_PROFILE_PIC:
+
+                updateProfile();
+
+                break;
+
         }
+
     }
 
     @Override
@@ -499,6 +579,34 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
 
     }
 
+    public void openImagePicker()
+    {
+        pickerBuilder = new  PickerBuilder(this, PickerBuilder.SELECT_FROM_GALLERY);
+        pickerBuilder.setOnImageReceivedListener(new PickerBuilder.onImageReceivedListener() {
+            @Override
+            public void onImageReceived(Uri imageUri) {
+                imageUpload.setImageURI(imageUri);
+                InputStream iStream = null;
+                String path = imageUri.getPath();
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+
+                imageUploadString = "data:image/jpeg;base64,"+ Base64.encodeToString(byteArray, Base64.DEFAULT);
+        /*        uploadProfilePicManager = UploadProfilePicManager.getInstance();
+                uploadProfilePicManager.initialize(HomeActivity.this,HomeActivity.this);
+                uploadProfilePicManager.uploadProfilePic(uploadProfilePicManager.getUploadProfPicParams(androidDeviceId,userId,"1",imageString));*/
+            }
+
+        }).setImageName("testImage")
+                .setImageFolderName("testFolder")
+                .withTimeStamp(true)
+                .setCropScreenColor(Color.CYAN)
+                .start();
+
+    }
     public void updateProfile() {
 
         try {
@@ -518,7 +626,7 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
             jsonObject.put(UserRegData.DOSHAM, dosham);
             //    jsonObject.put(UserRegData.MARRYOTHERCASTE,maritalStatusId);
             jsonObject.put(UserRegData.HEIGHT, height);
-            jsonObject.put(UserRegData.PHYSICALSTATUS, physicalStatus);
+            jsonObject.put(UserRegData.PHYSICALSTATUS, physicalStatusId);
             jsonObject.put(UserRegData.EDUCATION, educationId);
             jsonObject.put(UserRegData.OCCUPATION, occupationId);
             jsonObject.put(UserRegData.EMPLOYEDIN, employedInId);
@@ -595,6 +703,33 @@ public class ShowProfileDataActivity extends AppCompatActivity implements Volley
         } catch (Exception e) {
 
         }
+
+    }
+
+    @Override
+    public void onLocationFound(Location mLastLocation) {
+
+        if(lat.equals("")){
+
+            lat = mLastLocation.getLatitude()+"";
+            lng = mLastLocation.getLongitude()+"";
+
+            try {
+                userDataObject.put(UserRegData.LATITUDE, lat);
+                userDataObject.put(UserRegData.LONGITUDE, lng);
+
+                sharedPreference.putSharedPrefData(Constants.USERDATA,userDataObject.toString());
+
+            }catch (Exception e){
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void onLocationLost(String s) {
 
     }
 }

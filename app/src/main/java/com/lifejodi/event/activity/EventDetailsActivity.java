@@ -30,7 +30,7 @@ import com.lifejodi.event.managers.PaymentManager;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
@@ -74,7 +74,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
 
     EventRegManager eventRegManager;
     EventRegistrationData eventRegistrationData = EventRegistrationData.getInstance();
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     EventsData eventsData = EventsData.getInstance();
     UserRegData userRegData = UserRegData.getInstance();
     @BindView(R.id.image_services_details)
@@ -107,7 +107,7 @@ public class EventDetailsActivity extends AppCompatActivity implements VolleyCal
 
     public void initialization() {
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(this);
         paymentManager.initialize(this,this);
         if (getIntent().hasExtra("POSITION")) {

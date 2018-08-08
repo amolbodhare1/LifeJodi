@@ -30,13 +30,11 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
-import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
-import com.lifejodi.login.data.RegSpinnersStaticData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
@@ -46,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +90,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
 
     SetRegistrationFragment setRegistrationFragment;
     CustomSpinnerAdapter customSpinnerAdapter;
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
 
     CallbackManager callbackManager;
 
@@ -214,7 +211,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
         });
 
 
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(getActivity());
         profileForList = regSpinnersData.getProfileForList();
         customSpinnerAdapter = new CustomSpinnerAdapter(getActivity(),profileForList,regSpinnersData.PROFILEFOR);
@@ -284,7 +281,7 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
 
     public void checkAllFields() {
         name = editName.getText().toString();
-        dob = textDob.getText().toString();
+    //    dob = textDob.getText().toString();
         if (profileFor.equalsIgnoreCase("") || profileFor.equalsIgnoreCase(getResources().getString(R.string.profile_for))) {
             Toast.makeText(getActivity(), "Select profile created for", Toast.LENGTH_SHORT).show();
         } else {
@@ -319,7 +316,8 @@ public class RegScreen1Fragment extends Fragment implements DatePickerDialog.OnD
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         int month = monthOfYear + 1;
-        textDob.setText(dayOfMonth + "-" + month + "-" + year);
+        dob = dayOfMonth + "-" + month + "-" + year;
+        textDob.setText(dayOfMonth + " " + Constants.months[monthOfYear] + " " + year);
         //  Toast.makeText(getActivity(), ""+dayOfMonth+monthOfYear+year, Toast.LENGTH_SHORT).show();
     }
 

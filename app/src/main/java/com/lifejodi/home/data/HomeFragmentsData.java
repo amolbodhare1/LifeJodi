@@ -38,6 +38,7 @@ public class HomeFragmentsData {
     public static String RELIGION = "religion";
     public static String PHOTONAME = "photo_name";
     public static String PROFILEPIC = "profile_pic";
+    public static String FEATURED_PROFILE = "featured_profile";
 
     public static String USERID = "user_id";
 

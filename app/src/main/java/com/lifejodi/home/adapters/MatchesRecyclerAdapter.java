@@ -22,7 +22,7 @@ import com.lifejodi.home.data.ShortlistData;
 import com.lifejodi.home.managers.ShortListManager;
 import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
 
     Context context;
     ArrayList<HashMap<String,String>> dataList = new ArrayList<>();
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
 
     ShortListManager shortListManager;
     ShortlistData shortlistData = ShortlistData.getInstance();
@@ -83,8 +83,12 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(context, ProfileDetailsActivity.class);
                 intent.putExtra(Constants.USERID,dataMap.get(HomeFragmentsData.ID));
+                intent.putExtra(Constants.PROFILEPICPATH,dataMap.get(HomeFragmentsData.PROFILEPIC));
+                intent.putExtra(Constants.FULL_NAME,dataMap.get(HomeFragmentsData.FULLNAME));
+
                 context.startActivity(intent);
             }
         });
@@ -103,11 +107,20 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
         });
         holder.progressLayout.setVisibility(View.GONE);
 
-        if(dataMap.get(HomeFragmentsData.STATUS).equals("1")){
+        holder.fabShortlist.setVisibility(View.GONE);
+        holder.fabChat.setVisibility(View.GONE);
+
+        if(dataMap.get(HomeFragmentsData.FEATURED_PROFILE).equals("1")){
+            holder.imageFeatured.setVisibility(View.VISIBLE);
+        }else {
+            holder.imageFeatured.setVisibility(View.GONE);
+        }
+
+        /*if(dataMap.get(HomeFragmentsData.STATUS).equals("1")){
             holder.fabChat.setVisibility(View.VISIBLE);
         }else {
             holder.fabChat.setVisibility(View.GONE);
-        }
+        }*/
 
     }
 
@@ -143,7 +156,7 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
     public class MatchesHolder extends RecyclerView.ViewHolder
     {
         FrameLayout layout;
-        ImageView ivProfPic;
+        ImageView ivProfPic, imageFeatured;
         FloatingActionButton fabChat,fabShortlist;
         TextView tvName,tvAge;
         RelativeLayout progressLayout;
@@ -151,6 +164,7 @@ public class MatchesRecyclerAdapter extends RecyclerView.Adapter<MatchesRecycler
             super(itemView);
             layout = (FrameLayout) itemView.findViewById(R.id.layout_home_list);
             ivProfPic = (ImageView) itemView.findViewById(R.id.image_matches_profpic);
+            imageFeatured = (ImageView) itemView.findViewById(R.id.image_featured);
             fabChat = (FloatingActionButton) itemView.findViewById(R.id.button_matches_chat);
             fabShortlist = (FloatingActionButton) itemView.findViewById(R.id.button_matches_shortlist);
             tvName = (TextView) itemView.findViewById(R.id.text_matches_name);

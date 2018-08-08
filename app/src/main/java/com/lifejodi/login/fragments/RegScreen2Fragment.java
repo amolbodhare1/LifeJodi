@@ -15,15 +15,11 @@ import android.widget.Toast;
 
 import com.lifejodi.R;
 import com.lifejodi.login.adapter.CustomSpinnerAdapter;
-import com.lifejodi.login.adapter.SpinnerAdapter;
 import com.lifejodi.login.data.RegSpinnersData;
-import com.lifejodi.login.data.RegSpinnersStaticData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
-import com.lifejodi.login.manager.RegSpinnersManager;
-import com.lifejodi.network.VolleyCallbackInterface;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
 import com.lifejodi.utils.customfonts.CustomEditBeatles;
 
@@ -31,7 +27,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +72,7 @@ public class RegScreen2Fragment extends Fragment{
     UserRegData userRegData = UserRegData.getInstance();
 
     SetRegistrationFragment setRegistrationFragment;
-    SharedPreference sharedPreference = SharedPreference.getSharedInstance();
+    SharedPref sharedPreference = SharedPref.getSharedInstance();
     CustomSpinnerAdapter customSpinnerAdapter;
 
     @Nullable

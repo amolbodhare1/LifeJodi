@@ -10,7 +10,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:layout_marginTop="20dp"
+
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
 
 
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
@@ -52,7 +53,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
         <Spinner
@@ -66,7 +67,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined" />
         <Spinner
             android:layout_marginTop="20dp"
@@ -79,7 +80,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <Spinner
@@ -93,7 +94,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <Spinner
@@ -107,32 +108,30 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <LinearLayout
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Spinner
-                android:layout_gravity="center"
+                android:layout_gravity="bottom"
                 android:id="@+id/spinner_currency_code"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:gravity="center"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:layout_marginBottom="1dp"
                 android:textColor="@color/dark_grey"
                 android:spinnerMode="dialog"
-                app:backgroundTint="@color/bottomline_color"
+                android:backgroundTint="@color/bottomline_color"
                 style="@style/Widget.AppCompat.Spinner.Underlined" />
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -180,7 +179,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <LinearLayout
@@ -234,7 +233,7 @@
             android:paddingTop="8dp"
             android:textColor="@color/dark_grey"
             android:spinnerMode="dialog"
-            app:backgroundTint="@color/bottomline_color"
+            android:backgroundTint="@color/bottomline_color"
             style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
 
@@ -277,11 +276,45 @@
             android:gravity="top|left"
             android:maxLines="10"
             android:scrollbars="vertical"/>
-        <LinearLayout
-            android:layout_marginTop="2dp"
-            android:layout_width="320dp"
-            android:layout_height="1dp"
-            android:background="@color/line_color"/>
+
+
+        <FrameLayout
+            android:background="@color/bottomline_color"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_upload"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_profile_men"
+                    app:layout_collapseMode="parallax"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_capture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_brightness"
+                    android:layout_marginStart="80dp"
+                    android:layout_alignBottom="@+id/image_upload"
+                    android:src="@drawable/ic_photo_library"
+                    android:padding="@dimen/dp_12"
+                    />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
         <com.lifejodi.utils.customfonts.CustomButtonBeatles
             android:layout_gravity="center"
             android:id="@+id/button_continue"

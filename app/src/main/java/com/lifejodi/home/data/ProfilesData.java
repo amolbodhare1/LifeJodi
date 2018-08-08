@@ -39,6 +39,47 @@ public class ProfilesData {
     public static String RELIGION = "religion";
     public static String PHOTONAME = "photo_name";
     public static String PROFILEPIC = "profile_pic";
+    public static String LAT = "lat";
+    public static String LNG = "lng";
+    public static String SUBLOCALITY = "sublocality";
+    public static String LOCALITY = "locality";
+    public static String ADMINISTRATIVEAREA = "administrative_area_level_1";
+    public static String PINCODE = "pincode";
+    public static String FORMATTEDADRRESS = "formatted_address";
+    public static String PROFILEFOR = "profile_for";
+    public static String COUNTRYCODE = "country_code";
+    public static String PHNUMBER = "ph_number";
+    public static String EMAIL = "email";
+    public static String PASSWORD = "password";
+    public static String MARRYOTHERCAST = "marry_other_caste";
+    public static String CURRENCYID = "currency_id";
+    public static String COMMENT = "comment";
+    public static String EDUCATIONLEVEL = "educationlevel";
+    public static String OCCUPATIONNAME = "occupation";
+    public static String WORKINGAS = "workingas";
+    public static String MOTHERTONGUE = "mother_tongue";
+    public static String MOTHERTONGUEID = "mother_tongue_id";
+    public static String MARITALSTATUS = "marital_status";
+    public static String CASTE = "caste";
+    public static String CASTEID = "caste_id";
+    public static String DOSHAM = "dosham";
+    public static String HEIGHT = "height";
+    public static String PHYSICALSTATUS = "physical_status";
+    public static String EDUCATION = "edulevel_id";
+    public static String OCCUPATION = "occupation_id";
+    public static String EMPLOYEDIN = "employed_in";
+    public static String ANNUALINCOME = "annual_income";
+    public static String FAMILYSTATUS = "family_status";
+    public static String FAMILYTYPE = "family_type";
+    public static String FAMILYVALUES = "family_values";
+    public static String ABOUT = "about";
+    public static String COUNTRY = "country";
+    public static String USERID = "user_id";
+    public static String SHORTLISTED_STATUS = "shortlist_status";
+
+
+
+
 
     public String ShortListedDetailsStatus="";
     public String getShortListedDetailsStatus() {

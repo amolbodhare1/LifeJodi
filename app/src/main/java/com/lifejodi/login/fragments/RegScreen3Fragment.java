@@ -1,8 +1,6 @@
 package com.lifejodi.login.fragments;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -28,16 +26,14 @@ import com.lifejodi.login.data.RegSpinnersStaticData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.login.interfaces.SetRegistrationFragment;
 import com.lifejodi.utils.Constants;
-import com.lifejodi.utils.SharedPreference;
+import com.lifejodi.utils.SharedPref;
 import com.lifejodi.utils.customfonts.CustomButtonBeatles;
-import com.lifejodi.utils.customfonts.CustomTextBeatles;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +75,7 @@ public class RegScreen3Fragment extends Fragment{
     UserRegData userRegData = UserRegData.getInstance();
     SetRegistrationFragment setRegistrationFragment;
     View view;
-    SharedPreference sharedPreference;
+    SharedPref sharedPreference;
     CustomSpinnerAdapter customSpinnerAdapter;
 
     ArrayList<HashMap<String, String>> maritalStatusList = new ArrayList<>();
@@ -92,7 +88,7 @@ public class RegScreen3Fragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reg_screen3, null);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
 
         initialization(view);
         if (!fragmentResume && fragmentVisible) {
@@ -124,7 +120,7 @@ public class RegScreen3Fragment extends Fragment{
 
     public void initialization(View v) {
         textGetCurrentLocation = (TextView)v.findViewById(R.id.text_get_current_location);
-        sharedPreference = SharedPreference.getSharedInstance();
+        sharedPreference = SharedPref.getSharedInstance();
         sharedPreference.initialize(getActivity());
 
         maritalStatusList = regSpinnersData.getMaritalStatusList();
@@ -246,7 +242,7 @@ public class RegScreen3Fragment extends Fragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+    //    unbinder.unbind();
     }
 
 
