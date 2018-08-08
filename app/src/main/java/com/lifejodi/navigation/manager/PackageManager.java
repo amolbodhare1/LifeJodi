@@ -3,6 +3,7 @@ package com.lifejodi.navigation.manager;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.lifejodi.R;
 import com.lifejodi.login.data.LoginData;
 import com.lifejodi.login.data.UserRegData;
 import com.lifejodi.navigation.data.PackageData;
@@ -31,6 +32,7 @@ public class PackageManager implements VolleyResponse{
     UserRegData userRegData = UserRegData.getInstance();
 
     PackageData packageData = PackageData.getInstance();
+    Context context;
 
     private PackageManager(){
         mVolleyRequest = new VolleyRequest(this);
@@ -39,6 +41,7 @@ public class PackageManager implements VolleyResponse{
         this.mVolleyCallbackInterface = VolleyCallbackInterface;
         mVolleyRequest.setContext(mContext);
         sharedPreference.initialize(mContext);
+        context = mContext;
 
     }
 
@@ -127,6 +130,8 @@ public class PackageManager implements VolleyResponse{
                 myPackage.put(PackageData.PACKAGE_ADD_DATE,data.getString(PackageData.PACKAGE_ADD_DATE));
                 myPackage.put(PackageData.PACKAGE_EXPIRY_DATE,data.getString(PackageData.PACKAGE_EXPIRY_DATE));
 
+                sharedPreference.putSharedPrefData(Constants.PACKAGE_ADD_DATE,data.getString(PackageData.PACKAGE_ADD_DATE));
+                sharedPreference.putSharedPrefData(Constants.PACKAGE_EXPIRATION_DATE,data.getString(PackageData.PACKAGE_EXPIRY_DATE));
                 PackageData.getInstance().setMyPackage(myPackage);
                 mVolleyCallbackInterface.successCallBack("success",tag);
 
@@ -146,7 +151,13 @@ public class PackageManager implements VolleyResponse{
             if (jsonObject.getString(LoginData.STATUS).equals("1")){
 
                 JSONArray dataArray = jsonObject.getJSONArray("data");
-
+                HashMap<String,String> mapPopularPackage = new HashMap<>();
+                mapPopularPackage.put(PackageData.PACKAGE_ID,"0");
+                mapPopularPackage.put(PackageData.PACKAGE_DESC,context.getResources().getString(R.string.popular_package_details));
+                mapPopularPackage.put(PackageData.PACKAGE_AMOUNT,"Free");
+                mapPopularPackage.put(PackageData.PACKAGE_NAME,"Popular Package");
+                mapPopularPackage.put(PackageData.PACKAGE_VALIDITY,"1");
+                allPackagesList.add(mapPopularPackage);
                 for(int i=0;i<dataArray.length();i++){
 
                     HashMap<String,String> map = new HashMap<>();

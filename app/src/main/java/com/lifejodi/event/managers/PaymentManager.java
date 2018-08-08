@@ -83,6 +83,31 @@ public class PaymentManager implements VolleyResponse {
         return jsonObject;
     }
 
+    public JSONObject makePaymentPackageInput(String devId,String userId,String amount,String nonce,String package_id)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try{
+
+            jsonObject.put(EventRegistrationData.API,"makePaymentPackage");
+            jsonObject.put(EventRegistrationData.DEVICE,devId);
+            jsonObject.put(EventRegistrationData.VERSION,"1.0");
+
+            JSONObject data = new JSONObject();
+            data.put(UserRegData.USERID,userId);
+            data.put("amount",amount);
+            data.put("payment_method_nonce",nonce);
+            data.put("package_id",package_id);
+
+            jsonObject.put("data",data);
+
+
+        }catch (Exception e){
+
+        }
+
+        return jsonObject;
+    }
+
 
     public void getPaymentToken(JSONObject jsonObject)
     {
@@ -92,6 +117,11 @@ public class PaymentManager implements VolleyResponse {
     public void makePayment(JSONObject jsonObject)
     {
         mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_PAYMENT,Constants.TAG_MAKE_PAYMENT,jsonObject);
+    }
+
+    public void makePackagePayment(JSONObject jsonObject)
+    {
+        mVolleyRequest.volleyJsonRequest(Request.Method.POST, Constants.URL_PAYMENT,Constants.TAG_MAKE_PACKAGE_PAYMENT,jsonObject);
     }
 
     @Override
@@ -108,6 +138,9 @@ public class PaymentManager implements VolleyResponse {
                 break;
             case Constants.TAG_MAKE_PAYMENT:
                 parsePaymentResponse(strResponse,tag);
+                break;
+            case Constants.TAG_MAKE_PACKAGE_PAYMENT:
+
                 break;
         }
     }

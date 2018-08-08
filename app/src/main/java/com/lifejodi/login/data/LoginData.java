@@ -73,6 +73,7 @@ public class LoginData {
     public static String PINCODE = "pincode";
     public static String FORMATTEDADDRESS = "formatted_address";
     public static String USERID = "user_id";
+    public static String EXPIRYDATE = "expiry_date";
 
     String loginmessage="";
     public String getLoginmessage() {

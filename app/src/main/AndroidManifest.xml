@@ -88,6 +88,7 @@
         <activity android:name=".search.activities.SearchByIdResultActivity" android:screenOrientation="portrait"/>
         <activity android:name=".settings.SettingsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".radarsearch.activities.RadarSearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".navigation.activities.PackageDetailsActivity" android:screenOrientation="portrait"/>
         <service android:name=".login.service.FetchAddressIntentService"
             android:exported="false"/>
 

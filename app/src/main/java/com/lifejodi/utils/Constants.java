@@ -79,6 +79,9 @@ public class Constants {
     public static String USERNAME="username";
     public static String DEVICE_ID="deviceId";
 
+    public static String PACKAGE_ADD_DATE="package_add_date";
+    public static String PACKAGE_EXPIRATION_DATE="package_expiration_date";
+
 
     public static String LOGINNAME="login_name";
     public static String LOGINEMAIL="login_email";
@@ -174,6 +177,7 @@ public class Constants {
     public static String URL_PAYMENT = "http://www.efee.in/lifejodi/web_services/Lifejodiapi";
     public static final String TAG_REQUEST_PAYMENT_TOKEN = "requestToken";
     public static final String TAG_MAKE_PAYMENT = "makePayment";
+    public static final String TAG_MAKE_PACKAGE_PAYMENT = "makePackagePayment";
 
     public static final String TAG_MY_PACKAGE = "mypackage";
     public static final String TAG_ALL_PACKAGES = "all_packages";

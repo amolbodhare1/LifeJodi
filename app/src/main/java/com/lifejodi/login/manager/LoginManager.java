@@ -164,8 +164,10 @@ public class LoginManager implements VolleyResponse {
                     sharedPreference.putSharedPrefData(Constants.LOGINEMAIL,Constants.getStringValueOfJsonObject(dataObject,LoginData.EMAIL,LoginData.EMAIL));
                     sharedPreference.putSharedPrefData(Constants.PROFILEID,Constants.getStringValueOfJsonObject(dataObject,LoginData.PROFILEID,LoginData.PROFILEID));
                     sharedPreference.putSharedPrefData(Constants.UID,Constants.getStringValueOfJsonObject(dataObject,LoginData.USERID,LoginData.USERID));
+                sharedPreference.putSharedPrefData(Constants.PACKAGE_EXPIRATION_DATE,Constants.getStringValueOfJsonObject(dataObject,LoginData.EXPIRYDATE,LoginData.EXPIRYDATE));
 
-                    userRegData.regDataObject = new JSONObject();
+
+                userRegData.regDataObject = new JSONObject();
 
                     userRegData.regDataObject.put(UserRegData.USERID,Constants.getStringValueOfJsonObject(dataObject,UserRegData.USERID,UserRegData.USERID));
                     userRegData.regDataObject.put(UserRegData.EMAIL,Constants.getStringValueOfJsonObject(dataObject,UserRegData.EMAIL,UserRegData.EMAIL));
